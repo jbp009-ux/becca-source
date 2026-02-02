@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BECCA - PMX-01 CEO</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: #000;
+            color: #00ff00;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Matrix rain background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #00ff00;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .header .subtitle {
+            color: #00aa00;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            margin-top: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .status.offline {
+            color: #ff0000;
+            border-color: #ff0000;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .status.online {
+            color: #00ff00;
+            border-color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status.needs-key {
+            color: #ffaa00;
+            border-color: #ffaa00;
+            text-shadow: 0 0 5px #ffaa00;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            to { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* API Key Section */
+        .api-key-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .api-key-section label {
+            color: #00aa00;
+            font-size: 0.85rem;
+        }
+
+        .api-key-input {
+            padding: 8px 12px;
+            border: 1px solid #00ff00;
+            background: rgba(0, 20, 0, 0.8);
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            border-radius: 3px;
+            width: 300px;
+        }
+
+        .api-key-input::placeholder {
+            color: #005500;
+        }
+
+        .api-key-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .api-key-status {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+
+        .api-key-status.set {
+            color: #00ff00;
+            background: rgba(0, 100, 0, 0.3);
+        }
+
+        .api-key-status.not-set {
+            color: #ffaa00;
+            background: rgba(100, 50, 0, 0.3);
+        }
+
+        /* Chat area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            background: rgba(0, 20, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-left: 3px solid #00ff00;
+            background: rgba(0, 50, 0, 0.3);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .message.user {
+            border-left-color: #00aaff;
+            background: rgba(0, 50, 100, 0.2);
+        }
+
+        .message.assistant {
+            border-left-color: #00ff00;
+        }
+
+        .message.system {
+            border-left-color: #888;
+            background: rgba(50, 50, 50, 0.2);
+            color: #aaa;
+        }
+
+        .message.error {
+            border-left-color: #ff0000;
+            background: rgba(100, 0, 0, 0.2);
+            color: #ff6666;
+        }
+
+        .message-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        .message.user .message-header {
+            color: #00aaff;
+        }
+
+        .message.assistant .message-header {
+            color: #00ff00;
+        }
+
+        .message-content {
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message-content pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .message-content code {
+            background: rgba(0, 100, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Input area */
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-wrapper {
+            flex: 1;
+        }
+
+        #message-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #00ff00;
+            background: rgba(0, 20, 0, 0.8);
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        #message-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        #message-input::placeholder {
+            color: #005500;
+        }
+
+        #message-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #message-input {
+            resize: none;
+            min-height: 50px;
+            max-height: 150px;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 50, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+        }
+
+        .image-preview.active {
+            display: block;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+        }
+
+        .image-preview .remove-image {
+            margin-left: 10px;
+            color: #ff0000;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .image-preview .remove-image:hover {
+            text-decoration: underline;
+        }
+
+        .message-image {
+            max-width: 400px;
+            max-height: 300px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 15px 25px;
+            border: 1px solid #00ff00;
+            background: transparent;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.85rem;
+        }
+
+        .btn-inject {
+            background: linear-gradient(45deg, #001100, #003300);
+            border: 2px solid #00ff00;
+            font-weight: bold;
+            animation: inject-glow 2s ease-in-out infinite;
+        }
+
+        .btn-inject:hover {
+            background: linear-gradient(45deg, #002200, #004400);
+        }
+
+        .btn-inject.injected {
+            border-color: #00aa00;
+            color: #00aa00;
+            animation: none;
+        }
+
+        @keyframes inject-glow {
+            0%, 100% { box-shadow: 0 0 5px #00ff00; }
+            50% { box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        .btn-send {
+            min-width: 100px;
+        }
+
+        .btn-clear {
+            background: rgba(100, 0, 0, 0.2);
+            border-color: #aa0000;
+            color: #ff0000;
+        }
+
+        .btn-clear:hover {
+            background: rgba(100, 0, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #001100;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00aa00;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+
+        /* Typing indicator */
+        .typing {
+            color: #00aa00;
+            font-style: italic;
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix rain canvas -->
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="container">
+        <div class="header">
+            <h1>BECCA</h1>
+            <div class="subtitle">PMX-01 CEO - Chief Executive Operator</div>
+            <div id="status" class="status needs-key">NEEDS API KEY</div>
+        </div>
+
+        <!-- API Key Input Section -->
+        <div class="api-key-section">
+            <label>API KEY:</label>
+            <input
+                type="password"
+                id="api-key-input"
+                class="api-key-input"
+                placeholder="sk-ant-api03-..."
+                onkeypress="handleKeyInputEnter(event)"
+            >
+            <button class="btn btn-small" onclick="saveApiKey()">SET KEY</button>
+            <span id="api-key-status" class="api-key-status not-set">Not Set</span>
+        </div>
+
+        <div class="controls">
+            <button id="inject-btn" class="btn btn-inject" onclick="injectBecca()" disabled>
+                INJECT BECCA
+            </button>
+            <button class="btn btn-clear" onclick="clearSession()">
+                CLEAR
+            </button>
+        </div>
+
+        <div id="chat-area" class="chat-area">
+            <div class="message system">
+                <div class="message-content">
+                    [ SYSTEM ] Enter your Anthropic API key above, then click "INJECT BECCA"
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea
+                    id="message-input"
+                    placeholder="Enter command for BECCA... (Paste screenshots with Ctrl+V)"
+                    onkeypress="handleKeyPress(event)"
+                    onpaste="handlePaste(event)"
+                    disabled
+                    rows="2"
+                ></textarea>
+                <div id="image-preview" class="image-preview"></div>
+            </div>
+            <button id="send-btn" class="btn btn-send" onclick="sendMessage()" disabled>
+                SEND
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const sessionId = 'session_' + Date.now();
+        let isInjected = false;
+        let hasApiKey = false;
+        let pendingImage = null;
+
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = 'BECCA01PMX'.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Check API key on load
+        async function checkApiKey() {
+            try {
+                const response = await fetch('/api/check_key');
+                const data = await response.json();
+
+                if (data.has_key) {
+                    hasApiKey = true;
+                    document.getElementById('api-key-status').textContent = 'Set';
+                    document.getElementById('api-key-status').className = 'api-key-status set';
+                    document.getElementById('api-key-input').value = '';
+                    document.getElementById('api-key-input').placeholder = data.key_preview || 'Key is set';
+                    document.getElementById('inject-btn').disabled = false;
+                    document.getElementById('status').textContent = 'OFFLINE - READY TO INJECT';
+                    document.getElementById('status').className = 'status offline';
+                }
+            } catch (error) {
+                console.error('Error checking API key:', error);
+            }
+        }
+
+        // Save API key
+        async function saveApiKey() {
+            const keyInput = document.getElementById('api-key-input');
+            const key = keyInput.value.trim();
+
+            if (!key) {
+                addMessage('error', 'Please enter an API key');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/set_key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ api_key: key })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    hasApiKey = true;
+                    document.getElementById('api-key-status').textContent = 'Set';
+                    document.getElementById('api-key-status').className = 'api-key-status set';
+                    document.getElementById('api-key-input').value = '';
+                    document.getElementById('api-key-input').placeholder = key.substring(0, 20) + '...';
+                    document.getElementById('inject-btn').disabled = false;
+                    document.getElementById('status').textContent = 'OFFLINE - READY TO INJECT';
+                    document.getElementById('status').className = 'status offline';
+                    addMessage('system', 'API key set successfully. Click "INJECT BECCA" to start.');
+                } else {
+                    addMessage('error', data.error || 'Failed to set API key');
+                }
+            } catch (error) {
+                addMessage('error', 'Failed to set API key: ' + error.message);
+            }
+        }
+
+        // Handle Enter key in API key input
+        function handleKeyInputEnter(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                saveApiKey();
+            }
+        }
+
+        // Inject BECCA
+        async function injectBecca() {
+            if (!hasApiKey) {
+                addMessage('error', 'Please set your API key first');
+                return;
+            }
+
+            const btn = document.getElementById('inject-btn');
+            btn.disabled = true;
+            btn.textContent = 'INJECTING...';
+
+            try {
+                const response = await fetch('/api/inject', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    isInjected = true;
+                    btn.textContent = 'INJECTED';
+                    btn.classList.add('injected');
+
+                    document.getElementById('status').textContent = 'ONLINE - BECCA ACTIVE';
+                    document.getElementById('status').className = 'status online';
+
+                    document.getElementById('message-input').disabled = false;
+                    document.getElementById('send-btn').disabled = false;
+
+                    addMessage('system', data.message);
+
+                    document.getElementById('message-input').focus();
+                } else {
+                    if (data.needs_key) {
+                        hasApiKey = false;
+                        document.getElementById('api-key-status').textContent = 'Invalid';
+                        document.getElementById('api-key-status').className = 'api-key-status not-set';
+                        document.getElementById('status').textContent = 'NEEDS API KEY';
+                        document.getElementById('status').className = 'status needs-key';
+                    }
+                    throw new Error(data.error || 'Injection failed');
+                }
+            } catch (error) {
+                btn.textContent = 'INJECT BECCA';
+                btn.disabled = !hasApiKey;
+                addMessage('error', 'Injection failed: ' + error.message);
+            }
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+
+            if ((!message && !pendingImage) || !isInjected) return;
+
+            // Capture current image before clearing
+            const imageToSend = pendingImage;
+
+            input.value = '';
+            input.disabled = true;
+            document.getElementById('send-btn').disabled = true;
+
+            // Clear the image preview
+            removeImage();
+
+            addMessage('user', message, imageToSend);
+            addTypingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        message: message || '(Screenshot attached)',
+                        image: imageToSend
+                    })
+                });
+
+                const data = await response.json();
+                removeTypingIndicator();
+
+                if (data.success) {
+                    addMessage('assistant', data.response);
+                } else {
+                    if (data.needs_key) {
+                        hasApiKey = false;
+                        document.getElementById('api-key-status').textContent = 'Invalid';
+                        document.getElementById('api-key-status').className = 'api-key-status not-set';
+                        document.getElementById('inject-btn').disabled = true;
+                    }
+                    addMessage('error', data.error || 'Unknown error');
+                }
+            } catch (error) {
+                removeTypingIndicator();
+                addMessage('error', 'Connection error: ' + error.message);
+            }
+
+            input.disabled = false;
+            document.getElementById('send-btn').disabled = false;
+            input.focus();
+        }
+
+        // Clear session
+        async function clearSession() {
+            try {
+                await fetch('/api/clear', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+
+                isInjected = false;
+
+                document.getElementById('inject-btn').textContent = 'INJECT BECCA';
+                document.getElementById('inject-btn').classList.remove('injected');
+                document.getElementById('inject-btn').disabled = !hasApiKey;
+
+                if (hasApiKey) {
+                    document.getElementById('status').textContent = 'OFFLINE - READY TO INJECT';
+                    document.getElementById('status').className = 'status offline';
+                } else {
+                    document.getElementById('status').textContent = 'NEEDS API KEY';
+                    document.getElementById('status').className = 'status needs-key';
+                }
+
+                document.getElementById('message-input').disabled = true;
+                document.getElementById('send-btn').disabled = true;
+
+                document.getElementById('chat-area').innerHTML = `
+                    <div class="message system">
+                        <div class="message-content">
+                            [ SYSTEM ] Session cleared. Click "INJECT BECCA" to reinitialize.
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                addMessage('error', 'Failed to clear session: ' + error.message);
+            }
+        }
+
+        // Add message to chat
+        function addMessage(type, content, imageData = null) {
+            const chatArea = document.getElementById('chat-area');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const header = type === 'user' ? '[ GUARDIAN ]' :
+                          type === 'assistant' ? '[ BECCA CEO ]' :
+                          type === 'system' ? '[ SYSTEM ]' : '[ ERROR ]';
+
+            // Simple markdown-like formatting
+            let formattedContent = content
+                .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+
+            // Add image if present
+            let imageHtml = '';
+            if (imageData) {
+                imageHtml = `<img src="${imageData}" class="message-image" alt="Screenshot">`;
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-header">${header}</div>
+                ${imageHtml}
+                <div class="message-content">${formattedContent}</div>
+            `;
+
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        // Typing indicator
+        function addTypingIndicator() {
+            const chatArea = document.getElementById('chat-area');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'typing';
+            typingDiv.innerHTML = '[ BECCA ] Processing<span class="loading-dots"></span>';
+            chatArea.appendChild(typingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Handle paste for screenshots
+        function handlePaste(event) {
+            const items = event.clipboardData?.items;
+            if (!items) return;
+
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    event.preventDefault();
+                    const file = item.getAsFile();
+                    const reader = new FileReader();
+
+                    reader.onload = (e) => {
+                        pendingImage = e.target.result;
+                        showImagePreview(pendingImage);
+                    };
+
+                    reader.readAsDataURL(file);
+                    break;
+                }
+            }
+        }
+
+        // Show image preview
+        function showImagePreview(dataUrl) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = `
+                <img src="${dataUrl}" alt="Screenshot">
+                <span class="remove-image" onclick="removeImage()">[X] Remove</span>
+            `;
+            preview.classList.add('active');
+        }
+
+        // Remove pending image
+        function removeImage() {
+            pendingImage = null;
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            preview.classList.remove('active');
+        }
+
+        // Check API key on page load
+        checkApiKey();
+    </script>
+</body>
+</html>
