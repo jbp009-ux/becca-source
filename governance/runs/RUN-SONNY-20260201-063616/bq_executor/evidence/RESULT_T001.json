@@ -1,0 +1,40 @@
+{
+  "result_id": "RESULT-T001-20260201-063636",
+  "task_id": "T001",
+  "plan_id": "PLAN-SONNY-20260201-063616",
+  "status": "failed",
+  "started_at": "2026-02-01T06:36:16.349084Z",
+  "completed_at": "2026-02-01T06:36:36.215202Z",
+  "timing": {
+    "total_ms": 19866.118,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "secrets_scanner",
+  "tool_version": "1.0.0",
+  "profile": "Fire Ant",
+  "stats": {
+    "files_scanned": 0,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [],
+  "errors": [
+    {
+      "code": "E999",
+      "message": "'ScanResult' object has no attribute 'get'",
+      "details": "",
+      "recoverable": false
+    }
+  ],
+  "stop_reason": "error",
+  "metrics": {}
+}

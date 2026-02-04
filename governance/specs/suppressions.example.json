@@ -1,0 +1,53 @@
+{
+  "$schema": "./suppression.schema.json",
+  "version": "1.0.0",
+  "description": "Example suppressions file. Copy to .becca/suppressions.json and customize.",
+
+  "suppressions": [
+    {
+      "suppression_id": "SUPP-SEC-001",
+      "finding_type": "secret",
+      "pattern": "tests/fixtures/fake_credentials.json",
+      "pattern_type": "exact_path",
+      "reason": "Test fixture containing intentionally fake credentials for unit testing. Values are not real and cannot authenticate.",
+      "reason_category": "test_fixture",
+      "owner": "security-team",
+      "created_at": "2026-01-15T10:00:00Z",
+      "reviewed_by": "lead-dev",
+      "reviewed_at": "2026-01-15T11:00:00Z",
+      "auto_expire_on_change": true
+    },
+    {
+      "suppression_id": "SUPP-COST-001",
+      "finding_type": "cost_vector",
+      "pattern": "services/legacy-email.ts",
+      "pattern_type": "exact_path",
+      "reason": "Legacy email service scheduled for deprecation. Has existing rate limits at infrastructure level (AWS SES quotas). Will be replaced by new notification service.",
+      "reason_category": "pending_remediation",
+      "owner": "backend-team",
+      "created_at": "2026-01-20T14:00:00Z",
+      "expires_at": "2026-03-01T00:00:00Z",
+      "ticket": "https://github.com/org/repo/issues/456",
+      "auto_expire_on_change": true
+    },
+    {
+      "suppression_id": "SUPP-SEC-002",
+      "finding_type": "secret",
+      "pattern": "docs/examples/*.md",
+      "pattern_type": "glob",
+      "reason": "Documentation examples use placeholder API keys (sk_test_EXAMPLE...) that are clearly marked as non-functional examples.",
+      "reason_category": "false_positive",
+      "owner": "docs-team",
+      "created_at": "2026-01-10T09:00:00Z",
+      "reviewed_by": "security-lead",
+      "reviewed_at": "2026-01-10T10:30:00Z"
+    }
+  ],
+
+  "policies": {
+    "max_suppression_age_days": 90,
+    "require_ticket_for": ["pending_remediation", "legacy_accepted_risk"],
+    "require_second_reviewer_for": ["secret", "critical_path"],
+    "auto_expire_unreviewed_after_days": 30
+  }
+}

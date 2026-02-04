@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "PLAN-SONNY-20260202-051437",
+  "project": "sonny",
+  "mission": "Test governance kernel",
+  "generated_at": "2026-02-02T05:15:54.845703Z",
+  "status": {
+    "final": "FAILED_VERIFY",
+    "reason": "Status indeterminate"
+  },
+  "tasks": {
+    "total": 3,
+    "by_status": {
+      "PARTIAL": 1,
+      "TIMEOUT": 1,
+      "SUCCESS": 1
+    }
+  },
+  "risks": {
+    "total": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "performance": {
+    "total_ms": 77487.009,
+    "total_seconds": 77.49
+  },
+  "artifacts": {
+    "risks": "ghost_archivist/evidence/RISKS.json",
+    "evidence_index": "ghost_archivist/evidence/EVIDENCE_INDEX.json",
+    "final_report": "FINAL_REPORT.md",
+    "plan": "mq_planner/evidence/PLAN.json"
+  }
+}

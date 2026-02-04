@@ -1,0 +1,135 @@
+{
+  "index_id": "EVIDENCE-SONNY-20260202-051554",
+  "run_id": "RUN-SONNY-20260202-051437",
+  "plan_id": "PLAN-SONNY-20260202-051437",
+  "generated_at": "2026-02-02T05:15:54.844561Z",
+  "base_path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260202-051437",
+  "summary": {
+    "total_items": 8,
+    "total_size_bytes": 37923,
+    "by_type": {
+      "audit_trail": 3,
+      "config_snapshot": 1,
+      "secrets_findings": 2,
+      "scan_profile": 1,
+      "log_extract": 1
+    },
+    "by_source_task": {
+      "T002": 8
+    }
+  },
+  "evidence": [
+    {
+      "evidence_id": "E0001",
+      "path": "tool_inspector\\evidence\\project_structure.json",
+      "type": "audit_trail",
+      "format": "json",
+      "description": "project_structure from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 3535,
+      "hash": "sha256:6277c1cb3c657a468264e295a5baa322adabafa313412d6cf7caddb5908a8a03",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0002",
+      "path": "tool_inspector\\evidence\\grep_results.json",
+      "type": "audit_trail",
+      "format": "json",
+      "description": "grep_results from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 5457,
+      "hash": "sha256:8156b56ffdadf6dc861180c8a5c23e3a6a25b47a3c0f000da8d83fe689a5d12a",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0003",
+      "path": "tool_inspector\\evidence\\config_files.json",
+      "type": "config_snapshot",
+      "format": "json",
+      "description": "config_files from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 1918,
+      "hash": "sha256:24fcfc7e7ba2737516a92347748f6567ec1a8fed75c217e3749b10914dba6fdd",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0004",
+      "path": "tool_inspector\\evidence\\error_patterns.json",
+      "type": "audit_trail",
+      "format": "json",
+      "description": "error_patterns from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 15512,
+      "hash": "sha256:959e4af23a99131cab8b211b89cda94d720e491193a6336efc16ba0efa413a17",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0005",
+      "path": "tool_inspector\\evidence\\SECRET_FINDINGS.json",
+      "type": "secrets_findings",
+      "format": "json",
+      "description": "SECRET_FINDINGS from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 454,
+      "hash": "sha256:297c4df4a04ebfc9a7e437edc664841e9e58d9a2252fca41d233e25975d95f16",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0006",
+      "path": "tool_inspector\\evidence\\SECRET_FINDINGS.md",
+      "type": "secrets_findings",
+      "format": "md",
+      "description": "SECRET_FINDINGS from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 968,
+      "hash": "sha256:4ccc783eeff4d5cf5797b25023be8c27816e9fe0d56ffb671628b00fe75b0e76",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0007",
+      "path": "tool_inspector\\evidence\\SCAN_PROFILE.json",
+      "type": "scan_profile",
+      "format": "json",
+      "description": "SCAN_PROFILE from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 805,
+      "hash": "sha256:b1c61aa21dee7fcb94e3714b1163ec5e8699ce048632be69d2a379460ea15376",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0008",
+      "path": "tool_inspector\\evidence\\audit_log.json",
+      "type": "log_extract",
+      "format": "json",
+      "description": "audit_log from inspector",
+      "source_task": "T002",
+      "source_tool": "inspector",
+      "generated_at": "2026-02-02T05:15:54.773579Z",
+      "size_bytes": 9274,
+      "hash": "sha256:81cceef971770eebb9e91d62f40acbde3ee553ea743f561523a47ba76e8c6c57",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    }
+  ]
+}

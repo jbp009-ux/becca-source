@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "PLAN-SONNY-20260201-071858",
+  "project": "sonny",
+  "mission": "Find hardcoded secrets",
+  "generated_at": "2026-02-01T07:19:28.977049Z",
+  "status": {
+    "final": "ALL_CLEAR",
+    "reason": "All 3 task(s) successful"
+  },
+  "tasks": {
+    "total": 3,
+    "by_status": {
+      "SUCCESS": 3
+    }
+  },
+  "risks": {
+    "total": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "performance": {
+    "total_ms": 45140.983,
+    "total_seconds": 45.14
+  },
+  "artifacts": {
+    "risks": "ghost_archivist/evidence/RISKS.json",
+    "evidence_index": "ghost_archivist/evidence/EVIDENCE_INDEX.json",
+    "final_report": "FINAL_REPORT.md",
+    "plan": "mq_planner/evidence/PLAN.json"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "run_id": "RUN-SONNY-20260202-051437",
+  "project_id": "sonny",
+  "mission": "Test governance kernel",
+  "current_state": "FAILED",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-02T05:14:37.200708Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-02T05:14:37.222156Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-02T05:14:37.230161Z"
+    },
+    {
+      "state": "ARCHIVING",
+      "entered_at": "2026-02-02T05:15:54.840688Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-02T05:15:54.865480Z"
+    },
+    {
+      "state": "FAILED",
+      "entered_at": "2026-02-02T05:15:54.882644Z"
+    }
+  ],
+  "agents": [
+    "mq_planner",
+    "bq_executor",
+    "ghost_archivist"
+  ],
+  "agents_completed": [],
+  "created_at": "2026-02-02T05:14:37.200708Z",
+  "updated_at": "2026-02-02T05:15:54.882644Z"
+}

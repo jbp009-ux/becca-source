@@ -1,0 +1,40 @@
+{
+  "result_id": "RESULT-T002-20260201-063704",
+  "task_id": "T002",
+  "plan_id": "PLAN-SONNY-20260201-063616",
+  "status": "failed",
+  "started_at": "2026-02-01T06:36:36.216003Z",
+  "completed_at": "2026-02-01T06:37:04.971890Z",
+  "timing": {
+    "total_ms": 28755.887000000002,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "inspector",
+  "tool_version": "1.0.0",
+  "profile": "Scout",
+  "stats": {
+    "files_scanned": 0,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [],
+  "errors": [
+    {
+      "code": "E999",
+      "message": "argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'dict'",
+      "details": "",
+      "recoverable": false
+    }
+  ],
+  "stop_reason": "error",
+  "metrics": {}
+}

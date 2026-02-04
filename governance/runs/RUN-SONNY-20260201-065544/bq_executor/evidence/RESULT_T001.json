@@ -1,0 +1,55 @@
+{
+  "result_id": "RESULT-T001-20260201-065604",
+  "task_id": "T001",
+  "plan_id": "PLAN-SONNY-20260201-065544",
+  "status": "success",
+  "started_at": "2026-02-01T06:55:44.846329Z",
+  "completed_at": "2026-02-01T06:56:04.191667Z",
+  "timing": {
+    "total_ms": 19345.338000000003,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "secrets_scanner",
+  "tool_version": "1.0.0",
+  "profile": "Fire Ant",
+  "stats": {
+    "files_scanned": 425,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [
+    {
+      "artifact": "SECRET_FINDINGS",
+      "path": "bq_executor\\evidence\\SECRET_FINDINGS.json",
+      "format": "json",
+      "size_bytes": 454,
+      "hash": "sha256:1fb54212fa80bc0dbea40d00d22b9598da6ef2a6862ecc7eb60a1496cd302cc0"
+    },
+    {
+      "artifact": "SECRET_FINDINGS",
+      "path": "bq_executor\\evidence\\SECRET_FINDINGS.md",
+      "format": "md",
+      "size_bytes": 968,
+      "hash": "sha256:11a0f6712bdc40b266addfd4fd6c939ae1408a7b47fb5f078879a7d805087e9a"
+    },
+    {
+      "artifact": "SCAN_PROFILE",
+      "path": "bq_executor\\evidence\\SCAN_PROFILE.json",
+      "format": "json",
+      "size_bytes": 802,
+      "hash": "sha256:0c3fff78fbaa2b44e378371138368ba243b7d720fce1f0a65f7c7d52b85d743d"
+    }
+  ],
+  "errors": [],
+  "stop_reason": "completed",
+  "metrics": {}
+}

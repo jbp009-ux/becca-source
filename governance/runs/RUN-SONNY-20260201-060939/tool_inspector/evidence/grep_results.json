@@ -1,0 +1,182 @@
+[
+  {
+    "file": "package-lock.json",
+    "line": 622,
+    "content": "\"node_modules/@fastify/busboy\": {",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 624,
+    "content": "\"resolved\": \"https://registry.npmjs.org/@fastify/busboy/-/busboy-3.2.0.tgz\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1206,
+    "content": "\"fast-deep-equal\": \"^3.1.1\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1262,
+    "content": "\"fast-xml-parser\": \"^4.4.1\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1822,
+    "content": "\"fast-json-stable-stringify\": \"^2.1.0\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 2501,
+    "content": "\"fast-deep-equal\": \"^3.1.1\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 2502,
+    "content": "\"fast-json-stable-stringify\": \"^2.0.0\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3320,
+    "content": "\"fast-deep-equal\": \"^3.1.3\",",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3550,
+    "content": "\"node_modules/fast-deep-equal\": {",
+    "keyword": "fast"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3554,
+    "content": "\"node_modules/fast-json-stable-stringify\": {",
+    "keyword": "fast"
+  },
+  {
+    "file": "firebase.json",
+    "line": 63,
+    "content": "\"singleProjectMode\": true",
+    "keyword": "mode"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 471,
+    "content": "// TRUCK STATUS (Food Truck Mode - Real-Time Location & Status)",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 3,
+    "content": "These guidelines define the operational principles and capabilities of an AI agent (e.g., Gemini) interacting with React projects within the Firebase Studio environment. The goal is to enable an effic",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 53,
+    "content": "## **Modern React Practices**",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 69,
+    "content": "The AI will use a consistent styling approach, preferring modern solutions like Tailwind CSS or CSS-in-JS libraries (e.g., styled-components, Emotion) if they are already present in the project. If no",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 73,
+    "content": "**Aesthetics:** The AI always makes a great first impression by creating a unique user experience that incorporates modern components, a visually balanced layout with clean spacing, and polished style",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 75,
+    "content": "1. Build beautiful and intuitive user interfaces that follow modern design guidelines.",
+    "keyword": "mode"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 81,
+    "content": "**Bold Definition:** The AI uses modern, interactive iconography, images, and UI components like buttons, text fields, animation, effects, gestures, sliders, carousels, navigation, etc.",
+    "keyword": "mode"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3541,
+    "content": "\"node_modules/farmhash-modern\": {",
+    "keyword": "mode"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3543,
+    "content": "\"resolved\": \"https://registry.npmjs.org/farmhash-modern/-/farmhash-modern-1.1.0.tgz\",",
+    "keyword": "mode"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 37,
+    "content": "\"Bash(firebase functions:secrets:get:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 38,
+    "content": "\"Bash(firebase functions:secrets:set:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\ARCHITECTURE.md",
+    "line": 115,
+    "content": "4. **Secrets stay secret.** No API keys, tokens, or credentials in frontend code or repos. Use Firebase/GCP Secret Manager.",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 190,
+    "content": "- [ ] No secrets in source code",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\INSPECTOR_EVALUATION_PACKAGE.md",
+    "line": 655,
+    "content": "| Secrets management | PASS | Environment variables |",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\OPERATIONS_RUNBOOK.md",
+    "line": 77,
+    "content": "2. **Required secrets** (GitHub > Settings > Secrets):",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 15,
+    "content": "// CONFIGURATION (read dynamically for secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 35,
+    "content": "// Get config dynamically (for Firebase Secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\notificationFunctions.js",
+    "line": 358,
+    "content": "secrets: ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_PHONE_NUMBER', 'TWILIO_MESSAGING_SERVICE_SID', 'SENDGRID_API_KEY', 'SENDGRID_FROM_EMAIL', 'SENDGRID_FROM_NAME'],",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\ttsFunctions.js",
+    "line": 60,
+    "content": "// Or via CLI: firebase functions:secrets:set OPENAI_API_KEY",
+    "keyword": "secrets"
+  }
+]

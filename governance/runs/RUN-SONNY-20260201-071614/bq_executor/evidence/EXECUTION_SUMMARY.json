@@ -1,0 +1,214 @@
+{
+  "plan_id": "PLAN-SONNY-20260201-071614",
+  "executed_at": "2026-02-01T07:16:44.182146Z",
+  "total_tasks": 3,
+  "completed_tasks": 3,
+  "skipped_tasks": 0,
+  "results": [
+    {
+      "result_id": "RESULT-T001-20260201-071629",
+      "task_id": "T001",
+      "plan_id": "PLAN-SONNY-20260201-071614",
+      "status": "success",
+      "started_at": "2026-02-01T07:16:14.542677Z",
+      "completed_at": "2026-02-01T07:16:29.419315Z",
+      "timing": {
+        "total_ms": 14876.637999999999,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "secrets_scanner",
+      "tool_version": "1.0.0",
+      "profile": "Fire Ant",
+      "stats": {
+        "files_scanned": 425,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "bq_executor\\evidence\\SECRET_FINDINGS.json",
+          "format": "json",
+          "size_bytes": 453,
+          "hash": "sha256:a1352ba0c2d8a07c5c79515438b89b0c34998875b91f6bc40d72dd4fdbe6ca46"
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "bq_executor\\evidence\\SECRET_FINDINGS.md",
+          "format": "md",
+          "size_bytes": 968,
+          "hash": "sha256:b79a5d73436f222ee7168f80a1bd09491165a9b60451331ccd9b14e663240af8"
+        },
+        {
+          "artifact": "SCAN_PROFILE",
+          "path": "bq_executor\\evidence\\SCAN_PROFILE.json",
+          "format": "json",
+          "size_bytes": 804,
+          "hash": "sha256:2c21961591cd35a942e9843d72b44931a798f3e8af74c09335c7d3bb6353f8a8"
+        }
+      ],
+      "errors": [],
+      "stop_reason": "completed",
+      "metrics": {},
+      "fingerprint": {
+        "tool": "secrets_scanner",
+        "tool_version": "1.0.0",
+        "profile": "Fire Ant",
+        "inputs_hash": "f39cb220b5bd3e32",
+        "project_commit": "84aeecd5baaf9ae5649cb0aabe41223d19cecfc0",
+        "suppression_hash": ""
+      }
+    },
+    {
+      "result_id": "RESULT-T002-20260201-071644",
+      "task_id": "T002",
+      "plan_id": "PLAN-SONNY-20260201-071614",
+      "status": "pass",
+      "started_at": "2026-02-01T07:16:14.542964Z",
+      "completed_at": "2026-02-01T07:16:44.131851Z",
+      "timing": {
+        "total_ms": 29588.887,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "inspector",
+      "tool_version": "1.0.0",
+      "profile": "Scout",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [
+        {
+          "artifact": "project_structure",
+          "path": "tool_inspector\\evidence\\project_structure.json",
+          "format": "json",
+          "size_bytes": 3508,
+          "hash": "sha256:83e06bf54c07aa48f5b430040001e2d8c87bbf5aacc860fad1b504f0cd33f8ea"
+        },
+        {
+          "artifact": "grep_results",
+          "path": "tool_inspector\\evidence\\grep_results.json",
+          "format": "json",
+          "size_bytes": 3795,
+          "hash": "sha256:0ede3dfcebc0b12addc317f3362e25315620dc5a96c2a49e298765d84b51a820"
+        },
+        {
+          "artifact": "config_files",
+          "path": "tool_inspector\\evidence\\config_files.json",
+          "format": "json",
+          "size_bytes": 1918,
+          "hash": "sha256:24fcfc7e7ba2737516a92347748f6567ec1a8fed75c217e3749b10914dba6fdd"
+        },
+        {
+          "artifact": "error_patterns",
+          "path": "tool_inspector\\evidence\\error_patterns.json",
+          "format": "json",
+          "size_bytes": 15306,
+          "hash": "sha256:d4f7ee1736816702f8864b18e317932e9615f12872504e13c1a49d042236c4d0"
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "tool_inspector\\evidence\\SECRET_FINDINGS.json",
+          "format": "json",
+          "size_bytes": 454,
+          "hash": "sha256:2a599be4f9fb94e011b75ef7c9d8f3446732830419ca2bdce110dfdde09d3cdc"
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "tool_inspector\\evidence\\SECRET_FINDINGS.md",
+          "format": "md",
+          "size_bytes": 968,
+          "hash": "sha256:69e357b41620b6444cbf595c72f8f8fe17d71517f005cc7fe7f6cf9f0d99cf9f"
+        },
+        {
+          "artifact": "SCAN_PROFILE",
+          "path": "tool_inspector\\evidence\\SCAN_PROFILE.json",
+          "format": "json",
+          "size_bytes": 804,
+          "hash": "sha256:f4ebb883aea54c7c93f45cf53826578becf5b7fb5700111da33741b07d3e2ec7"
+        },
+        {
+          "artifact": "audit_log",
+          "path": "tool_inspector\\evidence\\audit_log.json",
+          "format": "json",
+          "size_bytes": 11283,
+          "hash": "sha256:5501683c7fc8a80b86f5f639360e00f327e381cb75b601da9a3da22d56208e5d"
+        }
+      ],
+      "errors": [],
+      "stop_reason": "completed",
+      "metrics": {},
+      "fingerprint": {
+        "tool": "inspector",
+        "tool_version": "1.0.0",
+        "profile": "Scout",
+        "inputs_hash": "bac85860610b25f6",
+        "project_commit": "84aeecd5baaf9ae5649cb0aabe41223d19cecfc0",
+        "suppression_hash": ""
+      }
+    },
+    {
+      "result_id": "RESULT-T003-20260201-071644",
+      "task_id": "T003",
+      "plan_id": "PLAN-SONNY-20260201-071614",
+      "status": "success",
+      "started_at": "2026-02-01T07:16:44.181431Z",
+      "completed_at": "2026-02-01T07:16:44.181436Z",
+      "timing": {
+        "total_ms": 0.005,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "reporter",
+      "tool_version": "1.0.0",
+      "profile": "Ghost",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [],
+      "stop_reason": "completed",
+      "metrics": {},
+      "fingerprint": {
+        "tool": "reporter",
+        "tool_version": "1.0.0",
+        "profile": "Ghost",
+        "inputs_hash": "44136fa355b3678a",
+        "project_commit": "84aeecd5baaf9ae5649cb0aabe41223d19cecfc0",
+        "suppression_hash": ""
+      }
+    }
+  ],
+  "global_stop": false,
+  "stop_reason": "",
+  "stop_type": ""
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "file": "firestore.rules",
+    "line": 84,
+    "content": "return data.keys().hasAll(['guestId', 'restaurantId', 'createdAt'])",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 93,
+    "content": "return data.keys().hasAll(['name', 'price', 'isAvailable'])",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 142,
+    "content": "// Private settings (Stripe keys, notification config, etc.)",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 222,
+    "content": "&& request.resource.data.keys().hasAll(['itemId', 'type', 'reason', 'createdAt', 'createdBy'])",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 284,
+    "content": "allow create: if request.resource.data.keys().hasAll(['firstName', 'email', 'phone'])",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 331,
+    "content": "allow create: if request.resource.data.keys().hasAll([",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 561,
+    "content": "// Cannot change wsId or restaurantId (immutable tenant keys)",
+    "keyword": "keys"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 602,
+    "content": "&& request.resource.data.keys().hasAll(['itemId', 'type', 'reason', 'createdAt', 'createdBy'])",
+    "keyword": "keys"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 492,
+    "content": "\"eslint-visitor-keys\": \"^3.4.3\"",
+    "keyword": "keys"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 504,
+    "content": "\"node_modules/@eslint-community/eslint-utils/node_modules/eslint-visitor-keys\": {",
+    "keyword": "keys"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 106,
+    "content": "| `getLanguageName()` | Intl API for display names | 51-58 |",
+    "keyword": "api"
+  },
+  {
+    "file": "docs_manifest.json",
+    "line": 9,
+    "content": "{ \"doc_id\": \"DOC-018\", \"title\": \"Dashboard API\", \"location\": \"docs/DASHBOARD_API.md\", \"status\": \"Stable\" },",
+    "keyword": "api"
+  },
+  {
+    "file": "GEMINI.md",
+    "line": 209,
+    "content": "* **Context API (`useContext`):** For state that needs to be shared with a few components, but not globally.",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 454,
+    "content": "\"node_modules/@emnapi/core\": {",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 460,
+    "content": "\"@emnapi/wasi-threads\": \"1.1.0\",",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 464,
+    "content": "\"node_modules/@emnapi/runtime\": {",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 473,
+    "content": "\"node_modules/@emnapi/wasi-threads\": {",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1205,
+    "content": "\"@opentelemetry/api\": \"^1.3.0\",",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1904,
+    "content": "\"node_modules/@napi-rs/wasm-runtime\": {",
+    "keyword": "api"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 1910,
+    "content": "\"@emnapi/core\": \"^1.4.3\",",
+    "keyword": "api"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 40,
+    "content": "- [x] **1.3 Fix useOwnerDashboard** \u2014 Replace hardcoded RESTAURANT_ID \u2705",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 42,
+    "content": "- Issue: Uses hardcoded `TENANT_ID` from config",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 383,
+    "content": "- Fixed wsId invariant: now uses `useTenantId()` instead of hardcoded TENANT_ID",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-SAAS-POLISH.md",
+    "line": 10,
+    "content": "These items are **hardcoded** and must be made **tenant-configurable** for true SaaS:",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-SAAS-POLISH.md",
+    "line": 32,
+    "content": "- Replaced 249 hardcoded `orange-*` classes with `primary-*` across 60 files",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-SAAS-POLISH.md",
+    "line": 44,
+    "content": "- Removed hardcoded \"Tony's\" and \"Sonny\" - now uses config",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "TODO-SAAS-POLISH.md",
+    "line": 77,
+    "content": "- CheckoutPage now uses hook instead of hardcoded values",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 70,
+    "content": "- [ ] No API keys hardcoded in source code",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "docs\\STRIPE_ADAPTER.md",
+    "line": 64,
+    "content": "The adapter is hardcoded to **sandbox mode** in V7-PAYMENTS-003.",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": "docs\\saas-polish-2026-01-29\\MODIFIED-FILES.md",
+    "line": 33,
+    "content": "- Removed hardcoded \"Tony's\" and \"Sonny\" strings",
+    "keyword": "hardcoded"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 37,
+    "content": "\"Bash(firebase functions:secrets:get:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 38,
+    "content": "\"Bash(firebase functions:secrets:set:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\ARCHITECTURE.md",
+    "line": 115,
+    "content": "4. **Secrets stay secret.** No API keys, tokens, or credentials in frontend code or repos. Use Firebase/GCP Secret Manager.",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 190,
+    "content": "- [ ] No secrets in source code",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\INSPECTOR_EVALUATION_PACKAGE.md",
+    "line": 655,
+    "content": "| Secrets management | PASS | Environment variables |",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\OPERATIONS_RUNBOOK.md",
+    "line": 77,
+    "content": "2. **Required secrets** (GitHub > Settings > Secrets):",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 15,
+    "content": "// CONFIGURATION (read dynamically for secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 35,
+    "content": "// Get config dynamically (for Firebase Secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\notificationFunctions.js",
+    "line": 358,
+    "content": "secrets: ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_PHONE_NUMBER', 'TWILIO_MESSAGING_SERVICE_SID', 'SENDGRID_API_KEY', 'SENDGRID_FROM_EMAIL', 'SENDGRID_FROM_NAME'],",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\ttsFunctions.js",
+    "line": 54,
+    "content": "// Or via CLI: firebase functions:secrets:set OPENAI_API_KEY",
+    "keyword": "secrets"
+  }
+]

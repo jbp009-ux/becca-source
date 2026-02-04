@@ -1,0 +1,182 @@
+[
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 18,
+    "content": "| Unit Tests | \u2705 Complete (`sonnyAI.test.ts`) |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 126,
+    "content": "### Exports for Testing",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 159,
+    "content": "| `functions/src/functions/sonnyAI.test.ts` | \u2705 Complete | 34 unit tests for language helpers |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 170,
+    "content": "| `sonnyAI.test.ts` | \u2705 Complete | 34 unit tests for all language helpers |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 172,
+    "content": "| Integration tests | \ud83d\udfe2 Low | Spanish\u2192English on Starter, etc. |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 218,
+    "content": "- **Tests:** [sonnyAI.test.ts](D:/projects/sonny/functions/src/functions/sonnyAI.test.ts)",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 225,
+    "content": "*Unit Tests: \u2705 34 tests passing (`sonnyAI.test.ts`)*",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 228,
+    "content": "*Next: Integration tests (optional, \ud83d\udfe2 Low priority)*",
+    "keyword": "test"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 11,
+    "content": "| \"test activate\" | \ud83c\udfaf Scout | \"If it's not tested, it's not done. What to test?\" |",
+    "keyword": "test"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 27,
+    "content": "| \ud83c\udfaf Scout | `governance/prompts/pmx/roles/PMX-07_Test-Ant.md` | Read, Write, Bash (npm test) |",
+    "keyword": "test"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 12,
+    "content": "| **BECCA Kernel** | \u2705 Operational | 35/35 tests pass, weekly cron scheduled |",
+    "keyword": "kernel"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 50,
+    "content": "## PART 2: BECCA KERNEL (Operational)",
+    "keyword": "kernel"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 54,
+    "content": "cd d:\\projects\\becca-kernel",
+    "keyword": "kernel"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 73,
+    "content": "d:\\projects\\becca-kernel\\",
+    "keyword": "kernel"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 221,
+    "content": "7. [ ] Phase 2 BECCA: Multi-agent kernel",
+    "keyword": "kernel"
+  },
+  {
+    "file": "TODO_SESSION_CONTINUITY.md",
+    "line": 233,
+    "content": "cd d:\\projects\\becca-kernel",
+    "keyword": "kernel"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 77,
+    "content": "\"d:\\\\projects\\\\becca-kernel\\\\tests\",",
+    "keyword": "kernel"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 78,
+    "content": "\"d:\\\\projects\\\\becca-kernel\\\\tools\",",
+    "keyword": "kernel"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 79,
+    "content": "\"d:\\\\projects\\\\becca-kernel\"",
+    "keyword": "kernel"
+  },
+  {
+    "file": "governance\\BECCA_AUTOMATION_DEEP_DIVE.md",
+    "line": 295,
+    "content": "### Phase 1: Orchestrator Kernel (Week 2)",
+    "keyword": "kernel"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 25,
+    "content": "| \ud83d\udd27 Mechanic | `governance/prompts/pmx/roles/PMX-06_Debugger-Ant.md` | Read, Grep, Bash, console |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 26,
+    "content": "| \ud83d\udee0\ufe0f Carpenter | `governance/prompts/pmx/roles/PMX-05_Coder-Ant.md` | Read, Edit, Write, Bash |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 27,
+    "content": "| \ud83c\udfaf Scout | `governance/prompts/pmx/roles/PMX-07_Test-Ant.md` | Read, Write, Bash (npm test) |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 28,
+    "content": "| \ud83d\udd25 Fire Ant | `governance/prompts/pmx/roles/PMX-08_Security-Ant.md` | Read, Grep, firestore.rules |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 29,
+    "content": "| \ud83c\udfd7\ufe0f Builder | `governance/prompts/pmx/roles/PMX-09_Firebase-Ant.md` | Read, Edit, Bash (firebase) |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 30,
+    "content": "| \ud83c\udfa8 Artist | `governance/prompts/pmx/roles/PMX-10_UI-Ant.md` | Read, Edit, Chrome DevTools |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 31,
+    "content": "| \ud83d\udce6 Carrier | `governance/prompts/pmx/roles/PMX-11_Data-Ant.md` | Read, Edit, Grep |",
+    "keyword": "governance"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 60,
+    "content": "\u2514\u2500\u2500 governance/       \u2190 PMX prompts",
+    "keyword": "governance"
+  },
+  {
+    "file": "firestore.rules",
+    "line": 454,
+    "content": "// @see governance/SONNY_SAAS_ARCHITECTURE.md",
+    "keyword": "governance"
+  },
+  {
+    "file": "README.md",
+    "line": 3,
+    "content": "A full-stack pizzeria management platform built with Next.js 16, Firebase, and Colony OS governance.",
+    "keyword": "governance"
+  }
+]

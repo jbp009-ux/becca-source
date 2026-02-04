@@ -1,0 +1,18 @@
+{
+  "$schema": "./becca_suppressions.schema.json",
+  "description": "Repo-local suppressions for BECCA secrets scanner",
+  "version": "1.0.0",
+
+  "suppress_patterns": [
+    "FIREBASE_PROJECT"
+  ],
+
+  "suppress_files": [
+    "tests/fixtures/*",
+    "docs/examples/*",
+    "**/test_*.ts"
+  ],
+
+  "suppress_hashes": [
+  ]
+}

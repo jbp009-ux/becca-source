@@ -1,0 +1,145 @@
+{
+  "plan_id": "PLAN-SONNY-20260201-063844",
+  "executed_at": "2026-02-01T06:39:24.758890Z",
+  "total_tasks": 3,
+  "completed_tasks": 1,
+  "results": [
+    {
+      "result_id": "RESULT-T001-20260201-063857",
+      "task_id": "T001",
+      "plan_id": "PLAN-SONNY-20260201-063844",
+      "status": "success",
+      "started_at": "2026-02-01T06:38:44.849040Z",
+      "completed_at": "2026-02-01T06:38:57.442300Z",
+      "timing": {
+        "total_ms": 12593.26,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "secrets_scanner",
+      "tool_version": "1.0.0",
+      "profile": "Fire Ant",
+      "stats": {
+        "files_scanned": 425,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "bq_executor\\evidence\\SECRET_FINDINGS.json",
+          "format": "json",
+          "size_bytes": 454,
+          "hash": "sha256:335182ae2a25c04222d1925649aaa4595531b3d60353fd698afd197144357ea2"
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "path": "bq_executor\\evidence\\SECRET_FINDINGS.md",
+          "format": "md",
+          "size_bytes": 968,
+          "hash": "sha256:6d1494b66cfbf84f02ecc51c3adf1c6fb89a138ac088eb6280d1ca610e66faaf"
+        },
+        {
+          "artifact": "SCAN_PROFILE",
+          "path": "bq_executor\\evidence\\SCAN_PROFILE.json",
+          "format": "json",
+          "size_bytes": 804,
+          "hash": "sha256:3b1773da8d14d2016c77d554557ee6f50ed35627ead0c7eb0ad1f1c3612504b9"
+        }
+      ],
+      "errors": [],
+      "stop_reason": "completed",
+      "metrics": {}
+    },
+    {
+      "result_id": "RESULT-T002-20260201-063924",
+      "task_id": "T002",
+      "plan_id": "PLAN-SONNY-20260201-063844",
+      "status": "failed",
+      "started_at": "2026-02-01T06:38:57.470792Z",
+      "completed_at": "2026-02-01T06:39:24.757871Z",
+      "timing": {
+        "total_ms": 27287.078999999998,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "inspector",
+      "tool_version": "1.0.0",
+      "profile": "Scout",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [
+        {
+          "code": "E999",
+          "message": "argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'dict'",
+          "details": "",
+          "recoverable": false
+        }
+      ],
+      "stop_reason": "error",
+      "metrics": {}
+    },
+    {
+      "result_id": "RESULT-T003-20260201-063924",
+      "task_id": "T003",
+      "plan_id": "PLAN-SONNY-20260201-063844",
+      "status": "blocked",
+      "started_at": "2026-02-01T06:39:24.758276Z",
+      "completed_at": "2026-02-01T06:39:24.758278Z",
+      "timing": {
+        "total_ms": 0.002,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "reporter",
+      "tool_version": "1.0.0",
+      "profile": "Ghost",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [
+        {
+          "code": "E001",
+          "message": "Dependency T002 not complete",
+          "details": "",
+          "recoverable": false
+        }
+      ],
+      "stop_reason": "blocked",
+      "metrics": {}
+    }
+  ],
+  "global_stop": false,
+  "stop_reason": ""
+}

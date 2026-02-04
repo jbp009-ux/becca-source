@@ -1,0 +1,68 @@
+{
+  "tool_id": "tool_browser",
+  "run_id": "RUN-SONNY-20260201-060939",
+  "status": "pass",
+  "state": "COMPLETE",
+  "evidence": [
+    {
+      "type": "console",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-060939\\tool_browser\\evidence\\console.json",
+      "description": "Console logs (MOCK - install playwright for real capture)"
+    },
+    {
+      "type": "network",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-060939\\tool_browser\\evidence\\network.json",
+      "description": "Network requests (MOCK)"
+    },
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-060939\\tool_browser\\evidence\\screenshot_placeholder.txt",
+      "description": "Screenshot placeholder (install playwright for real capture)"
+    }
+  ],
+  "changes": {
+    "files_modified": 0,
+    "files_created": 3,
+    "lines_added": 0,
+    "lines_removed": 0
+  },
+  "success_reasoning": {
+    "invariants_checked": [
+      "URL accessible: http://localhost:3000",
+      "Console logs captured: 2",
+      "Network requests captured: 0",
+      "Screenshot taken: False"
+    ],
+    "assumptions_made": [
+      "Dev server is running at target URL",
+      "Page loads within 10 seconds",
+      "No authentication required"
+    ],
+    "not_tested": [
+      "User interactions not simulated",
+      "Multiple pages not visited",
+      "Form submissions not tested"
+    ]
+  },
+  "risks": [],
+  "next_actions": [
+    {
+      "tool": "tool_reporter",
+      "priority": "required",
+      "reason": "Generate final report with all evidence"
+    }
+  ],
+  "timing": {
+    "started_at": "2026-02-01T06:10:40.666039Z",
+    "completed_at": "2026-02-01T06:10:40.666801Z",
+    "duration_seconds": 0.000762
+  },
+  "tokens_used": 0,
+  "error": "Browser automation not available - using mock mode",
+  "browser_summary": {
+    "url": "http://localhost:3000",
+    "console_total": 2,
+    "console_errors": 0,
+    "network_requests": 0
+  }
+}

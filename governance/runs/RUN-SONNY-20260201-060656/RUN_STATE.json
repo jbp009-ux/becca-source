@@ -1,0 +1,50 @@
+{
+  "run_id": "RUN-SONNY-20260201-060656",
+  "project_id": "sonny",
+  "mission": "Find hardcoded secrets",
+  "current_state": "COMPLETE",
+  "previous_state": "VERIFYING",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T06:06:56.784405Z",
+      "exited_at": "2026-02-01T06:06:56.804359Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T06:06:56.804359Z",
+      "exited_at": "2026-02-01T06:06:56.812620Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T06:06:56.812620Z",
+      "exited_at": "2026-02-01T06:08:45.841561Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-01T06:08:45.841561Z",
+      "exited_at": "2026-02-01T06:08:45.868241Z"
+    },
+    {
+      "state": "COMPLETE",
+      "entered_at": "2026-02-01T06:08:45.868241Z",
+      "exited_at": null
+    }
+  ],
+  "tools_planned": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_completed": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_remaining": [],
+  "current_tool": null,
+  "approvals_pending": [],
+  "approvals_granted": [],
+  "created_at": "2026-02-01T06:06:56.784405Z",
+  "updated_at": "2026-02-01T06:08:45.868241Z"
+}

@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Standards for mapping findings to remediation proposals. Ensures consistent, safe remediation across all proposers.",
+
+  "remediation_rules": {
+    "secrets": {
+      "api_key": {
+        "pattern_ids": ["generic_api_key", "firebase_key", "stripe_key", "openai_key", "github_token"],
+        "remediation": {
+          "type": "environment_variable",
+          "action": "Move to environment variable",
+          "auto_apply_allowed": false,
+          "required_tests": ["env_var_loaded", "functionality_preserved"],
+          "human_review_required": true
+        },
+        "guidance": [
+          "Create environment variable with descriptive name",
+          "Add to .env.example (without value)",
+          "Update deployment documentation",
+          "Rotate the exposed key immediately"
+        ]
+      },
+      "aws_credential": {
+        "pattern_ids": ["aws_access_key", "aws_secret_key"],
+        "remediation": {
+          "type": "secret_manager",
+          "action": "Migrate to AWS Secrets Manager or IAM roles",
+          "auto_apply_allowed": false,
+          "required_tests": ["aws_auth_works", "permissions_preserved"],
+          "human_review_required": true,
+          "escalation": "critical_path"
+        },
+        "guidance": [
+          "IMMEDIATE: Rotate the exposed credentials in AWS Console",
+          "Use IAM roles for EC2/Lambda instead of access keys",
+          "If access keys required, use AWS Secrets Manager",
+          "Never commit AWS credentials to source control"
+        ]
+      },
+      "private_key": {
+        "pattern_ids": ["private_key_header", "private_key_inline"],
+        "remediation": {
+          "type": "key_management",
+          "action": "Move to secure key storage",
+          "auto_apply_allowed": false,
+          "required_tests": ["key_access_works", "signing_works"],
+          "human_review_required": true,
+          "escalation": "critical_path",
+          "notify": ["security_team"]
+        },
+        "guidance": [
+          "IMMEDIATE: Revoke and regenerate the exposed key",
+          "Store in cloud KMS (AWS KMS, GCP KMS, Azure Key Vault)",
+          "Use environment variable only for development",
+          "Audit all systems that used the compromised key"
+        ]
+      },
+      "password": {
+        "pattern_ids": ["password_assignment", "db_password"],
+        "remediation": {
+          "type": "environment_variable",
+          "action": "Move to environment variable or secret manager",
+          "auto_apply_allowed": false,
+          "required_tests": ["auth_works", "connection_works"],
+          "human_review_required": true
+        },
+        "guidance": [
+          "Change the exposed password immediately",
+          "Use environment variable for database passwords",
+          "Consider connection pooling services that manage credentials",
+          "Audit access logs for unauthorized use"
+        ]
+      },
+      "jwt_secret": {
+        "pattern_ids": ["jwt_secret"],
+        "remediation": {
+          "type": "environment_variable",
+          "action": "Move to environment variable, consider key rotation",
+          "auto_apply_allowed": false,
+          "required_tests": ["jwt_validation_works", "sessions_preserved"],
+          "human_review_required": true
+        },
+        "guidance": [
+          "Rotate JWT secret (will invalidate existing tokens)",
+          "Plan for graceful session expiration",
+          "Use separate secrets for different token types",
+          "Store in environment variable or secret manager"
+        ]
+      }
+    },
+
+    "profit_guardrails": {
+      "sms": {
+        "pattern_ids": ["twilio_sms", "twilio_import", "sns_sms"],
+        "remediation": {
+          "type": "quota_and_rate_limit",
+          "action": "Add per-tenant quotas and rate limiting",
+          "auto_apply_allowed": false,
+          "required_tests": ["sms_still_works", "quota_enforced", "rate_limit_works"],
+          "human_review_required": true
+        },
+        "recommended_limits": {
+          "per_tenant_daily": 100,
+          "per_tenant_monthly": 2000,
+          "rate_limit_per_minute": 5,
+          "alert_threshold_percent": 80
+        },
+        "fallback": {
+          "when_quota_exceeded": "queue_for_next_day_or_email_fallback",
+          "degraded_mode": "email_only"
+        },
+        "guidance": [
+          "Implement usage tracking per tenant",
+          "Add quota check before each send",
+          "Implement rate limiting middleware",
+          "Set up alerts at 80% quota usage",
+          "Provide email fallback when SMS quota exceeded"
+        ]
+      },
+      "email": {
+        "pattern_ids": ["sendgrid_send", "sendgrid_import", "ses_send", "nodemailer"],
+        "remediation": {
+          "type": "quota_and_rate_limit",
+          "action": "Add per-tenant quotas and batching",
+          "auto_apply_allowed": false,
+          "required_tests": ["email_still_works", "quota_enforced"],
+          "human_review_required": false
+        },
+        "recommended_limits": {
+          "per_tenant_daily": 1000,
+          "per_tenant_monthly": 20000,
+          "rate_limit_per_minute": 60,
+          "alert_threshold_percent": 80
+        },
+        "fallback": {
+          "when_quota_exceeded": "queue_for_later",
+          "degraded_mode": "batch_digest"
+        },
+        "guidance": [
+          "Implement usage tracking per tenant",
+          "Batch transactional emails where possible",
+          "Use email queuing for non-urgent messages",
+          "Set up bounce/complaint monitoring"
+        ]
+      },
+      "voice": {
+        "pattern_ids": ["elevenlabs_tts", "google_tts", "openai_tts", "twilio_voice"],
+        "remediation": {
+          "type": "strict_quota_and_caching",
+          "action": "Add strict quotas, caching, and browser fallback",
+          "auto_apply_allowed": false,
+          "required_tests": ["voice_still_works", "cache_works", "fallback_works"],
+          "human_review_required": true,
+          "escalation": "cost_critical"
+        },
+        "recommended_limits": {
+          "per_tenant_daily_chars": 5000,
+          "per_tenant_monthly_chars": 50000,
+          "rate_limit_per_minute": 2,
+          "alert_threshold_percent": 70
+        },
+        "fallback": {
+          "when_quota_exceeded": "browser_speech_synthesis",
+          "degraded_mode": "text_only"
+        },
+        "guidance": [
+          "CRITICAL COST VECTOR - Requires strict limits",
+          "Cache generated audio aggressively",
+          "Use browser Web Speech API as fallback",
+          "Implement character counting before generation",
+          "Consider tiered pricing with voice as premium feature"
+        ]
+      },
+      "llm": {
+        "pattern_ids": ["openai_chat", "openai_client", "anthropic_claude", "google_gemini"],
+        "remediation": {
+          "type": "token_budget_and_caching",
+          "action": "Add token budgets, caching, and model tiering",
+          "auto_apply_allowed": false,
+          "required_tests": ["llm_still_works", "budget_enforced", "cache_works"],
+          "human_review_required": true
+        },
+        "recommended_limits": {
+          "per_tenant_daily_tokens": 50000,
+          "per_tenant_monthly_tokens": 1000000,
+          "rate_limit_per_minute": 20,
+          "alert_threshold_percent": 75
+        },
+        "fallback": {
+          "when_quota_exceeded": "smaller_model_or_cached_response",
+          "degraded_mode": "template_responses"
+        },
+        "guidance": [
+          "Implement token counting before each call",
+          "Cache common queries and responses",
+          "Use smaller/cheaper models for simple tasks",
+          "Implement request queuing during high load",
+          "Consider semantic caching for similar queries"
+        ]
+      }
+    }
+  },
+
+  "escalation_rules": [
+    {
+      "trigger": "critical_path",
+      "actions": [
+        "require_owner_approval",
+        "notify_security_team",
+        "set_expiry_1_hour"
+      ]
+    },
+    {
+      "trigger": "cost_critical",
+      "actions": [
+        "require_owner_approval",
+        "notify_finance_team",
+        "require_cost_impact_analysis"
+      ]
+    }
+  ],
+
+  "auto_apply_policy": {
+    "description": "Conditions under which proposals can be auto-applied after approval",
+    "requirements": [
+      "proposal.auto_apply_allowed == true",
+      "approval.decision == 'approved'",
+      "approval.expires_at > now()",
+      "all required_tests pass",
+      "no critical_path files touched"
+    ],
+    "never_auto_apply": [
+      "secrets remediation",
+      "critical_path changes",
+      "data model changes",
+      "auth/authz changes"
+    ]
+  },
+
+  "test_requirements": {
+    "env_var_loaded": {
+      "description": "Verify environment variable is read correctly",
+      "test_type": "unit",
+      "example": "expect(process.env.API_KEY).toBeDefined()"
+    },
+    "functionality_preserved": {
+      "description": "Verify feature still works after remediation",
+      "test_type": "integration"
+    },
+    "quota_enforced": {
+      "description": "Verify quota check blocks when exceeded",
+      "test_type": "unit",
+      "example": "await expect(sendSms()).rejects.toThrow('quota exceeded')"
+    },
+    "rate_limit_works": {
+      "description": "Verify rate limiting prevents burst",
+      "test_type": "unit"
+    },
+    "fallback_works": {
+      "description": "Verify degraded mode activates correctly",
+      "test_type": "integration"
+    }
+  }
+}

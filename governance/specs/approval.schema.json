@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "approval.schema.json",
+  "title": "Proposal Approval",
+  "description": "Schema for approval artifacts that authorize change proposals. Unforgeable by design.",
+  "type": "object",
+  "required": ["approval_id", "proposal_id", "run_id", "task_id", "request_hash", "proposal_hash", "decision", "approved_at"],
+  "properties": {
+    "approval_id": {
+      "type": "string",
+      "pattern": "^APPROVAL-[A-Z0-9-]+$",
+      "description": "Unique approval identifier"
+    },
+    "proposal_id": {
+      "type": "string",
+      "description": "Reference to the proposal being approved"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Run ID where proposal was created (prevents cross-run approval reuse)"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Task ID that generated the proposal"
+    },
+    "request_hash": {
+      "type": "string",
+      "description": "Must match proposal's request_hash (content integrity)"
+    },
+    "proposal_hash": {
+      "type": "string",
+      "description": "SHA256 of entire PROPOSAL.json file (file integrity)"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["approved", "rejected"],
+      "description": "Approval decision"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approver": {
+      "type": "string",
+      "description": "Identity of approver (human or system)"
+    },
+    "approval_method": {
+      "type": "string",
+      "enum": ["manual", "auto_policy", "ci_gate"],
+      "description": "How approval was granted"
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Conditions that must be met before applying",
+      "items": {
+        "type": "object",
+        "properties": {
+          "condition": {
+            "type": "string"
+          },
+          "satisfied": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "scope_restrictions": {
+      "type": "object",
+      "description": "Restrictions on what the approval covers",
+      "properties": {
+        "files_allowed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "actions_allowed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["modify", "create", "delete", "rename"]
+          }
+        }
+      }
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Approval expiration timestamp"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes from approver"
+    }
+  }
+}

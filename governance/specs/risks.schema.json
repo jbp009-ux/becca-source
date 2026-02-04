@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "becca/risks.schema.json",
+  "title": "BECCA Risks Schema",
+  "description": "Schema for risk findings aggregated by Ghost from task results",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": ["risks_id", "plan_id", "generated_at", "risks"],
+  "properties": {
+    "risks_id": {
+      "type": "string",
+      "pattern": "^RISKS-[A-Z0-9]+-[0-9]{8}-[0-9]{6}$",
+      "description": "Unique risks document identifier"
+    },
+    "plan_id": {
+      "type": "string",
+      "description": "Reference to originating plan"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to execution run"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary": {
+      "$ref": "#/definitions/Summary"
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Risk"
+      }
+    },
+    "suppressed": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SuppressedRisk"
+      },
+      "description": "Risks that were suppressed by configuration"
+    }
+  },
+
+  "definitions": {
+    "Summary": {
+      "type": "object",
+      "properties": {
+        "total_risks": { "type": "integer", "minimum": 0 },
+        "by_severity": {
+          "type": "object",
+          "properties": {
+            "CRITICAL": { "type": "integer" },
+            "HIGH": { "type": "integer" },
+            "MEDIUM": { "type": "integer" },
+            "LOW": { "type": "integer" }
+          }
+        },
+        "by_category": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" },
+          "description": "Count by risk category: secrets, rules, performance, etc."
+        },
+        "actionable_count": {
+          "type": "integer",
+          "description": "Number of risks requiring immediate action"
+        },
+        "suppressed_count": { "type": "integer" }
+      }
+    },
+    "Risk": {
+      "type": "object",
+      "required": ["risk_id", "severity", "title", "category"],
+      "properties": {
+        "risk_id": {
+          "type": "string",
+          "pattern": "^R[0-9]{4}$",
+          "description": "Risk identifier: R0001, R0002, etc."
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Brief risk title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed explanation of the risk"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["secrets", "access_control", "injection", "data_exposure", "configuration", "performance", "compliance"],
+          "description": "Risk category for grouping"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "References to supporting evidence in EVIDENCE_INDEX"
+        },
+        "source_task": {
+          "type": "string",
+          "description": "Task that discovered this risk"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["HIGH", "MEDIUM", "LOW"],
+          "description": "Confidence level in this finding"
+        },
+        "recommendation": {
+          "type": "string",
+          "description": "Suggested remediation action"
+        },
+        "references": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Links to documentation or CVEs"
+        },
+        "auto_fixable": {
+          "type": "boolean",
+          "description": "Whether this can be automatically remediated"
+        },
+        "fix_command": {
+          "type": "string",
+          "description": "Command to auto-fix if applicable"
+        }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer" },
+        "column": { "type": "integer" },
+        "snippet": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Redacted code snippet showing context"
+        }
+      }
+    },
+    "SuppressedRisk": {
+      "type": "object",
+      "required": ["risk_id", "suppression_reason"],
+      "properties": {
+        "risk_id": { "type": "string" },
+        "suppression_reason": {
+          "type": "string",
+          "enum": ["pattern_suppressed", "file_suppressed", "hash_suppressed", "allowlisted"]
+        },
+        "suppression_rule": {
+          "type": "string",
+          "description": "The specific rule that caused suppression"
+        },
+        "original_severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]
+        }
+      }
+    }
+  }
+}

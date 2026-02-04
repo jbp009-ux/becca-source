@@ -1,0 +1,130 @@
+{
+  "plan_id": "PLAN-SONNY-20260201-063616",
+  "executed_at": "2026-02-01T06:37:04.973025Z",
+  "total_tasks": 3,
+  "completed_tasks": 0,
+  "results": [
+    {
+      "result_id": "RESULT-T001-20260201-063636",
+      "task_id": "T001",
+      "plan_id": "PLAN-SONNY-20260201-063616",
+      "status": "failed",
+      "started_at": "2026-02-01T06:36:16.349084Z",
+      "completed_at": "2026-02-01T06:36:36.215202Z",
+      "timing": {
+        "total_ms": 19866.118,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "secrets_scanner",
+      "tool_version": "1.0.0",
+      "profile": "Fire Ant",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [
+        {
+          "code": "E999",
+          "message": "'ScanResult' object has no attribute 'get'",
+          "details": "",
+          "recoverable": false
+        }
+      ],
+      "stop_reason": "error",
+      "metrics": {}
+    },
+    {
+      "result_id": "RESULT-T002-20260201-063704",
+      "task_id": "T002",
+      "plan_id": "PLAN-SONNY-20260201-063616",
+      "status": "failed",
+      "started_at": "2026-02-01T06:36:36.216003Z",
+      "completed_at": "2026-02-01T06:37:04.971890Z",
+      "timing": {
+        "total_ms": 28755.887000000002,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "inspector",
+      "tool_version": "1.0.0",
+      "profile": "Scout",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [
+        {
+          "code": "E999",
+          "message": "argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'dict'",
+          "details": "",
+          "recoverable": false
+        }
+      ],
+      "stop_reason": "error",
+      "metrics": {}
+    },
+    {
+      "result_id": "RESULT-T003-20260201-063704",
+      "task_id": "T003",
+      "plan_id": "PLAN-SONNY-20260201-063616",
+      "status": "blocked",
+      "started_at": "2026-02-01T06:37:04.972436Z",
+      "completed_at": "2026-02-01T06:37:04.972438Z",
+      "timing": {
+        "total_ms": 0.002,
+        "enumerate_ms": 0.0,
+        "process_ms": 0.0,
+        "write_ms": 0.0
+      },
+      "tool": "reporter",
+      "tool_version": "1.0.0",
+      "profile": "Ghost",
+      "stats": {
+        "files_scanned": 0,
+        "files_skipped": 0,
+        "bytes_processed": 0,
+        "findings_count": 0,
+        "findings_by_severity": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0
+        }
+      },
+      "outputs": [],
+      "errors": [
+        {
+          "code": "E001",
+          "message": "Dependency T001 not complete",
+          "details": "",
+          "recoverable": false
+        }
+      ],
+      "stop_reason": "blocked",
+      "metrics": {}
+    }
+  ],
+  "global_stop": false,
+  "stop_reason": ""
+}

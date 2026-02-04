@@ -1,0 +1,182 @@
+[
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 55,
+    "content": "### Round 5 (v3.2) \u2014 Final Polish & Doc Alignment",
+    "keyword": "final"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 76,
+    "content": "## Final Architecture (Production)",
+    "keyword": "final"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 142,
+    "content": "## Tier Behavior (Final)",
+    "keyword": "final"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 176,
+    "content": "## Advisor Final Verdict (v3.2)",
+    "keyword": "final"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 199,
+    "content": "**v3.2 Final Polish:**",
+    "keyword": "final"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 3497,
+    "content": "\"strip-final-newline\": \"^2.0.0\"",
+    "keyword": "final"
+  },
+  {
+    "file": "package-lock.json",
+    "line": 6491,
+    "content": "\"node_modules/strip-final-newline\": {",
+    "keyword": "final"
+  },
+  {
+    "file": "sonnyChat.ts",
+    "line": 221,
+    "content": "const finalSessionId = sessionId || `session_${Date.now()}`;",
+    "keyword": "final"
+  },
+  {
+    "file": "sonnyChat.ts",
+    "line": 289,
+    "content": "sessionId: finalSessionId",
+    "keyword": "final"
+  },
+  {
+    "file": "sonnyChat.ts",
+    "line": 298,
+    "content": "sessionId: finalSessionId",
+    "keyword": "final"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 18,
+    "content": "| Unit Tests | \u2705 Complete (`sonnyAI.test.ts`) |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 126,
+    "content": "### Exports for Testing",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 159,
+    "content": "| `functions/src/functions/sonnyAI.test.ts` | \u2705 Complete | 34 unit tests for language helpers |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 170,
+    "content": "| `sonnyAI.test.ts` | \u2705 Complete | 34 unit tests for all language helpers |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 172,
+    "content": "| Integration tests | \ud83d\udfe2 Low | Spanish\u2192English on Starter, etc. |",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 218,
+    "content": "- **Tests:** [sonnyAI.test.ts](D:/projects/sonny/functions/src/functions/sonnyAI.test.ts)",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 225,
+    "content": "*Unit Tests: \u2705 34 tests passing (`sonnyAI.test.ts`)*",
+    "keyword": "test"
+  },
+  {
+    "file": "ADVISOR_EVALUATION_REPORT.md",
+    "line": 228,
+    "content": "*Next: Integration tests (optional, \ud83d\udfe2 Low priority)*",
+    "keyword": "test"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 11,
+    "content": "| \"test activate\" | \ud83c\udfaf Scout | \"If it's not tested, it's not done. What to test?\" |",
+    "keyword": "test"
+  },
+  {
+    "file": "CLAUDE.md",
+    "line": 27,
+    "content": "| \ud83c\udfaf Scout | `governance/prompts/pmx/roles/PMX-07_Test-Ant.md` | Read, Write, Bash (npm test) |",
+    "keyword": "test"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 37,
+    "content": "\"Bash(firebase functions:secrets:get:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 38,
+    "content": "\"Bash(firebase functions:secrets:set:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\ARCHITECTURE.md",
+    "line": 115,
+    "content": "4. **Secrets stay secret.** No API keys, tokens, or credentials in frontend code or repos. Use Firebase/GCP Secret Manager.",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 190,
+    "content": "- [ ] No secrets in source code",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\INSPECTOR_EVALUATION_PACKAGE.md",
+    "line": 655,
+    "content": "| Secrets management | PASS | Environment variables |",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\OPERATIONS_RUNBOOK.md",
+    "line": 77,
+    "content": "2. **Required secrets** (GitHub > Settings > Secrets):",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 15,
+    "content": "// CONFIGURATION (read dynamically for secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 35,
+    "content": "// Get config dynamically (for Firebase Secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\notificationFunctions.js",
+    "line": 358,
+    "content": "secrets: ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_PHONE_NUMBER', 'TWILIO_MESSAGING_SERVICE_SID', 'SENDGRID_API_KEY', 'SENDGRID_FROM_EMAIL', 'SENDGRID_FROM_NAME'],",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\ttsFunctions.js",
+    "line": 60,
+    "content": "// Or via CLI: firebase functions:secrets:set OPENAI_API_KEY",
+    "keyword": "secrets"
+  }
+]

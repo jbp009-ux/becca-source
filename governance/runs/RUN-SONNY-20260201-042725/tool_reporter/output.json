@@ -1,0 +1,44 @@
+{
+  "tool_id": "tool_reporter",
+  "run_id": "RUN-SONNY-20260201-042725",
+  "status": "pass",
+  "state": "COMPLETE",
+  "evidence": [
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-042725\\FINAL_REPORT.md",
+      "description": "Final run report"
+    }
+  ],
+  "changes": {
+    "files_modified": 0,
+    "files_created": 1,
+    "lines_added": 137,
+    "lines_removed": 0
+  },
+  "success_reasoning": {
+    "invariants_checked": [
+      "All tool outputs collected",
+      "Report generated successfully",
+      "Evidence paths valid"
+    ],
+    "assumptions_made": [
+      "Tool outputs follow ARTIFACT_SPEC",
+      "Evidence files exist at specified paths"
+    ],
+    "not_tested": [
+      "Evidence content not validated",
+      "Report formatting not verified"
+    ]
+  },
+  "risks": [],
+  "next_actions": [],
+  "timing": {
+    "started_at": "2026-02-01T04:27:39.167205Z",
+    "completed_at": "2026-02-01T04:27:39.174202Z",
+    "duration_seconds": 0.006997
+  },
+  "tokens_used": 0,
+  "error": null,
+  "report_path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-042725\\FINAL_REPORT.md"
+}

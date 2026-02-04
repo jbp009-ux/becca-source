@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "becca/plan.schema.json",
+  "title": "BECCA Plan Schema",
+  "description": "Schema for MQ-generated execution plans consumed by BQ dispatcher",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": ["plan_id", "mission", "created_at", "tasks"],
+  "properties": {
+    "plan_id": {
+      "type": "string",
+      "pattern": "^PLAN-[A-Z0-9]+-[0-9]{8}-[0-9]{6}$",
+      "description": "Unique plan identifier: PLAN-{PROJECT}-{YYYYMMDD}-{HHMMSS}"
+    },
+    "mission": {
+      "type": "string",
+      "minLength": 5,
+      "description": "Original mission statement from user"
+    },
+    "project": {
+      "type": "string",
+      "description": "Target project identifier"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp of plan creation"
+    },
+    "planner_version": {
+      "type": "string",
+      "description": "Version of MQ planner that generated this plan"
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/Task"
+      },
+      "description": "Ordered list of tasks to execute"
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "description": "Map of task_id to array of dependent task_ids (must complete first)"
+    },
+    "config": {
+      "$ref": "#/definitions/PlanConfig"
+    }
+  },
+
+  "definitions": {
+    "Task": {
+      "type": "object",
+      "required": ["task_id", "tool", "profile", "inputs"],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^T[0-9]{3}$",
+          "description": "Task identifier within plan: T001, T002, etc."
+        },
+        "tool": {
+          "type": "string",
+          "enum": ["inspector", "secrets_scanner", "rules_auditor", "test_runner", "reporter"],
+          "description": "Tool to execute for this task"
+        },
+        "profile": {
+          "type": "string",
+          "description": "Ant profile/role to use: Mechanic, Scout, Fire Ant, etc."
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Tool-specific input parameters",
+          "properties": {
+            "target_path": { "type": "string" },
+            "scan_mode": { "enum": ["fast", "deep", "release"] },
+            "patterns": { "type": "array", "items": { "type": "string" } },
+            "focus_areas": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": true
+        },
+        "stop_conditions": {
+          "type": "object",
+          "description": "Conditions that should halt execution",
+          "properties": {
+            "max_duration_ms": { "type": "integer", "minimum": 1000 },
+            "max_findings": { "type": "integer", "minimum": 1 },
+            "severity_threshold": { "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+            "on_critical": { "enum": ["stop", "continue", "escalate"] }
+          }
+        },
+        "outputs_expected": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "artifact": { "type": "string" },
+              "format": { "enum": ["json", "md", "txt", "jsonl"] },
+              "required": { "type": "boolean" }
+            },
+            "required": ["artifact", "format"]
+          },
+          "description": "Expected output artifacts from this task"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable task description"
+        }
+      }
+    },
+    "PlanConfig": {
+      "type": "object",
+      "properties": {
+        "parallel_execution": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allow independent tasks to run in parallel"
+        },
+        "fail_fast": {
+          "type": "boolean",
+          "default": true,
+          "description": "Stop plan execution on first task failure"
+        },
+        "max_total_duration_ms": {
+          "type": "integer",
+          "default": 300000,
+          "description": "Maximum total plan execution time (5 min default)"
+        },
+        "evidence_retention": {
+          "enum": ["all", "findings_only", "summary_only"],
+          "default": "all"
+        }
+      }
+    }
+  }
+}

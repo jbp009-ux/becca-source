@@ -1,0 +1,109 @@
+{
+  "tool_id": "tool_inspector",
+  "run_id": "PLAN-SONNY-20260201-071614",
+  "status": "pass",
+  "state": "COMPLETE",
+  "evidence": [
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\project_structure.json",
+      "description": "Project directory structure"
+    },
+    {
+      "type": "log",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\grep_results.json",
+      "description": "Grep results for keywords: ['hardcoded', 'secrets']"
+    },
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\config_files.json",
+      "description": "Configuration files found"
+    },
+    {
+      "type": "log",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\error_patterns.json",
+      "description": "Error patterns found in code"
+    },
+    {
+      "type": "security",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\SECRET_FINDINGS.json",
+      "description": "Secrets scan: 0 findings, 0 candidates"
+    },
+    {
+      "type": "security",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\SECRET_FINDINGS.md",
+      "description": "Secrets scan report (human-readable)"
+    },
+    {
+      "type": "profile",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\SCAN_PROFILE.json",
+      "description": "Scan timing profile for performance analysis"
+    },
+    {
+      "type": "log",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-071614\\tool_inspector\\evidence\\audit_log.json",
+      "description": "Audit log: 785 enumerated, 1893 opened, 1893 parsed, 8 denied"
+    }
+  ],
+  "changes": {
+    "files_modified": 0,
+    "files_created": 8,
+    "lines_added": 0,
+    "lines_removed": 0
+  },
+  "success_reasoning": {
+    "invariants_checked": [
+      "Project path exists",
+      "Source files are readable",
+      "Keywords extracted from mission"
+    ],
+    "assumptions_made": [
+      "Mission keywords are relevant to search",
+      "Top 10 results per keyword are sufficient"
+    ],
+    "not_tested": [
+      "Binary files not scanned",
+      "node_modules excluded",
+      "Files > 1MB skipped"
+    ]
+  },
+  "risks": [],
+  "next_actions": [
+    {
+      "tool": "tool_browser",
+      "priority": "required",
+      "reason": "Capture runtime behavior in browser"
+    }
+  ],
+  "timing": {
+    "started_at": "2026-02-01T07:16:14.542970Z",
+    "completed_at": "2026-02-01T07:16:44.131235Z",
+    "duration_seconds": 29.588265
+  },
+  "tokens_used": 0,
+  "error": null,
+  "findings_summary": {
+    "keywords": [
+      "hardcoded",
+      "secrets"
+    ],
+    "files_scanned": 523,
+    "grep_matches": 20,
+    "config_files": 50,
+    "error_patterns": 100
+  },
+  "secrets_summary": {
+    "patterns_loaded": 24,
+    "patterns_ran": 24,
+    "files_scanned": 425,
+    "severity_counts": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "candidate_count": 0,
+    "allowlisted_count": 0,
+    "scan_time_seconds": 12.725547790527344
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Critical paths that require elevated approval policies. Proposals touching these paths have stricter requirements.",
+
+  "critical_paths": [
+    {
+      "id": "auth",
+      "name": "Authentication & Authorization",
+      "patterns": [
+        "**/auth/**",
+        "**/login/**",
+        "**/session/**",
+        "**/*auth*.ts",
+        "**/*auth*.js",
+        "**/*auth*.py",
+        "**/middleware/auth*",
+        "**/hooks/useAuth*"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": true,
+        "max_expiry_hours": 4,
+        "require_tests": true
+      },
+      "rationale": "Auth changes can expose entire system to unauthorized access"
+    },
+    {
+      "id": "billing",
+      "name": "Billing & Payments",
+      "patterns": [
+        "**/billing/**",
+        "**/payment*/**",
+        "**/stripe*",
+        "**/subscription*",
+        "**/*pricing*",
+        "**/*charge*",
+        "**/*invoice*"
+      ],
+      "approval_policy": {
+        "min_approvers": 2,
+        "require_owner": true,
+        "max_expiry_hours": 2,
+        "require_tests": true,
+        "require_manual_verification": true
+      },
+      "rationale": "Billing errors directly impact revenue and customer trust"
+    },
+    {
+      "id": "firebase_rules",
+      "name": "Firebase Security Rules",
+      "patterns": [
+        "firestore.rules",
+        "storage.rules",
+        "database.rules.json",
+        "**/firebase*.rules"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": true,
+        "max_expiry_hours": 1,
+        "require_tests": true,
+        "require_rule_tests": true
+      },
+      "rationale": "Security rules protect all tenant data - errors expose entire platform"
+    },
+    {
+      "id": "secrets",
+      "name": "Secrets & Configuration",
+      "patterns": [
+        "**/.env*",
+        "**/secrets/**",
+        "**/credentials*",
+        "**/*secret*",
+        "**/*apikey*",
+        "**/*api_key*",
+        "**/config/prod*"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": true,
+        "max_expiry_hours": 1,
+        "auto_apply_allowed": false
+      },
+      "rationale": "Secrets exposure is immediate security incident"
+    },
+    {
+      "id": "deployment",
+      "name": "Deployment & CI/CD",
+      "patterns": [
+        ".github/workflows/**",
+        "**/deploy*",
+        "**/Dockerfile*",
+        "docker-compose*.yml",
+        "**/terraform/**",
+        "**/cloudformation/**",
+        "firebase.json"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": true,
+        "max_expiry_hours": 4,
+        "require_dry_run": true
+      },
+      "rationale": "Deployment changes affect production availability"
+    },
+    {
+      "id": "tenant_isolation",
+      "name": "Multi-Tenant Isolation",
+      "patterns": [
+        "**/*tenant*",
+        "**/*workspace*",
+        "**/middleware/validate*",
+        "**/*isolation*"
+      ],
+      "approval_policy": {
+        "min_approvers": 2,
+        "require_owner": true,
+        "max_expiry_hours": 2,
+        "require_tests": true,
+        "nuclear_invariant": true
+      },
+      "rationale": "NUCLEAR INVARIANT: Tenant isolation breach exposes all customer data"
+    },
+    {
+      "id": "comms_costs",
+      "name": "Communications & Variable Costs",
+      "patterns": [
+        "**/*sms*",
+        "**/*twilio*",
+        "**/*sendgrid*",
+        "**/*email*",
+        "**/*voice*",
+        "**/*notification*",
+        "**/functions/src/**/*send*"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": false,
+        "max_expiry_hours": 8,
+        "require_cost_analysis": true
+      },
+      "rationale": "Uncontrolled comms can cause runaway costs"
+    },
+    {
+      "id": "data_model",
+      "name": "Data Model & Migrations",
+      "patterns": [
+        "**/migrations/**",
+        "**/schema*",
+        "**/models/**",
+        "**/*.schema.json",
+        "**/types/*.ts"
+      ],
+      "approval_policy": {
+        "min_approvers": 1,
+        "require_owner": true,
+        "max_expiry_hours": 4,
+        "require_rollback_plan": true
+      },
+      "rationale": "Schema changes can cause data loss or corruption"
+    }
+  ],
+
+  "default_policy": {
+    "min_approvers": 1,
+    "require_owner": false,
+    "max_expiry_hours": 24,
+    "require_tests": false,
+    "auto_apply_allowed": true
+  },
+
+  "escalation_rules": [
+    {
+      "condition": "touches_multiple_critical_paths",
+      "action": "use_strictest_policy"
+    },
+    {
+      "condition": "nuclear_invariant_touched",
+      "action": "require_2_approvers_always"
+    },
+    {
+      "condition": "proposal_risk_critical",
+      "action": "add_1_approver"
+    }
+  ],
+
+  "path_matcher": {
+    "type": "glob",
+    "case_sensitive": false,
+    "notes": "Patterns use glob syntax. ** matches any directory depth, * matches within directory."
+  }
+}

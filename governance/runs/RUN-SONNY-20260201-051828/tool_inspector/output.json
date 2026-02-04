@@ -1,0 +1,81 @@
+{
+  "tool_id": "tool_inspector",
+  "run_id": "RUN-SONNY-20260201-051828",
+  "status": "pass",
+  "state": "COMPLETE",
+  "evidence": [
+    {
+      "type": "file",
+      "path": "d:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-051828\\tool_inspector\\evidence\\project_structure.json",
+      "description": "Project directory structure"
+    },
+    {
+      "type": "log",
+      "path": "d:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-051828\\tool_inspector\\evidence\\grep_results.json",
+      "description": "Grep results for keywords: ['api', 'secrets', 'keys']"
+    },
+    {
+      "type": "file",
+      "path": "d:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-051828\\tool_inspector\\evidence\\config_files.json",
+      "description": "Configuration files found"
+    },
+    {
+      "type": "log",
+      "path": "d:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-051828\\tool_inspector\\evidence\\error_patterns.json",
+      "description": "Error patterns found in code"
+    },
+    {
+      "type": "log",
+      "path": "d:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-051828\\tool_inspector\\evidence\\audit_log.json",
+      "description": "Audit log: 748 enumerated, 1414 opened, 1414 parsed, 5 denied"
+    }
+  ],
+  "changes": {
+    "files_modified": 0,
+    "files_created": 5,
+    "lines_added": 0,
+    "lines_removed": 0
+  },
+  "success_reasoning": {
+    "invariants_checked": [
+      "Project path exists",
+      "Source files are readable",
+      "Keywords extracted from mission"
+    ],
+    "assumptions_made": [
+      "Mission keywords are relevant to search",
+      "Top 10 results per keyword are sufficient"
+    ],
+    "not_tested": [
+      "Binary files not scanned",
+      "node_modules excluded",
+      "Files > 1MB skipped"
+    ]
+  },
+  "risks": [],
+  "next_actions": [
+    {
+      "tool": "tool_browser",
+      "priority": "required",
+      "reason": "Capture runtime behavior in browser"
+    }
+  ],
+  "timing": {
+    "started_at": "2026-02-01T05:18:28.953801Z",
+    "completed_at": "2026-02-01T05:18:50.309794Z",
+    "duration_seconds": 21.355993
+  },
+  "tokens_used": 0,
+  "error": null,
+  "findings_summary": {
+    "keywords": [
+      "api",
+      "secrets",
+      "keys"
+    ],
+    "files_scanned": 518,
+    "grep_matches": 30,
+    "config_files": 50,
+    "error_patterns": 100
+  }
+}

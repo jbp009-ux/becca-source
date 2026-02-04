@@ -1,0 +1,62 @@
+{
+  "index_id": "EVIDENCE-SONNY-20260201-063924",
+  "run_id": "RUN-SONNY-20260201-063844",
+  "plan_id": "PLAN-SONNY-20260201-063844",
+  "generated_at": "2026-02-01T06:39:24.768453Z",
+  "base_path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-063844",
+  "summary": {
+    "total_items": 3,
+    "total_size_bytes": 2226,
+    "by_type": {
+      "secrets_findings": 2,
+      "scan_profile": 1
+    },
+    "by_source_task": {
+      "T001": 3
+    }
+  },
+  "evidence": [
+    {
+      "evidence_id": "E0001",
+      "path": "bq_executor\\evidence\\SECRET_FINDINGS.json",
+      "type": "secrets_findings",
+      "format": "json",
+      "description": "SECRET_FINDINGS from secrets_scanner",
+      "source_task": "T001",
+      "source_tool": "secrets_scanner",
+      "generated_at": "2026-02-01T06:38:57.442300Z",
+      "size_bytes": 454,
+      "hash": "sha256:335182ae2a25c04222d1925649aaa4595531b3d60353fd698afd197144357ea2",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0002",
+      "path": "bq_executor\\evidence\\SECRET_FINDINGS.md",
+      "type": "secrets_findings",
+      "format": "md",
+      "description": "SECRET_FINDINGS from secrets_scanner",
+      "source_task": "T001",
+      "source_tool": "secrets_scanner",
+      "generated_at": "2026-02-01T06:38:57.442300Z",
+      "size_bytes": 968,
+      "hash": "sha256:6d1494b66cfbf84f02ecc51c3adf1c6fb89a138ac088eb6280d1ca610e66faaf",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    },
+    {
+      "evidence_id": "E0003",
+      "path": "bq_executor\\evidence\\SCAN_PROFILE.json",
+      "type": "scan_profile",
+      "format": "json",
+      "description": "SCAN_PROFILE from secrets_scanner",
+      "source_task": "T001",
+      "source_tool": "secrets_scanner",
+      "generated_at": "2026-02-01T06:38:57.442300Z",
+      "size_bytes": 804,
+      "hash": "sha256:3b1773da8d14d2016c77d554557ee6f50ed35627ead0c7eb0ad1f1c3612504b9",
+      "linked_risks": [],
+      "retention": "run_lifetime"
+    }
+  ]
+}

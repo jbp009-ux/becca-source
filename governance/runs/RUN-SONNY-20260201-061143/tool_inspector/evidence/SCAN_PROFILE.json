@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-02-01T06:12:40.676994Z",
+  "timings_ms": {
+    "enumerate_ms": 11759.764600006747,
+    "open_read_ms": 97.9677998839179,
+    "regex_scan_ms": 30784.51499984658,
+    "entropy_ms": 0.0,
+    "filters_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "stats": {
+    "files_read": 422,
+    "files_skipped": 0,
+    "bytes_read": 4044498,
+    "mb_read": 3.86
+  },
+  "breakdown_pct": {
+    "enumerate_pct": 27.6,
+    "open_read_pct": 0.2,
+    "regex_scan_pct": 72.2,
+    "entropy_pct": 0.0,
+    "filters_pct": 0.0,
+    "write_pct": 0.0
+  }
+}

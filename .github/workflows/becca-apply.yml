@@ -1,0 +1,269 @@
+# BECCA Apply Workflow
+# Applies approved proposals with all mandatory gates
+#
+# IMPORTANT: This workflow only runs manually after human approval
+# It will NOT run automatically - requires explicit trigger with approval artifact
+#
+# Prerequisites:
+# 1. Run BECCA PR Audit (generates proposals)
+# 2. Review proposals and create APPROVAL.json
+# 3. Commit approval artifact to repo
+# 4. Trigger this workflow with proposal ID
+#
+# Safety features:
+# - Requires approval artifact with matching hashes
+# - Creates rollback snapshot before any modification
+# - Runs dry-run before real apply
+# - Post-apply verification
+# - Creates commit with evidence trail
+
+name: BECCA Apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      proposal_id:
+        description: 'Proposal ID to apply (e.g., PROPOSAL-T001-20260201)'
+        required: true
+        type: string
+      run_id:
+        description: 'Run ID containing the proposal'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run only (no actual changes)'
+        required: false
+        default: true
+        type: boolean
+      create_pr:
+        description: 'Create PR with changes instead of direct commit'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  validate:
+    name: Validate Approval
+    runs-on: ubuntu-latest
+    outputs:
+      valid: ${{ steps.check.outputs.valid }}
+      proposal_path: ${{ steps.check.outputs.proposal_path }}
+      approval_path: ${{ steps.check.outputs.approval_path }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check approval exists
+        id: check
+        run: |
+          PROPOSAL_ID="${{ github.event.inputs.proposal_id }}"
+          RUN_ID="${{ github.event.inputs.run_id }}"
+          RUN_DIR=".becca/runs/$RUN_ID"
+
+          PROPOSAL_PATH="$RUN_DIR/proposals/$PROPOSAL_ID.json"
+          APPROVAL_PATH="$RUN_DIR/approvals/APPROVAL-$PROPOSAL_ID.json"
+
+          echo "Checking for proposal: $PROPOSAL_PATH"
+          echo "Checking for approval: $APPROVAL_PATH"
+
+          if [ ! -f "$PROPOSAL_PATH" ]; then
+            echo "::error::Proposal not found: $PROPOSAL_PATH"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          if [ ! -f "$APPROVAL_PATH" ]; then
+            echo "::error::Approval not found: $APPROVAL_PATH"
+            echo "::error::Create approval artifact first before running this workflow"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          echo "valid=true" >> $GITHUB_OUTPUT
+          echo "proposal_path=$PROPOSAL_PATH" >> $GITHUB_OUTPUT
+          echo "approval_path=$APPROVAL_PATH" >> $GITHUB_OUTPUT
+
+  apply:
+    name: Apply Changes
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.valid == 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+
+      - name: Run BECCA Apply
+        id: apply
+        run: |
+          python -c "
+          import json
+          import sys
+          from pathlib import Path
+          from datetime import datetime
+
+          sys.path.insert(0, '.')
+
+          from tools.apply_base import PatchApplyTool, ApplyError
+
+          proposal_path = Path('${{ needs.validate.outputs.proposal_path }}')
+          approval_path = Path('${{ needs.validate.outputs.approval_path }}')
+          run_id = '${{ github.event.inputs.run_id }}'
+          dry_run = '${{ github.event.inputs.dry_run }}' == 'true'
+
+          # Load proposal to get task_id
+          with open(proposal_path) as f:
+              proposal = json.load(f)
+
+          task_id = proposal.get('task_id', 'UNKNOWN')
+          run_dir = proposal_path.parent.parent
+
+          print(f'Proposal: {proposal.get(\"proposal_id\")}')
+          print(f'Task: {task_id}')
+          print(f'Run: {run_id}')
+          print(f'Dry run: {dry_run}')
+
+          if dry_run:
+              print('\\n[DRY RUN MODE - No changes will be made]\\n')
+
+          # Run apply tool
+          applier = PatchApplyTool(
+              project_path=Path('.'),
+              run_dir=run_dir,
+              run_id=run_id,
+              task_id=task_id,
+              proposal_path=proposal_path,
+              approval_path=approval_path,
+              allow_dirty=False
+          )
+
+          if dry_run:
+              # Just validate gates
+              print('Gate 1: Checking approval hash...')
+              applier._load_proposal()
+              applier._load_approval()
+              applier.gate_1_approval_hash()
+              print('  PASS')
+
+              print('Gate 2: Checking run ID...')
+              applier.gate_2_run_id()
+              print('  PASS')
+
+              print('Gate 3: Checking expiration...')
+              applier.gate_3_not_expired()
+              print('  PASS')
+
+              print('\\n[DRY RUN COMPLETE - All gates would pass]')
+              sys.exit(0)
+
+          result = applier.run()
+
+          if result['status'] == 'success':
+              print(f'\\nApply successful!')
+              print(f'Files modified: {result[\"files_modified\"]}')
+              print(f'Rollback available: {result[\"rollback_path\"]}')
+          else:
+              print(f'\\nApply failed!')
+              for error in result.get('errors', []):
+                  print(f'  Error: {error}')
+              sys.exit(1)
+          "
+
+      - name: Create branch and commit
+        if: github.event.inputs.dry_run == 'false' && github.event.inputs.create_pr == 'true'
+        run: |
+          PROPOSAL_ID="${{ github.event.inputs.proposal_id }}"
+          BRANCH_NAME="becca/apply-$PROPOSAL_ID"
+
+          git config user.name "BECCA Bot"
+          git config user.email "becca@example.com"
+
+          git checkout -b "$BRANCH_NAME"
+          git add -A
+          git commit -m "Apply $PROPOSAL_ID
+
+          Applied by BECCA automated workflow.
+
+          Run ID: ${{ github.event.inputs.run_id }}
+          Proposal: $PROPOSAL_ID
+          Triggered by: ${{ github.actor }}
+
+          Co-Authored-By: BECCA Bot <becca@example.com>"
+
+          git push origin "$BRANCH_NAME"
+
+      - name: Create Pull Request
+        if: github.event.inputs.dry_run == 'false' && github.event.inputs.create_pr == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const proposalId = '${{ github.event.inputs.proposal_id }}';
+            const runId = '${{ github.event.inputs.run_id }}';
+            const branchName = `becca/apply-${proposalId}`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[BECCA] Apply ${proposalId}`,
+              head: branchName,
+              base: 'main',
+              body: `## BECCA Automated Apply
+
+            This PR applies changes from an approved BECCA proposal.
+
+            **Proposal:** \`${proposalId}\`
+            **Run ID:** \`${runId}\`
+            **Triggered by:** @${{ github.actor }}
+
+            ### Pre-merge checklist
+            - [ ] Review the changes
+            - [ ] Verify approval artifact is valid
+            - [ ] Run tests if applicable
+
+            ---
+            *Generated by BECCA Apply workflow*
+            `
+            });
+
+            console.log(`Created PR #${pr.number}`);
+
+      - name: Direct commit (if not creating PR)
+        if: github.event.inputs.dry_run == 'false' && github.event.inputs.create_pr == 'false'
+        run: |
+          PROPOSAL_ID="${{ github.event.inputs.proposal_id }}"
+
+          git config user.name "BECCA Bot"
+          git config user.email "becca@example.com"
+
+          git add -A
+          git commit -m "Apply $PROPOSAL_ID
+
+          Applied by BECCA automated workflow.
+
+          Run ID: ${{ github.event.inputs.run_id }}
+          Proposal: $PROPOSAL_ID
+          Triggered by: ${{ github.actor }}
+
+          Co-Authored-By: BECCA Bot <becca@example.com>"
+
+          git push

@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "becca/result.schema.json",
+  "title": "BECCA Result Schema",
+  "description": "Schema for task execution results produced by Ants, consumed by Ghost",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": ["result_id", "task_id", "status", "started_at", "completed_at"],
+  "properties": {
+    "result_id": {
+      "type": "string",
+      "pattern": "^RESULT-T[0-9]{3}-[0-9]{8}-[0-9]{6}$",
+      "description": "Unique result identifier: RESULT-{TASK_ID}-{YYYYMMDD}-{HHMMSS}"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^T[0-9]{3}$",
+      "description": "Reference to originating task"
+    },
+    "plan_id": {
+      "type": "string",
+      "description": "Reference to parent plan"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAILED",
+        "SKIPPED_DEPENDENCY",
+        "SKIPPED_POLICY",
+        "STOPPED_BY_CONDITION",
+        "FAILED_VERIFY",
+        "INCOMPLETE",
+        "TIMEOUT"
+      ],
+      "description": "Task execution status. SUCCESS only when task completed fully and outputs verified."
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timing": {
+      "$ref": "#/definitions/Timing"
+    },
+    "tool": {
+      "type": "string",
+      "description": "Tool that executed this task"
+    },
+    "tool_version": {
+      "type": "string",
+      "description": "Version of tool used"
+    },
+    "profile": {
+      "type": "string",
+      "description": "Ant profile that executed task"
+    },
+    "stats": {
+      "$ref": "#/definitions/Stats"
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Output"
+      },
+      "description": "List of artifacts produced"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "stop_reason": {
+      "type": "string",
+      "enum": ["completed", "timeout", "max_findings", "critical_found", "error", "user_cancelled"],
+      "description": "Why task execution stopped"
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Tool-specific metrics for analysis"
+    }
+  },
+
+  "definitions": {
+    "Timing": {
+      "type": "object",
+      "properties": {
+        "total_ms": { "type": "number", "minimum": 0 },
+        "enumerate_ms": { "type": "number", "minimum": 0 },
+        "process_ms": { "type": "number", "minimum": 0 },
+        "write_ms": { "type": "number", "minimum": 0 }
+      },
+      "required": ["total_ms"]
+    },
+    "Stats": {
+      "type": "object",
+      "properties": {
+        "files_scanned": { "type": "integer", "minimum": 0 },
+        "files_skipped": { "type": "integer", "minimum": 0 },
+        "bytes_processed": { "type": "integer", "minimum": 0 },
+        "findings_count": { "type": "integer", "minimum": 0 },
+        "findings_by_severity": {
+          "type": "object",
+          "properties": {
+            "CRITICAL": { "type": "integer" },
+            "HIGH": { "type": "integer" },
+            "MEDIUM": { "type": "integer" },
+            "LOW": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "Output": {
+      "type": "object",
+      "required": ["artifact", "path", "format"],
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "description": "Artifact name matching outputs_expected"
+        },
+        "path": {
+          "type": "string",
+          "description": "Relative path to artifact file"
+        },
+        "format": {
+          "enum": ["json", "md", "txt", "jsonl"]
+        },
+        "size_bytes": { "type": "integer" },
+        "hash": {
+          "type": "string",
+          "description": "SHA256 hash of artifact content"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code: E001, E002, etc."
+        },
+        "message": { "type": "string" },
+        "details": { "type": "string" },
+        "recoverable": { "type": "boolean" }
+      }
+    }
+  }
+}

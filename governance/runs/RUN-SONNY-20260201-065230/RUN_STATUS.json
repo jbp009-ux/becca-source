@@ -1,0 +1,136 @@
+{
+  "run_id": "RUN-SONNY-20260201-065230",
+  "final_status": "FAILED_VERIFY",
+  "status_reason": "Verification failed: 1 checks failed",
+  "verified_at": "2026-02-01T06:53:10.210620Z",
+  "task_summary": {
+    "total": 3,
+    "by_status": {
+      "SUCCESS": 2,
+      "FAILED": 0,
+      "SKIPPED_DEPENDENCY": 0,
+      "SKIPPED_POLICY": 0,
+      "STOPPED_BY_CONDITION": 0,
+      "FAILED_VERIFY": 0,
+      "INCOMPLETE": 1,
+      "TIMEOUT": 0
+    },
+    "acceptable_skips": []
+  },
+  "risk_summary": {
+    "total": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "suppressed": 0
+  },
+  "verification": {
+    "passed": false,
+    "checks": [
+      {
+        "check": "PLAN.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "RESULT_T001.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "RESULT_T002.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "RESULT_T003.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "RISKS.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "EVIDENCE_INDEX.json exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "FINAL_REPORT.md exists",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0001 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0002 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0003 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0004 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0005 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0006 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0007 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0008 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0009 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0010 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Evidence E0011 hash",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Task T001 output SECRET_FINDINGS",
+        "passed": true,
+        "details": ""
+      },
+      {
+        "check": "Task T003 output FINAL_REPORT",
+        "passed": false,
+        "details": "Required artifact not produced"
+      }
+    ],
+    "failed_checks": [
+      "Task T003 output FINAL_REPORT: Required artifact not produced"
+    ]
+  }
+}

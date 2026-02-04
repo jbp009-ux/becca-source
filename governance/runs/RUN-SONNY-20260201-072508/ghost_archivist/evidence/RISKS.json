@@ -1,0 +1,20 @@
+{
+  "risks_id": "RISKS-SONNY-20260201-072539",
+  "plan_id": "PLAN-SONNY-20260201-072508",
+  "run_id": "RUN-SONNY-20260201-072508",
+  "generated_at": "2026-02-01T07:25:39.596573Z",
+  "summary": {
+    "total_risks": 0,
+    "by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "by_category": {},
+    "actionable_count": 0,
+    "suppressed_count": 0
+  },
+  "risks": [],
+  "suppressed": []
+}

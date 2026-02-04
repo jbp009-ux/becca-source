@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-02-01T06:41:56.095485Z",
+  "scan_mode": "fast",
+  "timings_ms": {
+    "enumerate_ms": 11267.724500008626,
+    "open_read_ms": 83.33279991347808,
+    "regex_scan_ms": 1165.624599903822,
+    "entropy_ms": 0.0,
+    "filters_ms": 0.0,
+    "write_ms": 0.0,
+    "total_ms": 12516.681899825926
+  },
+  "stats": {
+    "files_read": 425,
+    "files_skipped": 0,
+    "bytes_read": 4082261,
+    "mb_read": 3.89
+  },
+  "breakdown_pct": {
+    "enumerate_pct": 90.0,
+    "open_read_pct": 0.7,
+    "regex_scan_pct": 9.3,
+    "entropy_pct": 0.0,
+    "filters_pct": 0.0,
+    "write_pct": 0.0
+  },
+  "performance": {
+    "status": "OK",
+    "warnings": [],
+    "thresholds": {
+      "total_ms": 30000,
+      "regex_ms": 5000,
+      "files_max": 1000
+    }
+  }
+}

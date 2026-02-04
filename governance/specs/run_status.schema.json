@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "becca/run_status.schema.json",
+  "title": "BECCA Run Status Schema",
+  "description": "Schema for overall run status determination - prevents false greens",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": ["run_id", "final_status", "verified_at", "task_summary"],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-[A-Z0-9]+-[0-9]{8}-[0-9]{6}$"
+    },
+    "final_status": {
+      "type": "string",
+      "enum": [
+        "ALL_CLEAR",
+        "OK_WITH_WARNINGS",
+        "STOPPED",
+        "FAILED",
+        "FAILED_VERIFY"
+      ],
+      "description": "Deterministic final status based on task results and verification"
+    },
+    "status_reason": {
+      "type": "string",
+      "description": "Human-readable explanation of status determination"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "task_summary": {
+      "$ref": "#/definitions/TaskSummary"
+    },
+    "risk_summary": {
+      "$ref": "#/definitions/RiskSummary"
+    },
+    "verification": {
+      "$ref": "#/definitions/Verification"
+    }
+  },
+
+  "definitions": {
+    "TaskSummary": {
+      "type": "object",
+      "required": ["total", "by_status"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "by_status": {
+          "type": "object",
+          "properties": {
+            "SUCCESS": { "type": "integer", "default": 0 },
+            "FAILED": { "type": "integer", "default": 0 },
+            "SKIPPED_DEPENDENCY": { "type": "integer", "default": 0 },
+            "SKIPPED_POLICY": { "type": "integer", "default": 0 },
+            "STOPPED_BY_CONDITION": { "type": "integer", "default": 0 },
+            "FAILED_VERIFY": { "type": "integer", "default": 0 },
+            "INCOMPLETE": { "type": "integer", "default": 0 },
+            "TIMEOUT": { "type": "integer", "default": 0 }
+          }
+        },
+        "acceptable_skips": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Task IDs that were skipped with accepted reason"
+        }
+      }
+    },
+    "RiskSummary": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "critical": { "type": "integer", "default": 0 },
+        "high": { "type": "integer", "default": 0 },
+        "medium": { "type": "integer", "default": 0 },
+        "low": { "type": "integer", "default": 0 },
+        "suppressed": { "type": "integer", "default": 0 }
+      }
+    },
+    "Verification": {
+      "type": "object",
+      "required": ["passed", "checks"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["check", "passed"],
+            "properties": {
+              "check": { "type": "string" },
+              "passed": { "type": "boolean" },
+              "details": { "type": "string" }
+            }
+          }
+        },
+        "failed_checks": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+
+  "status_rules": {
+    "description": "Rules for determining final_status (for documentation)",
+    "ALL_CLEAR": {
+      "requires": [
+        "All tasks are SUCCESS or acceptable SKIPPED_*",
+        "Zero CRITICAL or HIGH risks",
+        "Verification passed",
+        "All expected outputs exist with valid hashes"
+      ]
+    },
+    "OK_WITH_WARNINGS": {
+      "requires": [
+        "All tasks completed (SUCCESS or acceptable skip)",
+        "Only MEDIUM/LOW risks present",
+        "Verification passed"
+      ]
+    },
+    "STOPPED": {
+      "requires": [
+        "At least one task has STOPPED_BY_CONDITION",
+        "Intentional stop (not error)"
+      ]
+    },
+    "FAILED": {
+      "requires": [
+        "Any task has FAILED status",
+        "OR any CRITICAL/HIGH risks found"
+      ]
+    },
+    "FAILED_VERIFY": {
+      "requires": [
+        "Verification checks failed",
+        "OR expected outputs missing",
+        "OR hash mismatch detected"
+      ]
+    }
+  }
+}

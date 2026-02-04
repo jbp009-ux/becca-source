@@ -1,0 +1,107 @@
+{
+  "plan_id": "PLAN-SONNY-20260201-063616",
+  "mission": "Find hardcoded secrets and API keys",
+  "project": "sonny",
+  "created_at": "2026-02-01T06:36:16.310353Z",
+  "planner_version": "1.0.0",
+  "intent": {
+    "category": "security",
+    "subcategory": "secrets",
+    "keywords": [
+      "api keys",
+      "secrets",
+      "hardcoded"
+    ],
+    "urgency": "normal"
+  },
+  "tasks": [
+    {
+      "task_id": "T001",
+      "tool": "secrets_scanner",
+      "profile": "Fire Ant",
+      "description": "Run secrets_scanner with Fire Ant profile",
+      "inputs": {
+        "scan_mode": "fast"
+      },
+      "stop_conditions": {
+        "max_duration_ms": 120000,
+        "on_critical": "escalate"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "json",
+          "required": true
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "md",
+          "required": false
+        },
+        {
+          "artifact": "SCAN_PROFILE",
+          "format": "json",
+          "required": false
+        }
+      ]
+    },
+    {
+      "task_id": "T002",
+      "tool": "inspector",
+      "profile": "Scout",
+      "description": "Run inspector with Scout profile",
+      "inputs": {
+        "focus_areas": [
+          "api keys",
+          "secrets",
+          "hardcoded"
+        ]
+      },
+      "stop_conditions": {
+        "max_duration_ms": 120000,
+        "on_critical": "escalate"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "STRUCTURE",
+          "format": "json",
+          "required": true
+        },
+        {
+          "artifact": "AUDIT",
+          "format": "json",
+          "required": true
+        }
+      ]
+    },
+    {
+      "task_id": "T003",
+      "tool": "reporter",
+      "profile": "Ghost",
+      "description": "Generate final report",
+      "inputs": {},
+      "stop_conditions": {
+        "max_duration_ms": 30000
+      },
+      "outputs_expected": [
+        {
+          "artifact": "FINAL_REPORT",
+          "format": "md",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "T003": [
+      "T001",
+      "T002"
+    ]
+  },
+  "config": {
+    "parallel_execution": false,
+    "fail_fast": false,
+    "max_total_duration_ms": 300000,
+    "evidence_retention": "all"
+  }
+}

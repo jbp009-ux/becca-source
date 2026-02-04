@@ -1,0 +1,50 @@
+{
+  "run_id": "RUN-SONNY-20260201-055533",
+  "project_id": "sonny",
+  "mission": "Find hardcoded secrets and API keys",
+  "current_state": "COMPLETE",
+  "previous_state": "VERIFYING",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T05:55:33.165577Z",
+      "exited_at": "2026-02-01T05:55:33.173716Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T05:55:33.173716Z",
+      "exited_at": "2026-02-01T05:55:33.181336Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T05:55:33.181336Z",
+      "exited_at": "2026-02-01T05:57:07.364797Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-01T05:57:07.364797Z",
+      "exited_at": "2026-02-01T05:57:07.390818Z"
+    },
+    {
+      "state": "COMPLETE",
+      "entered_at": "2026-02-01T05:57:07.390818Z",
+      "exited_at": null
+    }
+  ],
+  "tools_planned": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_completed": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_remaining": [],
+  "current_tool": null,
+  "approvals_pending": [],
+  "approvals_granted": [],
+  "created_at": "2026-02-01T05:55:33.165577Z",
+  "updated_at": "2026-02-01T05:57:07.390818Z"
+}

@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "suppression.schema.json",
+  "title": "Finding Suppression",
+  "description": "Schema for suppressing findings. Suppressions are temporary exceptions that require justification to prevent gaming the system.",
+  "type": "object",
+
+  "required": ["suppression_id", "finding_type", "pattern", "reason", "owner", "created_at"],
+  "properties": {
+    "suppression_id": {
+      "type": "string",
+      "pattern": "^SUPP-[A-Z0-9-]+$",
+      "description": "Unique suppression identifier"
+    },
+    "finding_type": {
+      "type": "string",
+      "enum": ["secret", "cost_vector", "security", "other"],
+      "description": "Category of finding being suppressed"
+    },
+    "pattern": {
+      "type": "string",
+      "description": "Pattern or file path being suppressed (glob or regex)"
+    },
+    "pattern_type": {
+      "type": "string",
+      "enum": ["glob", "regex", "exact_path", "finding_id"],
+      "default": "glob"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Detailed justification for the suppression (minimum 20 chars to prevent lazy 'false positive' entries)"
+    },
+    "reason_category": {
+      "type": "string",
+      "enum": [
+        "false_positive",
+        "test_fixture",
+        "intentional_exposure",
+        "legacy_accepted_risk",
+        "blocked_by_other_control",
+        "pending_remediation"
+      ],
+      "description": "Category of justification"
+    },
+    "owner": {
+      "type": "string",
+      "description": "GitHub username or email of person responsible for this suppression"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When suppression expires. Required for 'pending_remediation' category."
+    },
+    "ticket": {
+      "type": "string",
+      "description": "Link to tracking ticket (Jira, GitHub Issue, etc.) for remediation"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Second reviewer who approved this suppression (required for critical paths)"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "object",
+      "description": "Limits where this suppression applies",
+      "properties": {
+        "branches": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Only apply to these branches (e.g., ['feature/*', 'develop'])"
+        },
+        "environments": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Only apply to these environments (e.g., ['development', 'staging'])"
+        }
+      }
+    },
+    "auto_expire_on_change": {
+      "type": "boolean",
+      "default": true,
+      "description": "If true, suppression invalidates when the suppressed file changes"
+    }
+  },
+
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reason_category": {"const": "pending_remediation"}
+        },
+        "required": ["reason_category"]
+      },
+      "then": {
+        "required": ["expires_at", "ticket"],
+        "properties": {
+          "expires_at": {
+            "description": "REQUIRED for pending_remediation - when will this be fixed?"
+          },
+          "ticket": {
+            "description": "REQUIRED for pending_remediation - link to remediation ticket"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "finding_type": {"const": "secret"}
+        },
+        "required": ["finding_type"]
+      },
+      "then": {
+        "required": ["reviewed_by"],
+        "properties": {
+          "reviewed_by": {
+            "description": "Secret suppressions require a second reviewer"
+          }
+        }
+      }
+    }
+  ]
+}

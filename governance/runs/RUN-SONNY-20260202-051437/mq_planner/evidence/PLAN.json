@@ -1,0 +1,101 @@
+{
+  "plan_id": "PLAN-SONNY-20260202-051437",
+  "mission": "Test governance kernel",
+  "project": "sonny",
+  "created_at": "2026-02-02T05:14:37.223697Z",
+  "planner_version": "1.0.0",
+  "intent": {
+    "category": "quality",
+    "subcategory": "testing",
+    "keywords": [
+      "test"
+    ],
+    "urgency": "normal"
+  },
+  "tasks": [
+    {
+      "task_id": "T001",
+      "tool": "test_runner",
+      "profile": "Scout",
+      "description": "Run test_runner with Scout profile",
+      "inputs": {
+        "test_command": "npm test"
+      },
+      "stop_conditions": {
+        "max_duration_ms": 60000,
+        "on_critical": "continue"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "TEST_RESULTS",
+          "format": "json",
+          "required": true
+        }
+      ]
+    },
+    {
+      "task_id": "T002",
+      "tool": "inspector",
+      "profile": "Scout",
+      "description": "Run inspector with Scout profile",
+      "inputs": {
+        "focus_areas": [
+          "test"
+        ]
+      },
+      "stop_conditions": {
+        "max_duration_ms": 60000,
+        "on_critical": "continue"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "project_structure",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "config_files",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "error_patterns",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "json",
+          "required": false
+        }
+      ]
+    },
+    {
+      "task_id": "T003",
+      "tool": "reporter",
+      "profile": "Ghost",
+      "description": "Finalize report (delegated to Ghost archivist)",
+      "inputs": {},
+      "stop_conditions": {
+        "max_duration_ms": 30000
+      },
+      "outputs_expected": []
+    }
+  ],
+  "dependencies": {
+    "T003": [
+      "T001",
+      "T002"
+    ]
+  },
+  "config": {
+    "parallel_execution": false,
+    "max_parallel_workers": 4,
+    "fail_fast": false,
+    "max_total_duration_ms": 300000,
+    "evidence_retention": "all",
+    "has_propose_tasks": false,
+    "has_apply_tasks": false,
+    "pause_for_approval": false
+  }
+}

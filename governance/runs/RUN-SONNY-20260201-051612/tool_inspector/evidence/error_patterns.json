@@ -1,0 +1,502 @@
+[
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "console.warn call",
+    "count": 3
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "bridge\\clear-registry.js",
+    "pattern": "console.error call",
+    "count": 9
+  },
+  {
+    "file": "bridge\\clear-registry.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "bridge\\clear-registry.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": "bridge\\create-colony.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": "bridge\\create-colony.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "bridge\\create-colony.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "bridge\\index.js",
+    "pattern": "console.error call",
+    "count": 11
+  },
+  {
+    "file": "bridge\\index.js",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": "bridge\\index.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": "bridge\\index.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "bridge\\reverse-sync.js",
+    "pattern": "console.error call",
+    "count": 5
+  },
+  {
+    "file": "bridge\\reverse-sync.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "bridge\\reverse-sync.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": "bridge\\reverse-sync.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "bridge\\scaffold-project.js",
+    "pattern": "console.error call",
+    "count": 4
+  },
+  {
+    "file": "bridge\\scaffold-project.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "bridge\\scaffold-project.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "bridge\\setup.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "bridge\\setup.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "bridge\\setup.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": "bridge\\setup.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "bridge\\services\\promptMakerApi.js",
+    "pattern": "console.error call",
+    "count": 3
+  },
+  {
+    "file": "bridge\\services\\promptMakerApi.js",
+    "pattern": "console.warn call",
+    "count": 1
+  },
+  {
+    "file": "bridge\\services\\promptMakerApi.js",
+    "pattern": "Error throw",
+    "count": 5
+  },
+  {
+    "file": "bridge\\services\\promptMakerApi.js",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "bridge\\services\\promptMakerApi.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\check-emoji-picker.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-emoji-picker.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-emoji-picker.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-emoji.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-emoji.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-emoji.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-view.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-view.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\check-view.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\click-settings.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\click-settings.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\click-settings.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\deep-check.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": "frontend\\deep-check.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "frontend\\deep-check.js",
+    "pattern": "try block",
+    "count": 2
+  },
+  {
+    "file": "frontend\\find-settings-path.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\find-settings-path.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\find-settings-path.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\force-refresh.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\force-refresh.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\force-refresh.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\navigate-and-check.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\navigate-and-check.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\navigate-and-check.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\verify-deploy.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\verify-deploy.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\verify-deploy.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\scripts\\generate-tts-audio.js",
+    "pattern": "console.error call",
+    "count": 6
+  },
+  {
+    "file": "frontend\\scripts\\generate-tts-audio.js",
+    "pattern": "Error throw",
+    "count": 2
+  },
+  {
+    "file": "frontend\\scripts\\generate-tts-audio.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "frontend\\scripts\\generate-tts-audio.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": "frontend\\scripts\\generate-tts-audio.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\debug-menu\\page.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\debug-menu\\page.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\fix-images\\page.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\fix-images\\page.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\login\\page.tsx",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\app\\login\\page.tsx",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\app\\order\\page.tsx",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": "frontend\\src\\app\\order\\page.tsx",
+    "pattern": "try block",
+    "count": 9
+  },
+  {
+    "file": "frontend\\src\\app\\seed\\page.tsx",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": "frontend\\src\\app\\seed\\page.tsx",
+    "pattern": "try block",
+    "count": 4
+  },
+  {
+    "file": "frontend\\src\\app\\seed-inventory\\page.tsx",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\app\\seed-inventory\\page.tsx",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\app\\seed-order\\page.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-order\\page.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-order\\page.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-staff\\page.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-staff\\page.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-staff\\page.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-topfans\\page.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\seed-topfans\\page.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\app\\signup\\page.tsx",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\app\\signup\\page.tsx",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\components\\ApiKeysPanel.tsx",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": "frontend\\src\\components\\ApiKeysPanel.tsx",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": "frontend\\src\\components\\ApiKeysPanel.tsx",
+    "pattern": "try block",
+    "count": 2
+  },
+  {
+    "file": "frontend\\src\\components\\CustomerSettingsModal.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\DraftOrderCard.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\EightySixBoard.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\EightySixBoard.tsx",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\EightySixBoard.tsx",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\ErrorBoundary.tsx",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": "frontend\\src\\components\\InventoryPanel.tsx",
+    "pattern": "console.error call",
+    "count": 5
+  },
+  {
+    "file": "frontend\\src\\components\\InventoryPanel.tsx",
+    "pattern": "catch block",
+    "count": 5
+  },
+  {
+    "file": "frontend\\src\\components\\InventoryPanel.tsx",
+    "pattern": "try block",
+    "count": 5
+  },
+  {
+    "file": "frontend\\src\\components\\LocationsPanel.tsx",
+    "pattern": "console.error call",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\components\\LocationsPanel.tsx",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\components\\LocationsPanel.tsx",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": "frontend\\src\\components\\MenuLibraryPanel.tsx",
+    "pattern": "console.error call",
+    "count": 4
+  }
+]

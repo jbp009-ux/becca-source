@@ -1,0 +1,33 @@
+{
+  "result_id": "RESULT-T003-20260201-065310",
+  "task_id": "T003",
+  "plan_id": "PLAN-SONNY-20260201-065230",
+  "status": "partial",
+  "started_at": "2026-02-01T06:53:10.175762Z",
+  "completed_at": "2026-02-01T06:53:10.175766Z",
+  "timing": {
+    "total_ms": 0.004,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "reporter",
+  "tool_version": "1.0.0",
+  "profile": "Ghost",
+  "stats": {
+    "files_scanned": 0,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [],
+  "errors": [],
+  "stop_reason": "completed",
+  "metrics": {}
+}

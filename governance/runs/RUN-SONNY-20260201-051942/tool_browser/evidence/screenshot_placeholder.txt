@@ -1,0 +1,8 @@
+Screenshot placeholder
+
+URL: http://localhost:3000
+Mission: Find API keys
+
+Install playwright for real screenshots:
+  pip install playwright
+  playwright install chromium

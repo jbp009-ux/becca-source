@@ -1,0 +1,66 @@
+{
+  "$schema": "../specs/status.schema.json",
+  "version": "1.0.0",
+  "generatedAt": "2026-02-04T05:27:48.227286+00:00",
+  "projects": {
+    "sonny": {
+      "updatedAt": "2026-02-04T05:27:48.227286+00:00",
+      "sources": [
+        "github"
+      ],
+      "github": {
+        "latestCommit": null,
+        "latestCommitMessage": null,
+        "latestCommitDate": null,
+        "openPRs": 0,
+        "openIssues": 0,
+        "latestWorkflow": null
+      },
+      "bridge": {
+        "connected": false,
+        "lastConnectedAt": null,
+        "gitDirty": null,
+        "lastTestRun": null
+      },
+      "notes": "GitHub: 0 open PRs"
+    },
+    "colony-os": {
+      "updatedAt": null,
+      "sources": [],
+      "github": {
+        "latestCommit": null,
+        "latestCommitMessage": null,
+        "latestCommitDate": null,
+        "openPRs": null,
+        "openIssues": null,
+        "latestWorkflow": null
+      },
+      "bridge": {
+        "connected": false,
+        "lastConnectedAt": null,
+        "gitDirty": null,
+        "lastTestRun": null
+      },
+      "notes": "GitHub sync disabled for this project."
+    },
+    "becca-kernel": {
+      "updatedAt": null,
+      "sources": [],
+      "github": {
+        "latestCommit": null,
+        "latestCommitMessage": null,
+        "latestCommitDate": null,
+        "openPRs": null,
+        "openIssues": null,
+        "latestWorkflow": null
+      },
+      "bridge": {
+        "connected": false,
+        "lastConnectedAt": null,
+        "gitDirty": null,
+        "lastTestRun": null
+      },
+      "notes": "Control-plane repo (IAMBecca)."
+    }
+  }
+}

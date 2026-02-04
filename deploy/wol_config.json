@@ -1,0 +1,21 @@
+{
+  "pc_name": "Grey",
+  "mac_address_wifi": "DC:71:96:AE:1B:27",
+  "mac_address_ethernet": "70:85:C2:FC:E8:4A",
+  "public_ip": "98.229.128.163",
+  "local_ip": "192.168.86.26",
+  "gateway": "192.168.86.1",
+  "notes": "Ethernet WOL is more reliable. Connect via Ethernet cable for best results.",
+  "wake_methods": {
+    "ethernet": {
+      "supported": true,
+      "status": "disconnected",
+      "mac": "70:85:C2:FC:E8:4A"
+    },
+    "wifi": {
+      "supported": "unknown",
+      "status": "connected",
+      "mac": "DC:71:96:AE:1B:27"
+    }
+  }
+}

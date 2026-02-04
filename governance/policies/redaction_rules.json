@@ -1,0 +1,102 @@
+{
+  "$schema": "./redaction_rules.schema.json",
+  "version": "1.0.0",
+  "description": "Rules for redacting sensitive content before artifact upload/transmission",
+  "rules": [
+    {
+      "id": "api_keys",
+      "name": "API Keys",
+      "severity": "CRITICAL",
+      "patterns": [
+        "sk-ant-[a-zA-Z0-9\\-_]{40,}",
+        "sk-[a-zA-Z0-9]{48,}",
+        "AIza[0-9A-Za-z\\-_]{35}",
+        "AKIA[0-9A-Z]{16}",
+        "ghp_[a-zA-Z0-9]{36}",
+        "gho_[a-zA-Z0-9]{36}",
+        "xox[baprs]-[a-zA-Z0-9\\-]+"
+      ],
+      "redactWith": "[REDACTED_API_KEY]",
+      "preservePrefix": 8
+    },
+    {
+      "id": "private_keys",
+      "name": "Private Keys",
+      "severity": "CRITICAL",
+      "patterns": [
+        "-----BEGIN (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----[\\s\\S]*?-----END (RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----"
+      ],
+      "redactWith": "[REDACTED_PRIVATE_KEY]",
+      "preservePrefix": 0
+    },
+    {
+      "id": "jwt_tokens",
+      "name": "JWT Tokens",
+      "severity": "HIGH",
+      "patterns": [
+        "eyJ[A-Za-z0-9_-]+\\.eyJ[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+"
+      ],
+      "redactWith": "[REDACTED_JWT]",
+      "preservePrefix": 10
+    },
+    {
+      "id": "database_urls",
+      "name": "Database Connection Strings",
+      "severity": "CRITICAL",
+      "patterns": [
+        "postgres://[^\\s\"']+",
+        "mongodb(\\+srv)?://[^\\s\"']+",
+        "mysql://[^\\s\"']+",
+        "redis://[^\\s\"']+"
+      ],
+      "redactWith": "[REDACTED_DB_URL]",
+      "preservePrefix": 15
+    },
+    {
+      "id": "passwords",
+      "name": "Inline Passwords",
+      "severity": "HIGH",
+      "patterns": [
+        "(?i)(password|passwd|pwd)\\s*[=:]\\s*['\"][^'\"]{8,}['\"]"
+      ],
+      "redactWith": "[REDACTED_PASSWORD]",
+      "preservePrefix": 0
+    },
+    {
+      "id": "bearer_tokens",
+      "name": "Bearer Tokens",
+      "severity": "HIGH",
+      "patterns": [
+        "(?i)bearer\\s+[a-zA-Z0-9\\-_.]+"
+      ],
+      "redactWith": "Bearer [REDACTED]",
+      "preservePrefix": 7
+    },
+    {
+      "id": "firebase_config",
+      "name": "Firebase Config (partial)",
+      "severity": "MEDIUM",
+      "patterns": [
+        "\"apiKey\"\\s*:\\s*\"[^\"]+\""
+      ],
+      "redactWith": "\"apiKey\": \"[REDACTED]\"",
+      "preservePrefix": 0
+    }
+  ],
+  "allowlistContexts": [
+    "example",
+    "test",
+    "mock",
+    "fake",
+    "placeholder",
+    "YOUR_",
+    "REPLACE_",
+    "<your-",
+    "xxx"
+  ],
+  "enforcement": {
+    "failOnCritical": true,
+    "warnOnHigh": true,
+    "logAll": true
+  }
+}

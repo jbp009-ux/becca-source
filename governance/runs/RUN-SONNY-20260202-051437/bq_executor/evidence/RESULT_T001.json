@@ -1,0 +1,41 @@
+{
+  "result_id": "RESULT-T001-20260202-051437",
+  "task_id": "T001",
+  "plan_id": "PLAN-SONNY-20260202-051437",
+  "status": "partial",
+  "started_at": "2026-02-02T05:14:37.284201Z",
+  "completed_at": "2026-02-02T05:14:37.284207Z",
+  "timing": {
+    "total_ms": 0.006,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "test_runner",
+  "tool_version": "1.0.0",
+  "profile": "Scout",
+  "stats": {
+    "files_scanned": 0,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [],
+  "errors": [],
+  "stop_reason": "completed",
+  "metrics": {},
+  "fingerprint": {
+    "tool": "test_runner",
+    "tool_version": "1.0.0",
+    "profile": "Scout",
+    "inputs_hash": "a1769386ec697d2d",
+    "project_commit": "946741d2e2771b7ea0e63401921bf58badad1ff1",
+    "suppression_hash": ""
+  }
+}

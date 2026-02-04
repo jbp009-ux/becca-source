@@ -1,0 +1,122 @@
+[
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 37,
+    "content": "\"Bash(firebase functions:secrets:get:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 38,
+    "content": "\"Bash(firebase functions:secrets:set:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\ARCHITECTURE.md",
+    "line": 115,
+    "content": "4. **Secrets stay secret.** No API keys, tokens, or credentials in frontend code or repos. Use Firebase/GCP Secret Manager.",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 190,
+    "content": "- [ ] No secrets in source code",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\INSPECTOR_EVALUATION_PACKAGE.md",
+    "line": 655,
+    "content": "| Secrets management | PASS | Environment variables |",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\OPERATIONS_RUNBOOK.md",
+    "line": 77,
+    "content": "2. **Required secrets** (GitHub > Settings > Secrets):",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 15,
+    "content": "// CONFIGURATION (read dynamically for secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 35,
+    "content": "// Get config dynamically (for Firebase Secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\notificationFunctions.js",
+    "line": 358,
+    "content": "secrets: ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_PHONE_NUMBER', 'TWILIO_MESSAGING_SERVICE_SID', 'SENDGRID_API_KEY', 'SENDGRID_FROM_EMAIL', 'SENDGRID_FROM_NAME'],",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\ttsFunctions.js",
+    "line": 60,
+    "content": "// Or via CLI: firebase functions:secrets:set OPENAI_API_KEY",
+    "keyword": "secrets"
+  },
+  {
+    "file": "SONNY_AI_SALES_TRAINING_MANUAL.md",
+    "line": 496,
+    "content": "A: Perfect fit! Food Truck mode includes GPS tracking so customers can find your current location, plus mobile-optimized ordering.",
+    "keyword": "optimized"
+  },
+  {
+    "file": "SONNY_FEATURES_AND_PRICING.backup.md",
+    "line": 158,
+    "content": "| Quick-Service Menu | Optimized for fast ordering |",
+    "keyword": "optimized"
+  },
+  {
+    "file": "SONNY_FEATURES_AND_PRICING.md",
+    "line": 198,
+    "content": "| Quick-Service Menu | Optimized for fast ordering |",
+    "keyword": "optimized"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 297,
+    "content": "- Created `functions/src/config/functionConfig.ts` - Optimized function configs",
+    "keyword": "optimized"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 444,
+    "content": "- \u2705 Created `functions/src/config/functionConfig.ts` - Optimized configs for different function types",
+    "keyword": "optimized"
+  },
+  {
+    "file": "TODO-100K-SCALE.md",
+    "line": 580,
+    "content": "## \ud83c\udf89 PHASE 6 COMPLETE \u2014 Performance Optimized for 100k Scale!",
+    "keyword": "optimized"
+  },
+  {
+    "file": "docs\\FORENSIC_AUDIT_REMEDIATION_PLAN.md",
+    "line": 162,
+    "content": "No changes needed. Sonny's rules are already optimized using the best-practice pattern for multi-tenant SaaS.",
+    "keyword": "optimized"
+  },
+  {
+    "file": "frontend\\src\\components\\settings\\TODO.md",
+    "line": 30,
+    "content": "- [x] `TopFansConfig.tsx` - Already optimized (kept as-is)",
+    "keyword": "optimized"
+  },
+  {
+    "file": "frontend\\src\\types\\inventory.types.ts",
+    "line": 4,
+    "content": "* These types mirror the Firestore schemas but are optimized for React components.",
+    "keyword": "optimized"
+  },
+  {
+    "file": "functions\\FIRESTORE_SCHEMAS.md",
+    "line": 130,
+    "content": "This is the **AI-ready**, flat document optimized for fast reads and AI context injection.",
+    "keyword": "optimized"
+  }
+]

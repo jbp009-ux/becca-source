@@ -1,0 +1,50 @@
+{
+  "run_id": "RUN-SONNY-20260201-062159",
+  "project_id": "sonny",
+  "mission": "Find secrets (final test)",
+  "current_state": "COMPLETE",
+  "previous_state": "VERIFYING",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T06:21:59.763769Z",
+      "exited_at": "2026-02-01T06:21:59.772391Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T06:21:59.772391Z",
+      "exited_at": "2026-02-01T06:21:59.780186Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T06:21:59.780186Z",
+      "exited_at": "2026-02-01T06:22:33.905050Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-01T06:22:33.905050Z",
+      "exited_at": "2026-02-01T06:22:33.979428Z"
+    },
+    {
+      "state": "COMPLETE",
+      "entered_at": "2026-02-01T06:22:33.979428Z",
+      "exited_at": null
+    }
+  ],
+  "tools_planned": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_completed": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_remaining": [],
+  "current_tool": null,
+  "approvals_pending": [],
+  "approvals_granted": [],
+  "created_at": "2026-02-01T06:21:59.763769Z",
+  "updated_at": "2026-02-01T06:22:33.979428Z"
+}

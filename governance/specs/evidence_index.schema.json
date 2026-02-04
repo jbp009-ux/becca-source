@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "becca/evidence_index.schema.json",
+  "title": "BECCA Evidence Index Schema",
+  "description": "Schema for evidence catalog linking risks to supporting artifacts",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": ["index_id", "run_id", "generated_at", "evidence"],
+  "properties": {
+    "index_id": {
+      "type": "string",
+      "pattern": "^EVIDENCE-[A-Z0-9]+-[0-9]{8}-[0-9]{6}$",
+      "description": "Unique evidence index identifier"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to execution run"
+    },
+    "plan_id": {
+      "type": "string",
+      "description": "Reference to originating plan"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "base_path": {
+      "type": "string",
+      "description": "Base path for all evidence files (relative to run directory)"
+    },
+    "summary": {
+      "$ref": "#/definitions/Summary"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Evidence"
+      }
+    }
+  },
+
+  "definitions": {
+    "Summary": {
+      "type": "object",
+      "properties": {
+        "total_items": { "type": "integer", "minimum": 0 },
+        "total_size_bytes": { "type": "integer", "minimum": 0 },
+        "by_type": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "by_source_task": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "required": ["evidence_id", "path", "type"],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "pattern": "^E[0-9]{4}$",
+          "description": "Evidence identifier: E0001, E0002, etc."
+        },
+        "path": {
+          "type": "string",
+          "description": "Relative path to evidence file from base_path"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "secrets_findings",
+            "rules_analysis",
+            "scan_profile",
+            "test_results",
+            "console_output",
+            "config_snapshot",
+            "screenshot",
+            "log_extract",
+            "audit_trail"
+          ],
+          "description": "Evidence type for categorization"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["json", "md", "txt", "jsonl", "png", "log"]
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Brief description of what this evidence contains"
+        },
+        "source_task": {
+          "type": "string",
+          "description": "Task that generated this evidence"
+        },
+        "source_tool": {
+          "type": "string",
+          "description": "Tool that generated this evidence"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "SHA256 hash for integrity verification"
+        },
+        "linked_risks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Risk IDs that reference this evidence"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Tool-specific metadata"
+        },
+        "retention": {
+          "type": "string",
+          "enum": ["permanent", "run_lifetime", "temporary"],
+          "default": "run_lifetime",
+          "description": "How long to retain this evidence"
+        }
+      }
+    }
+  }
+}

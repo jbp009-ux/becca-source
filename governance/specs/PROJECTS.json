@@ -1,0 +1,138 @@
+{
+  "$schema": "./projects.schema.json",
+  "version": "2.0.0",
+  "projects": {
+    "sonny": {
+      "id": "sonny",
+      "displayName": "Sonny Pizzeria",
+      "description": "Multi-tenant SaaS pizzeria ordering system",
+      "github": {
+        "repo": "jbp009-ux/sonny",
+        "defaultBranch": "main",
+        "enabled": true
+      },
+      "local": {
+        "enabled": true,
+        "rootPath": "D:/projects/sonny"
+      },
+      "urls": {
+        "dev": "http://localhost:3000",
+        "prod": "https://sonny.app"
+      },
+      "security": {
+        "denyGlobs": [
+          "**/.env",
+          "**/.env.*",
+          "**/serviceAccountKey.json",
+          "**/*-firebase-adminsdk*.json",
+          "**/.ssh/**",
+          "**/.aws/**",
+          "**/node_modules/**",
+          "**/dist/**",
+          "**/.git/**",
+          "**/.firebase/**",
+          "**/credentials*",
+          "**/*secret*",
+          "**/private_key*"
+        ],
+        "allowCommands": [
+          "git status",
+          "git status --porcelain",
+          "git log -n 50 --oneline",
+          "git log -n 10 --format=%H|%s|%ai",
+          "git diff --stat",
+          "git branch -v",
+          "npm test",
+          "npm run lint",
+          "npm run typecheck"
+        ],
+        "allowedDomains": ["localhost", "sonny.app", "sonny8.ai"]
+      },
+      "costTracking": {
+        "aiProvider": "gemini",
+        "voiceProvider": "elevenlabs",
+        "smsProvider": "twilio"
+      }
+    },
+    "colony-os": {
+      "id": "colony-os",
+      "displayName": "Colony OS",
+      "description": "Governance and orchestration system",
+      "github": {
+        "repo": "jbp009-ux/colony-os",
+        "defaultBranch": "main",
+        "enabled": true
+      },
+      "local": {
+        "enabled": true,
+        "rootPath": "D:/projects/colony-os"
+      },
+      "urls": {
+        "dev": "http://localhost:5173",
+        "prod": null
+      },
+      "security": {
+        "denyGlobs": [
+          "**/.env",
+          "**/.env.*",
+          "**/serviceAccountKey.json",
+          "**/*-firebase-adminsdk*.json",
+          "**/.ssh/**",
+          "**/.aws/**",
+          "**/node_modules/**",
+          "**/dist/**",
+          "**/.git/**",
+          "**/.firebase/**"
+        ],
+        "allowCommands": [
+          "git status",
+          "git status --porcelain",
+          "git log -n 50 --oneline",
+          "git diff --stat",
+          "npm test"
+        ],
+        "allowedDomains": ["localhost"]
+      },
+      "costTracking": null
+    },
+    "becca-kernel": {
+      "id": "becca-kernel",
+      "displayName": "BECCA Kernel (IAMBecca)",
+      "description": "Control-plane repo for BECCA orchestration",
+      "github": {
+        "repo": "jbp009-ux/becca-source",
+        "defaultBranch": "main",
+        "enabled": true
+      },
+      "local": {
+        "enabled": true,
+        "rootPath": "D:/projects/becca-kernel"
+      },
+      "urls": {
+        "dev": "http://localhost:5000",
+        "prod": "https://source.betaos.com"
+      },
+      "security": {
+        "denyGlobs": [
+          "**/.env",
+          "**/.env.*",
+          "**/.ssh/**",
+          "**/.aws/**"
+        ],
+        "allowCommands": [
+          "git status",
+          "git log -n 50 --oneline"
+        ],
+        "allowedDomains": ["localhost", "source.betaos.com"]
+      },
+      "costTracking": null
+    }
+  },
+  "globalDenyPatterns": [
+    "**/.ssh/**",
+    "**/.aws/**",
+    "**/credentials*",
+    "**/*password*",
+    "**/private_key*"
+  ]
+}

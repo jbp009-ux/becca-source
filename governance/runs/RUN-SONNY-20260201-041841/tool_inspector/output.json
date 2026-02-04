@@ -1,0 +1,79 @@
+{
+  "tool_id": "tool_inspector",
+  "run_id": "RUN-SONNY-20260201-041841",
+  "status": "pass",
+  "state": "COMPLETE",
+  "evidence": [
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-041841\\tool_inspector\\evidence\\project_structure.json",
+      "description": "Project directory structure"
+    },
+    {
+      "type": "log",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-041841\\tool_inspector\\evidence\\grep_results.json",
+      "description": "Grep results for keywords: ['console.error', 'errors', 'console', 'console.warn', 'catch', 'throw']"
+    },
+    {
+      "type": "file",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-041841\\tool_inspector\\evidence\\config_files.json",
+      "description": "Configuration files found"
+    },
+    {
+      "type": "log",
+      "path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-041841\\tool_inspector\\evidence\\error_patterns.json",
+      "description": "Error patterns found in code"
+    }
+  ],
+  "changes": {
+    "files_modified": 0,
+    "files_created": 4,
+    "lines_added": 0,
+    "lines_removed": 0
+  },
+  "success_reasoning": {
+    "invariants_checked": [
+      "Project path exists",
+      "Source files are readable",
+      "Keywords extracted from mission"
+    ],
+    "assumptions_made": [
+      "Mission keywords are relevant to search",
+      "Top 10 results per keyword are sufficient"
+    ],
+    "not_tested": [
+      "Binary files not scanned",
+      "node_modules excluded",
+      "Files > 1MB skipped"
+    ]
+  },
+  "risks": [],
+  "next_actions": [
+    {
+      "tool": "tool_browser",
+      "priority": "required",
+      "reason": "Capture runtime behavior in browser"
+    }
+  ],
+  "timing": {
+    "started_at": "2026-02-01T04:18:41.959490Z",
+    "completed_at": "2026-02-01T04:19:09.607697Z",
+    "duration_seconds": 27.648207
+  },
+  "tokens_used": 0,
+  "error": null,
+  "findings_summary": {
+    "keywords": [
+      "console.error",
+      "errors",
+      "console",
+      "console.warn",
+      "catch",
+      "throw"
+    ],
+    "files_scanned": 519,
+    "grep_matches": 50,
+    "config_files": 50,
+    "error_patterns": 100
+  }
+}

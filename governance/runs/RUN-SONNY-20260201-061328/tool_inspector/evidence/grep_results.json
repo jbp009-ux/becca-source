@@ -1,0 +1,62 @@
+[
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 37,
+    "content": "\"Bash(firebase functions:secrets:get:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": ".claude\\settings.local.json",
+    "line": 38,
+    "content": "\"Bash(firebase functions:secrets:set:*)\",",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\ARCHITECTURE.md",
+    "line": 115,
+    "content": "4. **Secrets stay secret.** No API keys, tokens, or credentials in frontend code or repos. Use Firebase/GCP Secret Manager.",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\CODEX_DEEP_AUDIT_INSTRUCTIONS.md",
+    "line": 190,
+    "content": "- [ ] No secrets in source code",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\INSPECTOR_EVALUATION_PACKAGE.md",
+    "line": 655,
+    "content": "| Secrets management | PASS | Environment variables |",
+    "keyword": "secrets"
+  },
+  {
+    "file": "docs\\OPERATIONS_RUNBOOK.md",
+    "line": 77,
+    "content": "2. **Required secrets** (GitHub > Settings > Secrets):",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 15,
+    "content": "// CONFIGURATION (read dynamically for secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\adapters\\emailAdapter.js",
+    "line": 35,
+    "content": "// Get config dynamically (for Firebase Secrets support)",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\notificationFunctions.js",
+    "line": 358,
+    "content": "secrets: ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_PHONE_NUMBER', 'TWILIO_MESSAGING_SERVICE_SID', 'SENDGRID_API_KEY', 'SENDGRID_FROM_EMAIL', 'SENDGRID_FROM_NAME'],",
+    "keyword": "secrets"
+  },
+  {
+    "file": "functions\\lib\\src\\functions\\ttsFunctions.js",
+    "line": 60,
+    "content": "// Or via CLI: firebase functions:secrets:set OPENAI_API_KEY",
+    "keyword": "secrets"
+  }
+]

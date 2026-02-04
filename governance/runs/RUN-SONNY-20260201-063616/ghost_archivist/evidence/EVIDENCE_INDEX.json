@@ -1,0 +1,14 @@
+{
+  "index_id": "EVIDENCE-SONNY-20260201-063704",
+  "run_id": "RUN-SONNY-20260201-063616",
+  "plan_id": "PLAN-SONNY-20260201-063616",
+  "generated_at": "2026-02-01T06:37:04.982329Z",
+  "base_path": "D:\\projects\\becca-kernel\\governance\\runs\\RUN-SONNY-20260201-063616",
+  "summary": {
+    "total_items": 0,
+    "total_size_bytes": 0,
+    "by_type": {},
+    "by_source_task": {}
+  },
+  "evidence": []
+}

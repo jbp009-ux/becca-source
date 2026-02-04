@@ -1,0 +1,40 @@
+{
+  "result_id": "RESULT-T003-20260201-064156",
+  "task_id": "T003",
+  "plan_id": "PLAN-SONNY-20260201-064110",
+  "status": "failed",
+  "started_at": "2026-02-01T06:41:56.166245Z",
+  "completed_at": "2026-02-01T06:41:56.201211Z",
+  "timing": {
+    "total_ms": 34.965999999999994,
+    "enumerate_ms": 0.0,
+    "process_ms": 0.0,
+    "write_ms": 0.0
+  },
+  "tool": "reporter",
+  "tool_version": "1.0.0",
+  "profile": "Ghost",
+  "stats": {
+    "files_scanned": 0,
+    "files_skipped": 0,
+    "bytes_processed": 0,
+    "findings_count": 0,
+    "findings_by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "outputs": [],
+  "errors": [
+    {
+      "code": "E999",
+      "message": "[Errno 2] No such file or directory: 'D:\\\\projects\\\\becca-kernel\\\\governance\\\\runs\\\\RUN-SONNY-20260201-064110\\\\tool_reporter\\\\evidence\\\\report.md'",
+      "details": "",
+      "recoverable": false
+    }
+  ],
+  "stop_reason": "error",
+  "metrics": {}
+}

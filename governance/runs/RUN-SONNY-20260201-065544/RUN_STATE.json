@@ -1,0 +1,40 @@
+{
+  "run_id": "RUN-SONNY-20260201-065544",
+  "project_id": "sonny",
+  "mission": "Find hardcoded secrets",
+  "current_state": "COMPLETE",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T06:55:44.746944Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T06:55:44.796317Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T06:55:44.809768Z"
+    },
+    {
+      "state": "ARCHIVING",
+      "entered_at": "2026-02-01T06:56:31.914250Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-01T06:56:31.941653Z"
+    },
+    {
+      "state": "COMPLETE",
+      "entered_at": "2026-02-01T06:56:31.951216Z"
+    }
+  ],
+  "agents": [
+    "mq_planner",
+    "bq_executor",
+    "ghost_archivist"
+  ],
+  "agents_completed": [],
+  "created_at": "2026-02-01T06:55:44.746944Z",
+  "updated_at": "2026-02-01T06:56:31.951216Z"
+}

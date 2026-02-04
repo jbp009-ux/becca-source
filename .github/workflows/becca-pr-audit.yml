@@ -1,0 +1,556 @@
+# BECCA PR Audit Workflow
+# Runs PROPOSE-only scans on pull requests to detect issues before merge
+#
+# Features:
+# - Fast profile for PR feedback (< 2 min target)
+# - One-screen readable PR comment with status + grade
+# - Auto-labels PRs based on findings
+# - Uploads RUN_SUMMARY.json and FINAL_REPORT.md as artifacts
+# - Does NOT auto-apply changes (human approval required)
+#
+# Labels applied:
+# - becca:all-clear - No issues found
+# - becca:cost-risk-high - High/critical profit risk
+# - becca:secrets-risk - Secrets detected
+# - becca:critical-paths - Critical paths touched
+# - becca:needs-review - Proposals generated requiring review
+
+name: BECCA PR Audit
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Scan profile (fast, deep, release)'
+        required: false
+        default: 'fast'
+        type: choice
+        options:
+          - fast
+          - deep
+          - release
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: '3.11'
+  BECCA_PROFILE: ${{ github.event.inputs.profile || 'fast' }}
+
+jobs:
+  audit:
+    name: BECCA Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      status: ${{ steps.audit.outputs.status }}
+      profit_grade: ${{ steps.audit.outputs.profit_grade }}
+      total_findings: ${{ steps.audit.outputs.total_findings }}
+      critical_count: ${{ steps.audit.outputs.critical_count }}
+      has_secrets: ${{ steps.audit.outputs.has_secrets }}
+      has_cost_risk: ${{ steps.audit.outputs.has_cost_risk }}
+      touches_critical: ${{ steps.audit.outputs.touches_critical }}
+      proposal_count: ${{ steps.audit.outputs.proposal_count }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+          pip install jsonschema pyyaml
+
+      - name: Create run directory
+        id: setup
+        run: |
+          RUN_ID="RUN-PR-${{ github.event.pull_request.number || github.run_number }}-$(date +%Y%m%d-%H%M%S)"
+          RUN_DIR=".becca/runs/$RUN_ID"
+          mkdir -p "$RUN_DIR"
+          echo "run_id=$RUN_ID" >> $GITHUB_OUTPUT
+          echo "run_dir=$RUN_DIR" >> $GITHUB_OUTPUT
+
+          # Write run context for traceability
+          cat > "$RUN_DIR/RUN_CONTEXT.json" << EOF
+          {
+            "run_id": "$RUN_ID",
+            "branch": "${{ github.head_ref || github.ref_name }}",
+            "pr_number": ${{ github.event.pull_request.number || 'null' }},
+            "sha": "${{ github.sha }}",
+            "repo": "${{ github.repository }}",
+            "ci_run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "triggered_by": "${{ github.actor }}",
+            "event": "${{ github.event_name }}",
+            "created_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+
+      - name: Run BECCA audit
+        id: audit
+        run: |
+          python -c "
+          import json
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, '.')
+
+          from tools.propose_secrets_remediation import SecretsRemediationProposer
+          from tools.propose_profit_guardrails import ProfitGuardrailsProposer
+
+          project_path = Path('.')
+          run_dir = Path('${{ steps.setup.outputs.run_dir }}')
+          run_id = '${{ steps.setup.outputs.run_id }}'
+
+          # Load critical paths
+          critical_paths_touched = False
+          critical_patterns = []
+          try:
+              with open('governance/specs/CRITICAL_PATHS.json') as f:
+                  cp_config = json.load(f)
+                  for cp in cp_config.get('critical_paths', []):
+                      critical_patterns.extend(cp.get('patterns', []))
+          except:
+              pass
+
+          # Check if PR touches critical paths (scan changed files)
+          try:
+              import subprocess
+              diff_result = subprocess.run(
+                  ['git', 'diff', '--name-only', 'origin/main...HEAD'],
+                  capture_output=True, text=True, timeout=30
+              )
+              changed_files = diff_result.stdout.strip().split('\n') if diff_result.stdout.strip() else []
+
+              for f in changed_files:
+                  for pattern in critical_patterns:
+                      # Convert glob to regex
+                      regex = pattern.replace('**/', '.*').replace('*', '[^/]*')
+                      if re.match(regex, f):
+                          critical_paths_touched = True
+                          break
+          except:
+              pass
+
+          results = {
+              'run_id': run_id,
+              'profile': '${{ env.BECCA_PROFILE }}',
+              'status': 'ALL_CLEAR',
+              'proposals': [],
+              'total_findings': 0,
+              'critical_count': 0,
+              'high_count': 0,
+              'medium_count': 0,
+              'low_count': 0,
+              'secrets_findings': 0,
+              'cost_findings': 0,
+              'profit_grade': 'A',
+              'profit_score': 0,
+              'monthly_risk': '\$0',
+              'touches_critical_paths': critical_paths_touched,
+              'top_risks': [],
+          }
+
+          # ===== LOAD BASELINE (if exists) =====
+          baseline = None
+          try:
+              baseline_path = Path('.becca/baseline.json')
+              if baseline_path.exists():
+                  with open(baseline_path) as f:
+                      baseline = json.load(f)
+                  print(f'Loaded baseline from {baseline_path}')
+          except Exception as e:
+              print(f'No baseline available: {e}')
+
+          # ===== SECRETS SCAN =====
+          print('Running secrets scan...')
+          try:
+              secrets_proposer = SecretsRemediationProposer(
+                  project_path=project_path,
+                  run_dir=run_dir,
+                  plan_id=f'PLAN-{run_id}',
+                  task_id='T001-SECRETS'
+              )
+              secrets_result = secrets_proposer.run()
+
+              if secrets_proposer.findings:
+                  for f in secrets_proposer.findings:
+                      if f.severity == 'critical':
+                          results['critical_count'] += 1
+                          results['top_risks'].append(f'CRITICAL: {f.secret_type} in {f.file_path}:{f.line_number}')
+                      elif f.severity == 'high':
+                          results['high_count'] += 1
+                          if len(results['top_risks']) < 3:
+                              results['top_risks'].append(f'HIGH: {f.secret_type} in {f.file_path}')
+                      elif f.severity == 'medium':
+                          results['medium_count'] += 1
+                      else:
+                          results['low_count'] += 1
+
+                  results['secrets_findings'] = len(secrets_proposer.findings)
+                  results['total_findings'] += len(secrets_proposer.findings)
+                  results['proposals'].append({
+                      'type': 'secrets',
+                      'id': secrets_result.get('proposal_id', ''),
+                      'findings': len(secrets_proposer.findings),
+                      'risk': secrets_result.get('risk', 'low'),
+                      'title': secrets_proposer.get_title() if hasattr(secrets_proposer, 'get_title') else 'Secrets remediation'
+                  })
+                  print(f'  Found {len(secrets_proposer.findings)} secret(s)')
+          except Exception as e:
+              print(f'  Secrets scan error: {e}')
+
+          # ===== PROFIT GUARDRAILS SCAN =====
+          print('Running profit guardrails scan...')
+          try:
+              profit_proposer = ProfitGuardrailsProposer(
+                  project_path=project_path,
+                  run_dir=run_dir,
+                  plan_id=f'PLAN-{run_id}',
+                  task_id='T002-PROFIT'
+              )
+              profit_result = profit_proposer.run()
+              risk_score = profit_proposer._calculate_risk_score()
+
+              results['profit_grade'] = risk_score.get('grade', 'A')
+              results['profit_score'] = risk_score.get('score', 0)
+              results['monthly_risk'] = risk_score.get('monthly_risk', '\$0')
+
+              unprotected = [f for f in profit_proposer.findings if not f.has_quota_check]
+              if unprotected:
+                  for f in unprotected:
+                      if f.risk_level == 'critical':
+                          results['critical_count'] += 1
+                          results['top_risks'].append(f'CRITICAL: Unprotected {f.provider} ({f.cost_type})')
+                      elif f.risk_level == 'high':
+                          results['high_count'] += 1
+                          if len(results['top_risks']) < 3:
+                              results['top_risks'].append(f'HIGH: Unprotected {f.provider} in {f.file_path}')
+                      elif f.risk_level == 'medium':
+                          results['medium_count'] += 1
+                      else:
+                          results['low_count'] += 1
+
+                  results['cost_findings'] = len(unprotected)
+                  results['total_findings'] += len(unprotected)
+                  results['proposals'].append({
+                      'type': 'profit_guardrails',
+                      'id': profit_result.get('proposal_id', ''),
+                      'findings': len(unprotected),
+                      'risk': profit_result.get('risk', 'low'),
+                      'title': f'Add guardrails (Grade: {results[\"profit_grade\"]})'
+                  })
+                  print(f'  Found {len(unprotected)} unprotected cost vector(s)')
+          except Exception as e:
+              print(f'  Profit scan error: {e}')
+
+          # ===== DETERMINE STATUS =====
+          if results['critical_count'] > 0:
+              results['status'] = 'CRITICAL_FINDINGS'
+          elif results['high_count'] > 0:
+              results['status'] = 'NEEDS_REVIEW'
+          elif results['total_findings'] > 0:
+              results['status'] = 'OK_WITH_WARNINGS'
+          else:
+              results['status'] = 'ALL_CLEAR'
+
+          # Trim top_risks to 3
+          results['top_risks'] = results['top_risks'][:3]
+
+          # ===== CALCULATE DELTA FROM BASELINE =====
+          delta = {}
+          if baseline:
+              grade_order = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'F': 5}
+              current_grade = grade_order.get(results['profit_grade'], 3)
+              baseline_grade = grade_order.get(baseline.get('profit_grade', 'A'), 3)
+
+              if current_grade < baseline_grade:
+                  delta['profit_grade'] = f\"improved: {baseline.get('profit_grade', '?')} -> {results['profit_grade']}\"
+              elif current_grade > baseline_grade:
+                  delta['profit_grade'] = f\"degraded: {baseline.get('profit_grade', '?')} -> {results['profit_grade']}\"
+              else:
+                  delta['profit_grade'] = 'unchanged'
+
+              findings_diff = results['total_findings'] - baseline.get('total_findings', 0)
+              if findings_diff > 0:
+                  delta['findings'] = f'+{findings_diff} new findings'
+              elif findings_diff < 0:
+                  delta['findings'] = f'{findings_diff} findings (improved!)'
+              else:
+                  delta['findings'] = 'unchanged'
+
+              secrets_diff = results['secrets_findings'] - baseline.get('secrets_findings', 0)
+              if secrets_diff > 0:
+                  delta['secrets'] = f'+{secrets_diff} new secrets detected'
+              elif secrets_diff < 0:
+                  delta['secrets'] = f'{secrets_diff} secrets (fixed!)'
+
+              cost_diff = results['cost_findings'] - baseline.get('cost_findings', 0)
+              if cost_diff > 0:
+                  delta['cost'] = f'+{cost_diff} new unprotected cost vectors'
+              elif cost_diff < 0:
+                  delta['cost'] = f'{cost_diff} cost vectors (protected!)'
+
+          results['delta'] = delta
+
+          # Write summary
+          summary_path = run_dir / 'RUN_SUMMARY.json'
+          with open(summary_path, 'w') as f:
+              json.dump(results, f, indent=2)
+
+          # ===== GENERATE ONE-SCREEN REPORT =====
+          status_emoji = {
+              'ALL_CLEAR': '✅',
+              'OK_WITH_WARNINGS': '⚠️',
+              'NEEDS_REVIEW': '🔶',
+              'CRITICAL_FINDINGS': '🔴'
+          }
+          grade_emoji = {'A': '🟢', 'B': '🟡', 'C': '🟠', 'D': '🔶', 'F': '🔴'}
+
+          report_lines = [
+              f'## {status_emoji.get(results[\"status\"], \"❓\")} BECCA: {results[\"status\"].replace(\"_\", \" \")}',
+              '',
+              f'| Metric | Value |',
+              f'|--------|-------|',
+              f'| **Profit Risk** | {grade_emoji.get(results[\"profit_grade\"], \"⚪\")} Grade {results[\"profit_grade\"]} ({results[\"monthly_risk\"]}) |',
+              f'| **Critical** | {results[\"critical_count\"]} |',
+              f'| **High** | {results[\"high_count\"]} |',
+              f'| **Proposals** | {len(results[\"proposals\"])} |',
+              f'| **Critical Paths?** | {\"Yes ⚠️\" if results[\"touches_critical_paths\"] else \"No\"} |',
+              '',
+          ]
+
+          # Add delta section if baseline exists
+          if delta:
+              report_lines.extend([
+                  '### vs Baseline (main)',
+                  '',
+              ])
+              if 'profit_grade' in delta:
+                  if 'improved' in delta['profit_grade']:
+                      report_lines.append(f'- Profit risk {delta[\"profit_grade\"]}')
+                  elif 'degraded' in delta['profit_grade']:
+                      report_lines.append(f'- Profit risk {delta[\"profit_grade\"]}')
+              if 'secrets' in delta:
+                  report_lines.append(f'- Secrets: {delta[\"secrets\"]}')
+              if 'cost' in delta:
+                  report_lines.append(f'- Cost vectors: {delta[\"cost\"]}')
+              if 'findings' in delta and delta['findings'] != 'unchanged':
+                  report_lines.append(f'- Total findings: {delta[\"findings\"]}')
+              report_lines.append('')
+
+          if results['top_risks']:
+              report_lines.extend([
+                  '### Top Risks',
+                  '',
+              ])
+              for risk in results['top_risks']:
+                  report_lines.append(f'- {risk}')
+              report_lines.append('')
+
+          if results['proposals']:
+              report_lines.extend([
+                  '### Proposals',
+                  '',
+              ])
+              for p in results['proposals']:
+                  report_lines.append(f'- **{p[\"type\"]}**: {p[\"title\"]} ({p[\"findings\"]} findings)')
+              report_lines.append('')
+
+          # ===== DETERMINE NEXT ACTION =====
+          next_action = 'No action required'
+          if results['critical_count'] > 0:
+              # Critical findings - most urgent
+              if results['secrets_findings'] > 0:
+                  next_action = 'URGENT: Rotate exposed secrets before merge'
+              else:
+                  next_action = 'Review and address critical findings before merge'
+          elif results['secrets_findings'] > 0:
+              next_action = 'Move secrets to environment variables'
+          elif results['cost_findings'] > 0:
+              next_action = f'Add quotas to unprotected cost vectors (Grade {results[\"profit_grade\"]})'
+          elif results['proposals']:
+              next_action = f'Review {len(results[\"proposals\"])} proposal(s) in artifacts'
+          elif results['total_findings'] > 0:
+              next_action = 'Review warnings (non-blocking)'
+
+          report_lines.extend([
+              f'**Next action:** {next_action}',
+              '',
+              '---',
+              f'Run: \`{run_id}\` | [Artifacts](https://github.com/\${{GITHUB_REPOSITORY}}/actions/runs/\${{GITHUB_RUN_ID}})',
+          ])
+
+          report_path = run_dir / 'FINAL_REPORT.md'
+          with open(report_path, 'w') as f:
+              f.write('\\n'.join(report_lines))
+
+          # ===== SET GITHUB OUTPUTS =====
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'status={results[\"status\"]}\\n')
+              f.write(f'profit_grade={results[\"profit_grade\"]}\\n')
+              f.write(f'total_findings={results[\"total_findings\"]}\\n')
+              f.write(f'critical_count={results[\"critical_count\"]}\\n')
+              f.write(f'has_secrets={\"true\" if results[\"secrets_findings\"] > 0 else \"false\"}\\n')
+              f.write(f'has_cost_risk={\"true\" if results[\"profit_grade\"] in [\"D\", \"F\"] else \"false\"}\\n')
+              f.write(f'touches_critical={\"true\" if results[\"touches_critical_paths\"] else \"false\"}\\n')
+              f.write(f'proposal_count={len(results[\"proposals\"])}\\n')
+
+          if results['critical_count'] > 0:
+              print(f'::warning::Found {results[\"critical_count\"]} CRITICAL findings!')
+          "
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: becca-audit-${{ steps.setup.outputs.run_id }}
+          path: |
+            ${{ steps.setup.outputs.run_dir }}/RUN_SUMMARY.json
+            ${{ steps.setup.outputs.run_dir }}/FINAL_REPORT.md
+            ${{ steps.setup.outputs.run_dir }}/proposals/**
+          retention-days: 30
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const runDir = '${{ steps.setup.outputs.run_dir }}';
+            const status = '${{ steps.audit.outputs.status }}';
+            const profitGrade = '${{ steps.audit.outputs.profit_grade }}';
+
+            let report = '';
+            try {
+              report = fs.readFileSync(`${runDir}/FINAL_REPORT.md`, 'utf8');
+              // Replace GitHub env vars
+              report = report.replace('${GITHUB_REPOSITORY}', '${{ github.repository }}');
+              report = report.replace('${GITHUB_RUN_ID}', '${{ github.run_id }}');
+            } catch (e) {
+              report = '## ❓ BECCA Audit\n\nUnable to generate report. Check workflow logs.';
+            }
+
+            // Find and update/create comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('BECCA:'));
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: report
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: report
+              });
+            }
+
+      - name: Apply labels
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [];
+
+            // Determine which labels to add
+            if ('${{ steps.audit.outputs.status }}' === 'ALL_CLEAR') {
+              labels.push('becca:all-clear');
+            }
+            if ('${{ steps.audit.outputs.has_secrets }}' === 'true') {
+              labels.push('becca:secrets-risk');
+            }
+            if ('${{ steps.audit.outputs.has_cost_risk }}' === 'true') {
+              labels.push('becca:cost-risk-high');
+            }
+            if ('${{ steps.audit.outputs.touches_critical }}' === 'true') {
+              labels.push('becca:critical-paths');
+            }
+            if (parseInt('${{ steps.audit.outputs.proposal_count }}') > 0) {
+              labels.push('becca:needs-review');
+            }
+
+            // Get existing labels
+            const { data: existingLabels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            // Remove old becca labels
+            const beccaLabels = existingLabels.filter(l => l.name.startsWith('becca:'));
+            for (const label of beccaLabels) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name: label.name,
+                });
+              } catch (e) {
+                // Label might not exist
+              }
+            }
+
+            // Add new labels
+            if (labels.length > 0) {
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: labels,
+                });
+              } catch (e) {
+                // Labels might not exist in repo - create them
+                for (const label of labels) {
+                  try {
+                    await github.rest.issues.createLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      name: label,
+                      color: label.includes('clear') ? '0e8a16' :
+                             label.includes('critical') ? 'd73a4a' :
+                             label.includes('secrets') ? 'b60205' :
+                             label.includes('cost') ? 'fbca04' : '0366d6',
+                      description: `BECCA auto-label: ${label.replace('becca:', '')}`
+                    });
+                  } catch (e2) {
+                    // Label might already exist
+                  }
+                }
+                // Try adding labels again
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: labels,
+                });
+              }
+            }
+
+            console.log(`Applied labels: ${labels.join(', ')}`);

@@ -1,0 +1,50 @@
+{
+  "run_id": "RUN-SONNY-20260201-051828",
+  "project_id": "sonny",
+  "mission": "Find API keys and secrets",
+  "current_state": "COMPLETE",
+  "previous_state": "VERIFYING",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T05:18:28.916098Z",
+      "exited_at": "2026-02-01T05:18:28.938441Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T05:18:28.938441Z",
+      "exited_at": "2026-02-01T05:18:28.945936Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T05:18:28.945936Z",
+      "exited_at": "2026-02-01T05:18:50.337046Z"
+    },
+    {
+      "state": "VERIFYING",
+      "entered_at": "2026-02-01T05:18:50.337046Z",
+      "exited_at": "2026-02-01T05:18:50.361601Z"
+    },
+    {
+      "state": "COMPLETE",
+      "entered_at": "2026-02-01T05:18:50.361601Z",
+      "exited_at": null
+    }
+  ],
+  "tools_planned": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_completed": [
+    "tool_inspector",
+    "tool_browser",
+    "tool_reporter"
+  ],
+  "tools_remaining": [],
+  "current_tool": null,
+  "approvals_pending": [],
+  "approvals_granted": [],
+  "created_at": "2026-02-01T05:18:28.916098Z",
+  "updated_at": "2026-02-01T05:18:50.361601Z"
+}

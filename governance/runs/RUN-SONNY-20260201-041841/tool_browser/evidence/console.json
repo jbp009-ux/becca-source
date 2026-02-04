@@ -1,0 +1,12 @@
+[
+  {
+    "type": "log",
+    "text": "[MOCK] Browser automation not available",
+    "timestamp": "2026-02-01T04:19:09.635292"
+  },
+  {
+    "type": "info",
+    "text": "[MOCK] Would have visited: http://localhost:3000",
+    "timestamp": "2026-02-01T04:19:09.635296"
+  }
+]

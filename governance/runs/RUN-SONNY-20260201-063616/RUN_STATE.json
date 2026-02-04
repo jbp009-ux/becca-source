@@ -1,0 +1,36 @@
+{
+  "run_id": "RUN-SONNY-20260201-063616",
+  "project_id": "sonny",
+  "mission": "Find hardcoded secrets and API keys",
+  "current_state": "HALTED",
+  "state_history": [
+    {
+      "state": "INIT",
+      "entered_at": "2026-02-01T06:36:16.287560Z"
+    },
+    {
+      "state": "PLANNING",
+      "entered_at": "2026-02-01T06:36:16.308822Z"
+    },
+    {
+      "state": "EXECUTING",
+      "entered_at": "2026-02-01T06:36:16.316792Z"
+    },
+    {
+      "state": "ARCHIVING",
+      "entered_at": "2026-02-01T06:37:04.981488Z"
+    },
+    {
+      "state": "HALTED",
+      "entered_at": "2026-02-01T06:37:04.992717Z"
+    }
+  ],
+  "agents": [
+    "mq_planner",
+    "bq_executor",
+    "ghost_archivist"
+  ],
+  "agents_completed": [],
+  "created_at": "2026-02-01T06:36:16.287560Z",
+  "updated_at": "2026-02-01T06:37:04.992717Z"
+}

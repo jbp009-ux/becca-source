@@ -1,0 +1,502 @@
+[
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "console.warn call",
+    "count": 3
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": "sonnyChat.ts",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\06707cfd742cf440.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\06707cfd742cf440.js",
+    "pattern": "catch block",
+    "count": 7
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\06707cfd742cf440.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\06707cfd742cf440.js",
+    "pattern": "try block",
+    "count": 7
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\13879f7a2c80d4ab.js",
+    "pattern": "console.warn call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\13879f7a2c80d4ab.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\18e1cd96229bc5fa.js",
+    "pattern": "console.error call",
+    "count": 7
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\18e1cd96229bc5fa.js",
+    "pattern": "Error throw",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\18e1cd96229bc5fa.js",
+    "pattern": "catch block",
+    "count": 66
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\18e1cd96229bc5fa.js",
+    "pattern": "promise catch",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\18e1cd96229bc5fa.js",
+    "pattern": "try block",
+    "count": 80
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\1ecfb577ed4356b9.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\1ecfb577ed4356b9.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\1ecfb577ed4356b9.js",
+    "pattern": "try block",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\20c8371549be6c95.js",
+    "pattern": "console.error call",
+    "count": 5
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\20c8371549be6c95.js",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\20c8371549be6c95.js",
+    "pattern": "try block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\264d61c3ae8074f9.js",
+    "pattern": "console.error call",
+    "count": 5
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\264d61c3ae8074f9.js",
+    "pattern": "console.warn call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\264d61c3ae8074f9.js",
+    "pattern": "catch block",
+    "count": 10
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\264d61c3ae8074f9.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\264d61c3ae8074f9.js",
+    "pattern": "try block",
+    "count": 19
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\2ea3810f8986eb7f.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\2ea3810f8986eb7f.js",
+    "pattern": "catch block",
+    "count": 7
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\2ea3810f8986eb7f.js",
+    "pattern": "try block",
+    "count": 8
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\37ba024c230334e6.js",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\37ba024c230334e6.js",
+    "pattern": "try block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\38342d8a4bd6f8a8.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\38342d8a4bd6f8a8.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3a9ec0c1d4afbbd8.js",
+    "pattern": "console.error call",
+    "count": 9
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3a9ec0c1d4afbbd8.js",
+    "pattern": "catch block",
+    "count": 18
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3a9ec0c1d4afbbd8.js",
+    "pattern": "promise catch",
+    "count": 6
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3a9ec0c1d4afbbd8.js",
+    "pattern": "try block",
+    "count": 13
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3cabbfd962572e6b.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3cabbfd962572e6b.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\3cabbfd962572e6b.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\44c18204d3c16714.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\44c18204d3c16714.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\46b983b9354e0848.js",
+    "pattern": "console.error call",
+    "count": 6
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\46b983b9354e0848.js",
+    "pattern": "catch block",
+    "count": 6
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\46b983b9354e0848.js",
+    "pattern": "try block",
+    "count": 6
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\49fd93ae5a3b1a90.js",
+    "pattern": "console.error call",
+    "count": 51
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\49fd93ae5a3b1a90.js",
+    "pattern": "catch block",
+    "count": 44
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\49fd93ae5a3b1a90.js",
+    "pattern": "promise catch",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\49fd93ae5a3b1a90.js",
+    "pattern": "try block",
+    "count": 42
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\5ba4aa6ada874bef.js",
+    "pattern": "console.error call",
+    "count": 8
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\5ba4aa6ada874bef.js",
+    "pattern": "console.warn call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\5ba4aa6ada874bef.js",
+    "pattern": "catch block",
+    "count": 109
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\5ba4aa6ada874bef.js",
+    "pattern": "promise catch",
+    "count": 30
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\5ba4aa6ada874bef.js",
+    "pattern": "try block",
+    "count": 83
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\62b367618883e1de.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\62b367618883e1de.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\62b367618883e1de.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\65c62359cce2267f.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\65c62359cce2267f.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\65c62359cce2267f.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\68d30e92f9998da4.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\68d30e92f9998da4.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\6c0920d79449289e.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\6c0920d79449289e.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8a868379a5bf5a1c.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8a868379a5bf5a1c.js",
+    "pattern": "catch block",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8a868379a5bf5a1c.js",
+    "pattern": "try block",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8d4268269d499719.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8d4268269d499719.js",
+    "pattern": "console.warn call",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8d4268269d499719.js",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8d4268269d499719.js",
+    "pattern": "promise catch",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\8d4268269d499719.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a1b1b661131251b0.js",
+    "pattern": "console.error call",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a1b1b661131251b0.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a1b1b661131251b0.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a6dad97d9634a72d.js",
+    "pattern": "console.error call",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a6dad97d9634a72d.js",
+    "pattern": "Error throw",
+    "count": 2
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a6dad97d9634a72d.js",
+    "pattern": "catch block",
+    "count": 51
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a6dad97d9634a72d.js",
+    "pattern": "try block",
+    "count": 51
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a8a84568eaed2900.js",
+    "pattern": "console.error call",
+    "count": 6
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a8a84568eaed2900.js",
+    "pattern": "catch block",
+    "count": 5
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\a8a84568eaed2900.js",
+    "pattern": "try block",
+    "count": 5
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b0588dc8191f0dfc.js",
+    "pattern": "console.error call",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b0588dc8191f0dfc.js",
+    "pattern": "console.warn call",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b0588dc8191f0dfc.js",
+    "pattern": "catch block",
+    "count": 76
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b0588dc8191f0dfc.js",
+    "pattern": "promise catch",
+    "count": 28
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b0588dc8191f0dfc.js",
+    "pattern": "try block",
+    "count": 62
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b80437467653cc98.js",
+    "pattern": "catch block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\b80437467653cc98.js",
+    "pattern": "try block",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\bb3c5d47e9240180.js",
+    "pattern": "catch block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\bb3c5d47e9240180.js",
+    "pattern": "try block",
+    "count": 1
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\bce98daa61e03e0e.js",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\bce98daa61e03e0e.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c3a5a946416a4608.js",
+    "pattern": "console.error call",
+    "count": 13
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c3a5a946416a4608.js",
+    "pattern": "catch block",
+    "count": 9
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c3a5a946416a4608.js",
+    "pattern": "try block",
+    "count": 9
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c7d193c1eade70c6.js",
+    "pattern": "console.error call",
+    "count": 4
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c7d193c1eade70c6.js",
+    "pattern": "catch block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\c7d193c1eade70c6.js",
+    "pattern": "try block",
+    "count": 3
+  },
+  {
+    "file": ".firebase\\ai-waitress-31281\\hosting\\_next\\static\\chunks\\ca44cecab27da3aa.js",
+    "pattern": "console.error call",
+    "count": 51
+  }
+]

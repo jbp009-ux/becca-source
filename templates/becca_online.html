@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BECCA Online - Truth Mode</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #c9d1d9;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Matrix Rain Canvas */
+        #matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        header h1 {
+            color: #00ff41;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+        }
+
+        header .subtitle {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+
+        .truth-badge {
+            display: inline-block;
+            background: transparent;
+            color: #00ff41;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-top: 10px;
+            border: 1px solid #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .project-selector {
+            margin-bottom: 20px;
+        }
+
+        .project-selector select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            border: 1px solid #00ff41;
+        }
+
+        .btn-primary:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .btn-secondary {
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+        }
+
+        .btn-secondary:hover {
+            background: #30363d;
+        }
+
+        .btn-settings {
+            flex: 0;
+            min-width: 45px;
+            background: #21262d;
+            color: #8b949e;
+            border: 1px solid #30363d;
+        }
+
+        .btn-settings:hover {
+            background: #30363d;
+        }
+
+        .settings-panel {
+            background: rgba(0, 20, 0, 0.9);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .settings-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .settings-content label {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+
+        .settings-content input {
+            flex: 1;
+            min-width: 200px;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            border-radius: 4px;
+        }
+
+        .settings-content button {
+            flex: 0;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .settings-hint {
+            width: 100%;
+            color: #8b949e;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .auth-status {
+            font-size: 0.8em;
+            color: #8b949e;
+            margin-left: 10px;
+        }
+
+        .auth-ok {
+            color: #3fb950;
+        }
+
+        .mode-indicator {
+            background: #21262d;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            border-left: 3px solid #58a6ff;
+        }
+
+        .response-card {
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .evidence-count {
+            background: transparent;
+            color: #00ff41;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            border: 1px solid #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .section {
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            color: #00ff41;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        .section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .section li {
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #8b949e;
+        }
+
+        .claims li::before {
+            color: #3fb950;
+        }
+
+        .evidence li::before {
+            color: #388bfd;
+        }
+
+        .unknown li::before {
+            color: #f85149;
+        }
+
+        .next-action {
+            background: #21262d;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #f0883e;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .chat-input-area input:focus {
+            outline: none;
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .chat-input-area input::placeholder {
+            color: #6e7681;
+        }
+
+        .btn-ask {
+            flex: 0;
+            min-width: 80px;
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+            font-weight: 600;
+            border: 1px solid #00ff41;
+        }
+
+        .btn-ask:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .chat-response {
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 3px solid #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .chat-response .question {
+            color: #8b949e;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .chat-response .answer {
+            line-height: 1.6;
+        }
+
+        .chat-response .answer p {
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #8b949e;
+        }
+
+        .error {
+            background: #3d1f1f;
+            border: 1px solid #f85149;
+            color: #f85149;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .sources {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .source-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        .source-active {
+            background: #238636;
+            color: white;
+        }
+
+        .source-inactive {
+            background: #30363d;
+            color: #8b949e;
+        }
+
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #00ff41;
+            color: #00ff41;
+            font-size: 0.85em;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            background: rgba(0, 20, 0, 0.9);
+            border: 1px solid #00ff41;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .login-box h1 {
+            color: #00ff41;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .login-box .subtitle {
+            color: #8b949e;
+            margin-bottom: 30px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            border-radius: 6px;
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .login-box input::placeholder {
+            color: #6e7681;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 255, 65, 0.2);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-box button:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .login-error {
+            color: #f85149;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-rain"></canvas>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <h1>BECCA</h1>
+            <div class="subtitle">Enter access code</div>
+            <input type="password" id="loginPassword" placeholder="Password" onkeypress="if(event.key==='Enter') attemptLogin()">
+            <button onclick="attemptLogin()">Access</button>
+            <div id="loginError" class="login-error">Invalid password</div>
+        </div>
+    </div>
+
+    <div id="mainApp" class="container hidden">
+        <header>
+            <h1>BECCA Online</h1>
+            <div class="subtitle">Phone-Accessible Project Status</div>
+            <span class="truth-badge">TRUTH MODE ENABLED</span>
+            <div style="margin-top: 10px;">
+                <button onclick="logout()" style="background: transparent; border: 1px solid #f85149; color: #f85149; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8em;">Logout</button>
+            </div>
+        </header>
+
+        <div class="project-selector">
+            <select id="projectSelect">
+                <option value="">Loading projects...</option>
+            </select>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-primary" onclick="getStatus()">Get Status</button>
+            <button class="btn-secondary" onclick="triggerRun()">Collect Evidence</button>
+            <button class="btn-settings" onclick="toggleSettings()" title="Settings">⚙</button>
+        </div>
+
+        <!-- Hidden settings panel (only shown when needed) -->
+        <div id="settingsPanel" class="settings-panel" style="display: none;">
+            <div class="settings-content">
+                <label>API Key (for write operations):</label>
+                <input type="password" id="apiKeyInput" placeholder="Enter API key once, it will be remembered">
+                <button onclick="saveApiKey()">Save</button>
+                <button onclick="toggleSettings()">Close</button>
+                <p class="settings-hint">Get your key from localhost:5001/api/keys on your PC</p>
+            </div>
+        </div>
+
+        <!-- Chat input for asking BECCA questions -->
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask BECCA a question... (e.g., 'What's the update on sonny?')" onkeypress="if(event.key==='Enter') askBecca()">
+            <button class="btn-ask" onclick="askBecca()">Ask</button>
+        </div>
+
+        <div id="responseArea">
+            <div class="response-card">
+                <div class="loading">Select a project and click "Get Status" to begin</div>
+            </div>
+        </div>
+
+        <footer>
+            BECCA Online &bull; Evidence Count matters &bull; No fake progress
+        </footer>
+    </div>
+
+    <script>
+        // ========== LOGIN SYSTEM ==========
+        const LOGIN_STORAGE_KEY = 'becca_auth_token';
+        const PASSWORD_HASH = 'becca2026'; // Change this to your password
+
+        function checkAuth() {
+            const token = localStorage.getItem(LOGIN_STORAGE_KEY);
+            if (token === btoa(PASSWORD_HASH)) {
+                showMainApp();
+                return true;
+            }
+            return false;
+        }
+
+        function attemptLogin() {
+            const password = document.getElementById('loginPassword').value;
+            if (password === PASSWORD_HASH) {
+                localStorage.setItem(LOGIN_STORAGE_KEY, btoa(PASSWORD_HASH));
+                showMainApp();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function showMainApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+        }
+
+        function logout() {
+            localStorage.removeItem(LOGIN_STORAGE_KEY);
+            location.reload();
+        }
+
+        // Check auth on load
+        if (!checkAuth()) {
+            document.getElementById('loginScreen').classList.remove('hidden');
+        }
+    </script>
+
+    <script>
+        const API_BASE = window.location.origin;
+        const API_KEY_STORAGE = 'becca_api_key';
+
+        // Get stored API key
+        function getStoredApiKey() {
+            return localStorage.getItem(API_KEY_STORAGE) || '';
+        }
+
+        // Save API key to localStorage
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (key) {
+                localStorage.setItem(API_KEY_STORAGE, key);
+                alert('API key saved! It will be used for authenticated operations.');
+                toggleSettings();
+            }
+        }
+
+        // Toggle settings panel
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const input = document.getElementById('apiKeyInput');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                input.value = getStoredApiKey();
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        // Load projects on page load
+        async function loadProjects() {
+            try {
+                const response = await fetch(`${API_BASE}/api/projects`);
+                const data = await response.json();
+                const select = document.getElementById('projectSelect');
+                select.innerHTML = '<option value="">Select a project...</option>';
+
+                data.projects.forEach(project => {
+                    const option = document.createElement('option');
+                    option.value = project.id;
+                    option.textContent = `${project.name} ${project.github_enabled ? '(GitHub)' : ''} ${project.local_enabled ? '(Local)' : ''}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Failed to load projects:', error);
+            }
+        }
+
+        async function getStatus() {
+            const projectId = document.getElementById('projectSelect').value;
+            if (!projectId) {
+                alert('Please select a project');
+                return;
+            }
+
+            const area = document.getElementById('responseArea');
+            area.innerHTML = '<div class="response-card"><div class="loading">Fetching status...</div></div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/status/${projectId}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    area.innerHTML = `<div class="error">${data.error}</div>`;
+                    return;
+                }
+
+                renderResponse(data);
+            } catch (error) {
+                area.innerHTML = `<div class="error">Failed to fetch status: ${error.message}</div>`;
+            }
+        }
+
+        async function triggerRun() {
+            const projectId = document.getElementById('projectSelect').value;
+            if (!projectId) {
+                alert('Please select a project');
+                return;
+            }
+
+            const apiKey = getStoredApiKey();
+            if (!apiKey) {
+                alert('API key required for this operation. Click the gear icon to set it.');
+                toggleSettings();
+                return;
+            }
+
+            const area = document.getElementById('responseArea');
+            area.innerHTML = '<div class="response-card"><div class="loading">Collecting evidence...</div></div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/run`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': apiKey
+                    },
+                    body: JSON.stringify({ project_id: projectId })
+                });
+                const data = await response.json();
+
+                if (response.status === 401) {
+                    area.innerHTML = `<div class="error">Invalid API key. Click the gear icon to update it.</div>`;
+                    return;
+                }
+
+                if (data.error) {
+                    area.innerHTML = `<div class="error">${data.error}</div>`;
+                    return;
+                }
+
+                // Re-fetch status after run
+                await getStatus();
+            } catch (error) {
+                area.innerHTML = `<div class="error">Failed to trigger run: ${error.message}</div>`;
+            }
+        }
+
+        function renderResponse(data) {
+            const resp = data.response;
+            const area = document.getElementById('responseArea');
+
+            let html = `
+                <div class="response-card">
+                    <div class="response-header">
+                        <strong>${data.project_id}</strong>
+                        <span class="evidence-count">Evidence: ${resp.evidence_count}</span>
+                    </div>
+
+                    <div class="section claims">
+                        <div class="section-title">Claims</div>
+                        <ul>
+                            ${resp.claims.length ? resp.claims.map(c => `<li>${escapeHtml(c)}</li>`).join('') : '<li>(no verified claims)</li>'}
+                        </ul>
+                    </div>
+
+                    <div class="section evidence">
+                        <div class="section-title">Evidence</div>
+                        <ul>
+                            ${resp.evidence.length ? resp.evidence.map(e => `<li>[${e.id}] ${e.source}: ${escapeHtml(e.description)} ${e.url ? `<a href="${e.url}" target="_blank">link</a>` : ''}</li>`).join('') : '<li>(no evidence)</li>'}
+                        </ul>
+                    </div>
+
+                    <div class="section unknown">
+                        <div class="section-title">Unknown</div>
+                        <ul>
+                            ${resp.unknown.length ? resp.unknown.map(u => `<li>${escapeHtml(u)}</li>`).join('') : '<li>(nothing unknown)</li>'}
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Next Action</div>
+                        <div class="next-action">${escapeHtml(resp.next_action)}</div>
+                    </div>
+
+                    <div class="mode-indicator">
+                        <strong>Mode:</strong> ${data.mode}
+                    </div>
+
+                    <div class="sources">
+                        <span class="source-badge ${data.sources.github ? 'source-active' : 'source-inactive'}">GitHub</span>
+                        <span class="source-badge ${data.sources.bridge ? 'source-active' : 'source-inactive'}">Local Bridge</span>
+                    </div>
+                </div>
+            `;
+
+            area.innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function askBecca() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) {
+                return;
+            }
+
+            const projectId = document.getElementById('projectSelect').value;
+            const area = document.getElementById('responseArea');
+            area.innerHTML = '<div class="response-card"><div class="loading">BECCA is thinking...</div></div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        project_id: projectId || null
+                    })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    area.innerHTML = `<div class="error">${escapeHtml(data.error)}</div>`;
+                    return;
+                }
+
+                if (data.type === 'status' && data.response) {
+                    // It was a status query - render the full response
+                    renderResponse({
+                        project_id: data.project_id,
+                        response: data.response,
+                        mode: data.mode || 'GITHUB ONLY',
+                        sources: data.sources || { github: true, bridge: false }
+                    });
+                } else {
+                    // General chat response from Claude
+                    renderChatResponse(message, data);
+                }
+
+                // Clear input
+                input.value = '';
+
+            } catch (error) {
+                area.innerHTML = `<div class="error">Failed to ask BECCA: ${error.message}</div>`;
+            }
+        }
+
+        function renderChatResponse(question, data) {
+            const area = document.getElementById('responseArea');
+
+            // Format the message - handle line breaks and basic markdown
+            let formattedMessage = escapeHtml(data.message || '')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/- (.+?)(<br>|<\/p>|$)/g, '<li>$1</li>');
+
+            // Wrap lists
+            if (formattedMessage.includes('<li>')) {
+                formattedMessage = formattedMessage.replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+            }
+
+            let html = `
+                <div class="chat-response">
+                    <div class="question">You asked: "${escapeHtml(question)}"</div>
+                    <div class="answer">
+                        <p>${formattedMessage}</p>
+                        ${data.suggestion ? `<p style="color: #58a6ff; margin-top: 15px;"><strong>Tip:</strong> ${escapeHtml(data.suggestion)}</p>` : ''}
+                        ${data.truth_mode ? '<p style="color: #3fb950; font-size: 0.85em; margin-top: 10px;">Truth Mode Active</p>' : ''}
+                        ${data.error ? `<p style="color: #f85149; font-size: 0.85em;">${escapeHtml(data.error)}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            area.innerHTML = html;
+        }
+
+        // Initialize
+        loadProjects();
+
+        // Matrix Rain Effect
+        (function() {
+            const canvas = document.getElementById('matrix-rain');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            // Matrix characters (mix of katakana, latin, numbers, symbols)
+            const chars = 'BECCA01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const charArray = chars.split('');
+
+            // Columns
+            const fontSize = 14;
+            let columns = Math.floor(canvas.width / fontSize);
+            let drops = [];
+
+            // Initialize drops
+            function initDrops() {
+                columns = Math.floor(canvas.width / fontSize);
+                drops = [];
+                for (let i = 0; i < columns; i++) {
+                    drops[i] = Math.random() * -100;
+                }
+            }
+            initDrops();
+            window.addEventListener('resize', initDrops);
+
+            // Draw function
+            function draw() {
+                // Semi-transparent black to create trail effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Green text
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    // Random character
+                    const char = charArray[Math.floor(Math.random() * charArray.length)];
+
+                    // Draw character
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                    // Reset drop randomly after it goes off screen
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+
+                    drops[i]++;
+                }
+            }
+
+            // Animation loop
+            setInterval(draw, 50);
+        })();
+    </script>
+</body>
+</html>

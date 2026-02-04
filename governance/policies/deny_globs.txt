@@ -1,0 +1,50 @@
+# BECCA Deny Globs - Files/paths that must NEVER be read or transmitted
+# One pattern per line. Supports glob syntax.
+# These patterns are enforced at:
+#   1. Local bridge (before reading)
+#   2. tool_inspector (before scanning)
+#   3. Redaction layer (before artifact upload)
+
+# Environment files (may contain secrets)
+**/.env
+**/.env.*
+**/.env.local
+**/.env.production
+
+# Service account keys (Firebase, GCP)
+**/serviceAccountKey.json
+**/*-firebase-adminsdk*.json
+**/service-account*.json
+
+# SSH and AWS credentials
+**/.ssh/**
+**/.aws/**
+**/.gnupg/**
+
+# Generic credentials
+**/credentials*
+**/*password*
+**/private_key*
+**/*.pem
+**/*.key
+
+# Build artifacts and dependencies (large, not useful)
+**/node_modules/**
+**/dist/**
+**/build/**
+**/.next/**
+**/__pycache__/**
+**/.firebase/**
+
+# Git internals
+**/.git/**
+
+# IDE and OS files
+**/.idea/**
+**/.vscode/settings.json
+**/Thumbs.db
+**/.DS_Store
+
+# Test coverage (large)
+**/coverage/**
+**/.nyc_output/**

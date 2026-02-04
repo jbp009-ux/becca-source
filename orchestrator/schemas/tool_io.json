@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "tool_input": {
+      "type": "object",
+      "required": ["run_id", "tool_id", "mission", "allowed_actions", "environment"],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "pattern": "^RUN-[A-Z0-9-]+-\\d{8}-\\d{6}$"
+        },
+        "tool_id": {
+          "type": "string",
+          "pattern": "^tool_[a-z_]+$"
+        },
+        "role": {
+          "type": "string",
+          "pattern": "^PMX-\\d{2}$"
+        },
+        "mission": {
+          "type": "string",
+          "minLength": 10
+        },
+        "constraints": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1
+        },
+        "environment": {
+          "type": "string",
+          "enum": ["dev", "staging", "prod"]
+        },
+        "auto_approve_gates": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "require_approval": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "context": {
+          "type": "object"
+        },
+        "budget": {
+          "type": "object",
+          "properties": {
+            "max_tokens": {"type": "integer", "minimum": 1000, "maximum": 100000},
+            "max_files": {"type": "integer", "minimum": 1, "maximum": 100},
+            "max_time_seconds": {"type": "integer", "minimum": 10, "maximum": 3600}
+          }
+        }
+      }
+    },
+    "evidence_item": {
+      "type": "object",
+      "required": ["type", "path", "description"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "log", "screenshot", "diff", "network", "console"]
+        },
+        "path": {"type": "string"},
+        "description": {"type": "string"}
+      }
+    },
+    "risk_item": {
+      "type": "object",
+      "required": ["level", "description"],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low", "info"]
+        },
+        "description": {"type": "string"},
+        "mitigation": {"type": "string"}
+      }
+    },
+    "next_action": {
+      "type": "object",
+      "required": ["tool", "priority", "reason"],
+      "properties": {
+        "tool": {"type": "string"},
+        "priority": {
+          "type": "string",
+          "enum": ["required", "recommended", "optional"]
+        },
+        "reason": {"type": "string"}
+      }
+    },
+    "tool_output": {
+      "type": "object",
+      "required": ["tool_id", "run_id", "status", "state", "timing"],
+      "properties": {
+        "tool_id": {"type": "string"},
+        "run_id": {"type": "string"},
+        "status": {
+          "type": "string",
+          "enum": ["pass", "fail", "needs-approval", "halted"]
+        },
+        "state": {
+          "type": "string",
+          "enum": ["COMPLETE", "AWAITING_APPROVAL", "HALTED_UNSAFE", "ROLLED_BACK"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/evidence_item"}
+        },
+        "changes": {
+          "type": "object",
+          "properties": {
+            "files_modified": {"type": "integer", "minimum": 0},
+            "files_created": {"type": "integer", "minimum": 0},
+            "lines_added": {"type": "integer", "minimum": 0},
+            "lines_removed": {"type": "integer", "minimum": 0}
+          }
+        },
+        "success_reasoning": {
+          "type": "object",
+          "properties": {
+            "invariants_checked": {"type": "array", "items": {"type": "string"}},
+            "assumptions_made": {"type": "array", "items": {"type": "string"}},
+            "not_tested": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/risk_item"}
+        },
+        "next_actions": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/next_action"}
+        },
+        "timing": {
+          "type": "object",
+          "required": ["started_at", "completed_at", "duration_seconds"],
+          "properties": {
+            "started_at": {"type": "string", "format": "date-time"},
+            "completed_at": {"type": "string", "format": "date-time"},
+            "duration_seconds": {"type": "number", "minimum": 0}
+          }
+        },
+        "tokens_used": {"type": "integer", "minimum": 0},
+        "error": {"type": ["string", "null"]}
+      }
+    },
+    "run_state": {
+      "type": "object",
+      "required": ["run_id", "project_id", "current_state", "created_at"],
+      "properties": {
+        "run_id": {"type": "string"},
+        "project_id": {"type": "string"},
+        "current_state": {
+          "type": "string",
+          "enum": ["INIT", "PLANNING", "EXECUTING", "AWAITING_APPROVAL", "VERIFYING", "AUDITING", "COMPLETE", "ROLLED_BACK", "HALTED_UNSAFE"]
+        },
+        "previous_state": {"type": ["string", "null"]},
+        "state_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "state": {"type": "string"},
+              "entered_at": {"type": "string", "format": "date-time"},
+              "exited_at": {"type": ["string", "null"], "format": "date-time"}
+            }
+          }
+        },
+        "tools_planned": {"type": "array", "items": {"type": "string"}},
+        "tools_completed": {"type": "array", "items": {"type": "string"}},
+        "tools_remaining": {"type": "array", "items": {"type": "string"}},
+        "current_tool": {"type": ["string", "null"]},
+        "approvals_pending": {"type": "array"},
+        "approvals_granted": {"type": "array"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "updated_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

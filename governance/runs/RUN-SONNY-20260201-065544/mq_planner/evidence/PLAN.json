@@ -1,0 +1,109 @@
+{
+  "plan_id": "PLAN-SONNY-20260201-065544",
+  "mission": "Find hardcoded secrets",
+  "project": "sonny",
+  "created_at": "2026-02-01T06:55:44.798876Z",
+  "planner_version": "1.0.0",
+  "intent": {
+    "category": "security",
+    "subcategory": "secrets",
+    "keywords": [
+      "hardcoded",
+      "secrets"
+    ],
+    "urgency": "normal"
+  },
+  "tasks": [
+    {
+      "task_id": "T001",
+      "tool": "secrets_scanner",
+      "profile": "Fire Ant",
+      "description": "Run secrets_scanner with Fire Ant profile",
+      "inputs": {
+        "scan_mode": "fast"
+      },
+      "stop_conditions": {
+        "max_duration_ms": 120000,
+        "on_critical": "escalate"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "json",
+          "required": true
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "md",
+          "required": false
+        },
+        {
+          "artifact": "SCAN_PROFILE",
+          "format": "json",
+          "required": false
+        }
+      ]
+    },
+    {
+      "task_id": "T002",
+      "tool": "inspector",
+      "profile": "Scout",
+      "description": "Run inspector with Scout profile",
+      "inputs": {
+        "focus_areas": [
+          "hardcoded",
+          "secrets"
+        ]
+      },
+      "stop_conditions": {
+        "max_duration_ms": 120000,
+        "on_critical": "escalate"
+      },
+      "outputs_expected": [
+        {
+          "artifact": "project_structure",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "config_files",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "error_patterns",
+          "format": "json",
+          "required": false
+        },
+        {
+          "artifact": "SECRET_FINDINGS",
+          "format": "json",
+          "required": false
+        }
+      ]
+    },
+    {
+      "task_id": "T003",
+      "tool": "reporter",
+      "profile": "Ghost",
+      "description": "Finalize report (delegated to Ghost archivist)",
+      "inputs": {},
+      "stop_conditions": {
+        "max_duration_ms": 30000
+      },
+      "outputs_expected": []
+    }
+  ],
+  "dependencies": {
+    "T003": [
+      "T001",
+      "T002"
+    ]
+  },
+  "config": {
+    "parallel_execution": false,
+    "fail_fast": false,
+    "max_total_duration_ms": 300000,
+    "evidence_retention": "all"
+  }
+}
