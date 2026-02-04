@@ -515,7 +515,23 @@ def chat():
         "hows it going",
         "what's happening",
         "whats happening",
-        "progress on"
+        "progress on",
+        "what have i worked on",
+        "what did i work on",
+        "recent work",
+        "recent commits",
+        "recent changes",
+        "what's new",
+        "whats new",
+        "latest commits",
+        "show me commits",
+        "my activity",
+        "what's been done",
+        "whats been done",
+        "show me the",
+        "give me an update",
+        "worked on lately",
+        "been working on"
     ]
 
     is_status_query = any(p in message.lower() for p in status_patterns)
@@ -590,6 +606,7 @@ def ask_claude_truth_mode(message: str, project_id: str = None):
     Ask Claude a question with Truth Mode enforcement.
 
     Claude is instructed to always separate verified facts from speculation.
+    Now includes real GitHub data in the context so Claude can answer accurately.
     """
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
 
@@ -602,35 +619,58 @@ def ask_claude_truth_mode(message: str, project_id: str = None):
             "needs_api_key": True
         })
 
-    # Build context about available projects
+    # Build context about available projects with REAL GitHub data
     config = load_projects()
-    project_context = ""
+    project_context = "\n\n=== LIVE DATA FROM GITHUB ===\n"
+
+    # Fetch real GitHub data for all enabled projects
+    for pid, pdata in config.get("projects", {}).items():
+        github_config = pdata.get("github", {})
+        if github_config.get("enabled"):
+            repo = github_config.get("repo")
+            branch = github_config.get("defaultBranch", "main")
+            try:
+                truth = fetch_github_truth(pid, repo, branch)
+                project_context += f"\n**{pdata.get('displayName', pid)}** ({repo}):\n"
+                if truth.latest_commit:
+                    project_context += f"  - Latest commit: {truth.latest_commit[:8]} - {truth.latest_commit_message}\n"
+                    project_context += f"  - Commit date: {truth.latest_commit_date}\n"
+                if truth.recent_commits:
+                    project_context += f"  - Recent commits ({len(truth.recent_commits)}):\n"
+                    for c in truth.recent_commits[:5]:
+                        msg = c.get('message', '').split('\n')[0][:60]
+                        project_context += f"    * {c.get('sha', '')[:7]}: {msg}\n"
+                project_context += f"  - Open PRs: {truth.open_prs}\n"
+                project_context += f"  - Open Issues: {truth.open_issues}\n"
+                if truth.latest_workflow:
+                    wf = truth.latest_workflow
+                    project_context += f"  - CI: {wf.get('name')} - {wf.get('conclusion', 'in progress')}\n"
+            except Exception as e:
+                project_context += f"\n**{pid}**: Error fetching data - {str(e)[:50]}\n"
+
+    project_context += "\n=== END LIVE DATA ===\n"
+
     if project_id and project_id in config.get("projects", {}):
         proj = config["projects"][project_id]
-        project_context = f"\nContext: User is asking about project '{project_id}' ({proj.get('name', project_id)})"
+        project_context += f"\nUser is specifically asking about: {project_id} ({proj.get('displayName', project_id)})"
 
     # Truth Mode system prompt
-    system_prompt = """You are BECCA, a truth-focused AI advisor. You MUST follow these rules:
+    system_prompt = """You are BECCA, a truth-focused AI advisor. You have access to LIVE GitHub data shown below.
 
-1. NEVER make claims without evidence. If you don't know something, say "I don't know" or "I would need to check"
-2. Separate FACTS (what you know for certain) from SPECULATION (what you think might be true)
-3. When discussing project status, always note that you need to check GitHub/local data for current state
-4. Be direct and concise - no fluff or excessive praise
-5. If asked about something you can't verify, explain what evidence would be needed
+IMPORTANT RULES:
+1. USE the live data provided to answer questions accurately
+2. Reference specific commits, dates, and evidence from the data
+3. Be direct and concise - the user wants facts, not fluff
+4. If something isn't in the live data, say you don't have that specific information
 
-Format your responses clearly:
-- Use "I know:" for verified facts
-- Use "I think:" for speculation or reasoning
-- Use "I'd need to check:" for things that require evidence
-
-You are helping a developer stay on track with their projects. Be helpful but honest."""
+You are helping a developer stay on track with their projects. Answer based on the evidence."""
 
     try:
         import anthropic
         import httpx
 
         # Use short timeout to avoid hanging
-        http_client = httpx.Client(timeout=httpx.Timeout(15.0, connect=5.0))
+        http_client = httpx.Client(timeout=httpx.Timeout(30.0, connect=5.0))
         client = anthropic.Anthropic(api_key=anthropic_key, http_client=http_client)
 
         response = client.messages.create(
@@ -646,7 +686,8 @@ You are helping a developer stay on track with their projects. Be helpful but ho
             "type": "chat",
             "message": answer,
             "model": "claude-sonnet-4-20250514",
-            "truth_mode": True
+            "truth_mode": True,
+            "has_live_data": True
         })
 
     except ImportError as e:
